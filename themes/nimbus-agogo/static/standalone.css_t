@@ -1,0 +1,66 @@
+@import url(doc.css);
+
+body {
+  font-family: {{ theme_bodyfont }};
+  line-height: 1.4em;
+  color: black;
+  background-color: {{ theme_bgcolor }};
+}
+
+a {
+  color: {{ theme_linkcolor }};
+}
+
+h1, h2, h3, h4 {
+  font-family: {{ theme_headerfont }};
+  font-weight: normal;
+  color: {{ theme_headercolor2 }};
+  margin-bottom: .8em;
+}
+
+h1 {
+  color: {{ theme_headercolor1 }};
+}
+
+div.docheader-wrapper {
+  background: {{ theme_headerbg }};
+  border-bottom: 3px solid #2e3436;
+}
+
+/* Header */
+
+div.docheader {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+div.docheader h1 {
+  font-family: {{ theme_headerfont }};
+  font-weight: normal;
+  font-size: 180%;
+  letter-spacing: .08em;
+}
+
+div.docheader h1 a {
+  color: white;
+}
+
+div.docheader div.rel {
+  margin-top: 1em;
+}
+
+div.docheader div.rel a {
+  color: {{ theme_headerlinkcolor }};
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+p.logo {
+    float: right;
+}
+
+img.logo {
+    border: 0;
+}
+
+
