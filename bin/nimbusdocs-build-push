@@ -1,0 +1,137 @@
+#!/usr/bin/env python
+
+import os
+import sys
+import optparse
+import subprocess
+import traceback
+
+import fabric
+from fabric.api import lcd, cd, local, settings, run
+
+# hardcoding project/version pairs here now, should be from config file
+ALL_PROJECTS = [('cloudinitd', '1.0'), ('ctxbroker', '2.8')]
+PROJECT_VERSIONS = dict(ALL_PROJECTS)
+
+REMOTE_HOST = "login3.mcs.anl.gov"
+REMOTE_BASEDIR = "/mcs/nimbus.mcs.anl.gov/staticdoc"
+REMOTE_UNIXGROUP = "vwtools"
+
+class RsyncError(Exception):
+    pass
+
+#############################################################################
+# Fabric build and sync operations
+#############################################################################
+
+def build_docs(project_dir):
+    with lcd(project_dir):
+        local("make clean html")
+
+def sync_docs(src_dir, host, dest_dir, dryrun=False):
+    # being careful here
+    norm_path = os.path.normpath(dest_dir)
+    assert norm_path.startswith(REMOTE_BASEDIR)
+    assert os.path.isdir(src_dir)
+
+    rsync = ['rsync', '-crlv', '--delete', '-e', 'ssh']
+    if dryrun:
+        rsync.append('-n')
+    rsync.append(src_dir)
+    rsync.append("%s:%s" % (host, dest_dir))
+
+    say("Running '%s'.." % ' '.join(rsync))
+
+    proc = subprocess.Popen(rsync, stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT)
+    (output,error) = proc.communicate()
+    ret = proc.wait()
+    print output
+    if ret != 0:
+        raise RsyncError(output)
+
+    # now update permissions
+    
+    # not working for me..
+    #if not dryrun:
+    #    with settings(host_string="labisso@"+host):
+    #        run("find %s -exec chown :%s {} \\;" % (dest_dir, REMOTE_UNIXGROUP))
+    #        run("find %s -type -d -exec chmod 775 {} \\;" % dest_dir)
+    #        run("find %s -type -f -exec chmod 664 {} \\;" % dest_dir)
+
+def say(text, box=False):
+    if box:
+        line = "=" * len(text)
+        print "\n" + line + "\n" + text + "\n" + line + "\n"
+    else:
+        print text
+
+def setup_parser():
+    usage = "%prog [options] [docproject1 [docproject2] ...]"
+    parser = optparse.OptionParser(usage=usage)
+    parser.add_option('-b', '--build-only', action='store_true',
+        dest='build_only', default=False, help="Only build docs, do not sync")
+    parser.add_option('-n', '--dry-run', action='store_true', default=False,
+        dest='dry_run', help='Use the rsync dryrun flag')
+    return parser
+
+def build_projects(buildlist, opts):
+    """Main build loop
+    """
+    for project, version in buildlist:
+        say("Building %s version %s" % (project, version), box=True)
+
+        build_docs(project)
+
+        if not opts.build_only:
+            src_dir = os.path.join(project, "_build/html/")
+            dest_dir = os.path.join(REMOTE_BASEDIR, project+"/"+version)
+            
+            sync_docs(src_dir, REMOTE_HOST, dest_dir, dryrun=opts.dry_run)
+
+def main(args):
+    parser = setup_parser()
+    opts, args = parser.parse_args(args)
+
+    if args:
+        to_build = []
+        for arg in args:
+            if arg not in PROJECT_VERSIONS:
+                parser.error("project '%s' is unknown. known=%s" % (arg, 
+                    PROJECT_VERSIONS.keys()))
+            to_build.append((arg, PROJECT_VERSIONS[arg]))
+    else:
+        to_build = ALL_PROJECTS
+
+    try:
+        build_projects(to_build, opts)
+    except RsyncError:
+        say("PROBLEM with rsync. FAILED!", box=True)
+        return 1
+    finally:
+        fabric.network.disconnect_all()
+    
+    return 0
+
+if __name__ == '__main__':
+    try:
+        rc = main(sys.argv[1:])
+        sys.exit(rc)
+    except SystemExit:
+        raise
+    except KeyboardInterrupt:
+        print "\n\nReceived keyboard interrupt. Aborting!\n"
+        sys.exit(5)
+    except:
+        exception_type = sys.exc_type
+        try:
+            exceptname = exception_type.__name__
+        except AttributeError:
+            exceptname = exception_type
+        name = str(exceptname)
+        err = str(sys.exc_value)
+        errmsg = "\n==> Uncaught problem, please report all following output:\n  %s: %s" % (name, err)
+        print >>sys.stderr, errmsg
+        traceback.print_tb(sys.exc_info()[2])
+        sys.exit(97)
+
