@@ -4,7 +4,7 @@ Installing
 
 cloudinit.d is registered on pypi and can thus be installed with 
 easy_install.  If you have python 2.5 or greater installed on your 
-system the easiest way to installed cloudinitd is:
+system the easiest way to install cloudinitd is:
 
 .. code-block:: none
 
@@ -24,8 +24,8 @@ checkout you can run the following command set:
 
 python 2.5 or greater is required.
 
-Installing on CentOS 5.5
-========================
+Installing on CentOS 5.5 or RHEL 5
+==================================
 
 Because CentOS 5.5 does not come with python 2.5 the installation requires
 a few additional sets:
