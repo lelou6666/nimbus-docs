@@ -12,6 +12,7 @@ application coordination tool cloudinit.d.
    quickstart
    wordpress
    service
+   install
 
 .. image:: images/cloudinitd_dia.png
    :width: 600
