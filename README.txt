@@ -26,14 +26,19 @@ Some PHP is in place in EE to handle wrapping docs into the site skin and to
 do URL mangling. So if you for example access /doc/cloudinitd/ you will be
 redirected to /doc/cloudinitd/latest/.
 
+------------
+DEPENDENCIES
+------------
+
+* Python 2.5 - 2.7
+* Sphinx
+* Fabric
 
 -------------
 BUILDING DOCS
 -------------
 
 To build and push docs, you must have SSH access to the MCS login systems.
-
-You must have fabric available on your Python path, and have Python >=2.5
 
 Use the `nimbusdocs-build-push` tool to build and push doc projects:
     
