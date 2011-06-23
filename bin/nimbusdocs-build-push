@@ -53,11 +53,11 @@ def sync_docs(src_dir, host, dest_dir, dryrun=False):
     # now update permissions
     
     # not working for me..
-    #if not dryrun:
-    #    with settings(host_string="labisso@"+host):
-    #        run("find %s -exec chown :%s {} \\;" % (dest_dir, REMOTE_UNIXGROUP))
-    #        run("find %s -type -d -exec chmod 775 {} \\;" % dest_dir)
-    #        run("find %s -type -f -exec chmod 664 {} \\;" % dest_dir)
+    if not dryrun:
+        with settings(host_string=host):
+            run("find %s -exec chown :%s {} \\;" % (dest_dir, REMOTE_UNIXGROUP))
+            run("find %s -type d -exec chmod 775 {} \\;" % dest_dir)
+            run("find %s -type f -exec chmod 664 {} \\;" % dest_dir)
 
 def say(text, box=False):
     if box:
@@ -73,12 +73,20 @@ def setup_parser():
         dest='build_only', default=False, help="Only build docs, do not sync")
     parser.add_option('-n', '--dry-run', action='store_true', default=False,
         dest='dry_run', help='Use the rsync dryrun flag')
+    parser.add_option('-u', '--user', metavar='USER', dest='username',
+            action='store', 
+            help='username to use when connecting to remote hosts')
     return parser
 
 def build_projects(buildlist, opts):
     """Main build loop
     """
     for project, version in buildlist:
+        if opts.username:
+            host = "%s@%s" % (opts.username, REMOTE_HOST)
+        else:
+            host = REMOTE_HOST
+
         say("Building %s version %s" % (project, version), box=True)
 
         build_docs(project)
@@ -87,7 +95,7 @@ def build_projects(buildlist, opts):
             src_dir = os.path.join(project, "_build/html/")
             dest_dir = os.path.join(REMOTE_BASEDIR, project+"/"+version)
             
-            sync_docs(src_dir, REMOTE_HOST, dest_dir, dryrun=opts.dry_run)
+            sync_docs(src_dir, host, dest_dir, dryrun=opts.dry_run)
 
 def main(args):
     parser = setup_parser()
