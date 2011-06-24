@@ -13,6 +13,7 @@ application coordination tool cloudinit.d.
    wordpress
    service
    install
+   deps
 
 .. image:: images/cloudinitd_dia.png
    :width: 600
