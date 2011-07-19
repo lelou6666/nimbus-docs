@@ -2,7 +2,7 @@
 Nimbus Context Broker
 =====================
 
-This guide is incomplete.
+This guide is N-complete.
 
 .. toctree::
    :maxdepth: 1
