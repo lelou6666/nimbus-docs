@@ -180,7 +180,7 @@ htmlhelp_basename = 'ctxbrokerdoc'
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
-  ('index', 'cloudinitd.tex', u'cloudinit.d Documentation',
+  ('index', 'ctxbroker.tex', u'Context Broker Documentation',
    u'Nimbus Team', 'manual'),
 ]
 
@@ -213,6 +213,6 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('index', 'cloudinitd', u'cloudinit.d Documentation',
+    ('index', 'ctxbroker', u'Context Broker Documentation',
      [u'Nimbus Team'], 1)
 ]
