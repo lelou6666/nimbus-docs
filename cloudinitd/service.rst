@@ -65,8 +65,8 @@ and we associate it with our service.  Now we must create the pgms
 needed to turn this VM into a cloudinit.d service.  Some possible
 programs are shown below:
 
-.. note:: These programs can be written in any scripting language available on the
-    VM on which they will be run.
+.. note::
+  These programs can be written in any scripting language available on the VM on which they will be run.
 
 ``bootpgm`` ::
 

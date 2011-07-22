@@ -60,7 +60,7 @@ point your web browser at
 ``http://ec2-174-129-163-229.compute-1.amazonaws.com/wordpress/wp-admin/install.php``
 and you have your own personal wordpress service!
 
-.. note:
+.. note::
     For this example to work you need your default security group to have
     port 22, 80 and 3306 open.
 
