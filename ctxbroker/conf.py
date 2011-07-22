@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# cloudinit.d documentation build configuration file, created by
+# ctxbroker documentation build configuration file, created by
 # sphinx-quickstart on Tue Jun 21 12:17:33 2011.
 #
 # This file is execfile()d with the current directory set to its containing dir.
