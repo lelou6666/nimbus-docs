@@ -10,10 +10,9 @@ import fabric
 from fabric.api import lcd, cd, local, settings, run
 
 # hardcoding project/version pairs here now, should be from config file
-
 # a version of None means docs are pushed into the top level directory of
 # the project.
-ALL_PROJECTS = [('cloudinitd', '1.0'), ('ctxbroker', '2.8'), ('nimbus', None)]
+ALL_PROJECTS = [('cloudinitd', '1.0'), ('ctxbroker', '2.8'), ('nimbus', None), ('epu', '0.5')]
 PROJECT_VERSIONS = dict(ALL_PROJECTS)
 
 REMOTE_HOST = "login.mcs.anl.gov"
