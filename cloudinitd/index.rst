@@ -11,6 +11,7 @@ application coordination tool cloudinit.d.
    intro
    quickstart
    wordpress
+   cloudfoundry
    service
    install
    deps
