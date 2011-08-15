@@ -66,7 +66,7 @@ For overview information about *Nimbus Platform*, see the questions above:
 Can Nimbus Platform work on clouds other than Nimbus IaaS?
 ===========================================================
 
-Yes, the tools work with multiple IaaS systems.  The Context Broker works with AWS and Nimbus IaaS. Because cloudinit.d uses the boto and libcloud libraries, there are many IaaS systems that it can work with.  Cloudinit.d has been tested against AWS, Nimbus IaaS, and OpenStack.  The `boto <http://code.google.com/p/boto/>`_ tool can work with many other EC2 protocol-compliant systems.  And `libcloud <http://libcloud.apache.org>`_ can be used with `many other IaaS systems <http://libcloud.apache.org/supported_providers.html>`_.
+Yes, the tools work with multiple IaaS systems.  The Context Broker works with AWS and Nimbus IaaS. Because cloudinit.d uses the boto and libcloud libraries, there are many IaaS systems that it can work with.  Cloudinit.d has been tested against AWS, Nimbus IaaS, Eucalyptus, and OpenStack.  The `boto <http://code.google.com/p/boto/>`_ tool can work with many other EC2 protocol-compliant systems.  And `libcloud <http://libcloud.apache.org>`_ can be used with `many other IaaS systems <http://libcloud.apache.org/supported_providers.html>`_.
 
 
 How is Nimbus Platform different than "PaaS"?
