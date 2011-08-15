@@ -14,7 +14,6 @@ div.header, div.doccontent, div.footer {
   width: {{ theme_pagewidth }};
   margin-left: auto;
   margin-right: auto;
-  font: 1.01em Verdana,sans-serif;
 }
 
 div.bodywrapper a, div.footer a {
