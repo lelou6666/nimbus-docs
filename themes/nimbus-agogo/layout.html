@@ -22,6 +22,14 @@
     be in the right place. This will bite us later.
 #}
 {% block htmltitle %}
+
+{# presence of this comment triggers our EE template to include its own
+   sidebar, with dynamic content (news etc).
+#}
+{%- if theme_allow_ee_sidebar|tobool %}
+<!-- NIMBUS_SHOW_EE_SIDEBAR -->
+{%- endif %}
+
 <!-- BEGIN HEAD -->
 {{ super() }}
 {% endblock %}
@@ -65,6 +73,7 @@
             {{ super() }}
           {%- endblock %}
         </div>
+        {%- if not theme_nosidebar|tobool %}
         <div class="sidebar">
           {%- block sidebartoc %}
           <h3>Contents</h3>
@@ -98,6 +107,7 @@
           {%- block sidebarsearch %}
           {%- endblock %}
         </div>
+        {%- endif %}
         <div class="clearer"></div>
       </div>
   </div>

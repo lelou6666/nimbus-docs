@@ -10,10 +10,13 @@ import fabric
 from fabric.api import lcd, cd, local, settings, run
 
 # hardcoding project/version pairs here now, should be from config file
-ALL_PROJECTS = [('cloudinitd', '1.0'), ('ctxbroker', '2.8')]
+
+# a version of None means docs are pushed into the top level directory of
+# the project.
+ALL_PROJECTS = [('cloudinitd', '1.0'), ('ctxbroker', '2.8'), ('nimbus', None)]
 PROJECT_VERSIONS = dict(ALL_PROJECTS)
 
-REMOTE_HOST = "login3.mcs.anl.gov"
+REMOTE_HOST = "login.mcs.anl.gov"
 REMOTE_BASEDIR = "/mcs/nimbus.mcs.anl.gov/staticdoc"
 REMOTE_UNIXGROUP = "vwtools"
 
@@ -51,8 +54,6 @@ def sync_docs(src_dir, host, dest_dir, dryrun=False):
         raise RsyncError(output)
 
     # now update permissions
-    
-    # not working for me..
     if not dryrun:
         with settings(host_string=host):
             run("find %s -exec chown :%s {} \\;" % (dest_dir, REMOTE_UNIXGROUP))
@@ -93,7 +94,9 @@ def build_projects(buildlist, opts):
 
         if not opts.build_only:
             src_dir = os.path.join(project, "_build/html/")
-            dest_dir = os.path.join(REMOTE_BASEDIR, project+"/"+version)
+            dest_dir = os.path.join(REMOTE_BASEDIR, project+"/")
+            if version:
+                dest_dir += version
             
             sync_docs(src_dir, host, dest_dir, dryrun=opts.dry_run)
 
