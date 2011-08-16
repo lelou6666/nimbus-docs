@@ -14,6 +14,7 @@ application coordination tool cloudinit.d.
    service
    install
    deps
+   monitor
 
 .. image:: images/cloudinitd_dia.png
    :width: 600
