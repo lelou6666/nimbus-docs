@@ -9,6 +9,7 @@
  *
  */
 
+@import url("basic.css");
 
 div.header, div.doccontent, div.footer {
   width: {{ theme_pagewidth }};
@@ -83,9 +84,6 @@ dt:target, .highlighted {
   background-color: #fbe54e;
 }
 
-div.docheader {
-/*  padding: 10px; */
-}
 div.docheader div.rel {
   margin-top: 1em;
 }
@@ -134,11 +132,9 @@ div.body {
   padding-right: 2em;
 }
 
-div.document ul {
-  margin: 1.5em;
-  list-style-type: square;
+div.body li {
+  line-height: 1.4em;
 }
-
 div.document dd {
   margin-left: 1.2em;
   margin-top: .4em;
@@ -413,4 +409,8 @@ div.viewcode-block:target {
     background-color: #f4debf;
     border-top: 1px solid #ac9;
     border-bottom: 1px solid #ac9;
+}
+
+div.topic {
+    background-color:#eee;
 }

@@ -155,6 +155,7 @@ Options aren't always a good thing, especially to start with.  The main way to d
 *Overview of the cloud configuration:*
 
 .. image:: img/cloud-overview.png
+   :width: 600px
 
 
 Is Nimbus Infrastructure hard to install?
