@@ -12,7 +12,7 @@ DEA worker node installation.
 Prerequisites
 -------------
 
-Ensure that you have cloudinit.d installed. See the `cloudinit.d documentation`_
+Ensure that you have cloudinit.d installed. See the `cloudinit.d quickstart`_
 for instructions.
 
 Ensure that you have your IaaS credentials exported into your environment::
@@ -125,5 +125,5 @@ cloudfoundry to cloudfoundry-multi, like so::
 
     $ cloudinitd boot -v -v -v cloudfoundry-multi/main.conf -n cf-multi
 
-.. _cloudinit.d documentation: http://www.nimbusproject.org/doc/cloudinitd/latest/
+.. _cloudinit.d quickstart: http://www.nimbusproject.org/doc/cloudinitd/latest/quickstart.html
 .. _Cloud Foundry README: https://github.com/cloudfoundry/vcap/blob/master/README.md
