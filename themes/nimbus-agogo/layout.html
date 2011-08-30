@@ -22,6 +22,14 @@
     be in the right place. This will bite us later.
 #}
 {% block htmltitle %}
+
+{# presence of this comment triggers our EE template to include its own
+   sidebar, with dynamic content (news etc).
+#}
+{%- if theme_allow_ee_sidebar|tobool %}
+<!-- NIMBUS_SHOW_EE_SIDEBAR -->
+{%- endif %}
+
 <!-- BEGIN HEAD -->
 {{ super() }}
 {% endblock %}
@@ -65,9 +73,10 @@
             {{ super() }}
           {%- endblock %}
         </div>
+        {%- if not theme_nosidebar|tobool %}
         <div class="sidebar">
           {%- block sidebartoc %}
-          <h3>Contents</h3>
+          <h3>Page contents</h3>
           {{ toc }}
           {%- endblock %}
           
@@ -84,12 +93,17 @@
           <h3>You are here:</h3>
           <ul>
             <li>
-              <a href="{{ pathto('index') }}">{{ docstitle }}</a>
-              {% for p in parents %}
-                <ul><li><a href="{{ p.link }}">{{ p.title }}</a>
-              {% endfor %}
-              <ul><li>{{ title }}</li></ul>
-              {% for p in parents %}</li></ul>{% endfor %}
+              <a href="/doc/nimbus">Nimbus Documentation</a>
+            </li>
+            <li>
+              <ul><li>
+                <a href="{{ pathto('index') }}">{{ docstitle }}</a>
+                {% for p in parents %}
+                  <ul><li><a href="{{ p.link }}">{{ p.title }}</a>
+                {% endfor %}
+                <ul><li>{{ title }}</li></ul>
+                {% for p in parents %}</li></ul>{% endfor %}
+              </li></ul>
             </li>
           </ul>
 
@@ -98,6 +112,7 @@
           {%- block sidebarsearch %}
           {%- endblock %}
         </div>
+        {%- endif %}
         <div class="clearer"></div>
       </div>
   </div>
