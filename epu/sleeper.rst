@@ -1,14 +1,7 @@
-=======
-Install
-=======
+==========================
+Launch the Sleeper Service
+==========================
 
 This page is part of the EPU quickstart, it assumes you have read the `EPU overview page <index.html>`_.
 
-
-
 TODO
-
-
-* cloudinit.d software and dependencies
-* epumgmt software and dependencies
-

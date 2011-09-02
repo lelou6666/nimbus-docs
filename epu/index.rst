@@ -54,7 +54,7 @@ The EPU components have their own dependencies, mainly RabbitMQ and Cassandra.  
 Next steps
 ==========
 
-Before jumping right in and launching samples (which we provide with step by step instructions), it will probably help to dig a little deeper and peruse some diagrams.
+Before jumping right in and launching samples (which we provide with step by step instructions), it will help to dig a little deeper into how the software works and what it will provide.
 
 So first there is a conceptual walkthrough:
 
@@ -62,8 +62,30 @@ So first there is a conceptual walkthrough:
 - `After bootstrap <afterboot.html>`_
 
 
-And then the quickstart:
+Quickstart
+==========
 
+Time to get this party started:
+
+- `Dependencies <dependencies.html>`_
+- `Install <install.html>`_
+- `Launch the Sleeper Service <sleeper.html>`_
+
+
+Troubleshooting
+===============
+
+Have a problem?  (etc., TODO)
+
+- `Troubleshooting <trouble.html>`_
+
+
+Reference
+=========
+
+After you have followed the quickstart and move into general usage, the reference sections will contain additional, pertitent information:
+
+- `Reference <reference.html>`_
 
 
 
