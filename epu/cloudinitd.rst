@@ -38,8 +38,8 @@ Here is the most basic outline of the EPU system as launched by cloudinit.d (cli
 
 .. TODO: image is too close to text
 
-.. image:: images/cloudinitd+epu-thumb.png
-   :target: _images/cloudinitd+epu.png
+.. image:: images/cloudinitdepu-thumb.png
+   :target: _images/cloudinitdepu.png
 
 
 Next
