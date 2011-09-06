@@ -46,9 +46,10 @@ All of these values could be part of the launch plan itself, but environment var
 
 Making the environment variable definitions part of your virtualenv environment is a good way to always have them at the ready for a system launch.
 
-*Credentials for Provisioner: Nimbus IaaS and Context Broker*
+Credentials for Provisioner: Nimbus IaaS and Context Broker
+-----------------------------------------------------------
 
-.. code-block:: none
+.. code-block:: bash
 
     export CTXBROKER_KEY=`cat ~/.secrets/CTXBROKER_KEY`
     export CTXBROKER_SECRET=`cat ~/.secrets/CTXBROKER_SECRET`
@@ -60,9 +61,10 @@ These are the credentials that the *provisioner* will use to launch worker VMs.
 The context broker and IaaS credentials may or may not be different.  For OOICI they are usually the same credentials.  These are the key/secret pairs provided for the REST-style interfaces, not the X509 credentials.  The same key/secret is used with Cumulus.
 
 
-*Credentials for cloudinit.d: Nimbus IaaS*
+Credentials for cloudinit.d: Nimbus IaaS
+----------------------------------------
 
-.. code-block:: none
+.. code-block:: bash
 
     export CLOUDBOOT_IAAS_ACCESS_KEY="$NIMBUS_KEY"
     export CLOUDBOOT_IAAS_SECRET_KEY="$NIMBUS_SECRET"
@@ -70,9 +72,10 @@ The context broker and IaaS credentials may or may not be different.  For OOICI 
 cloudinit.d only needs IaaS credentials, it does not use the context broker.  It can be configured to launch the base services anywhere but as depicted here it will probably use the same IaaS system and credentials that the provisioner service does.
 
 
-*Cassandra Credentials*
+Cassandra Credentials
+---------------------
 
-.. code-block:: none
+.. code-block:: bash
 
     export CASSANDRA_USERNAME="mamacass"
     export CASSANDRA_PASSWORD=`uuidgen`
@@ -80,18 +83,20 @@ cloudinit.d only needs IaaS credentials, it does not use the context broker.  It
 You make these up if you are using EC2.  You have this running already if you are using a Nimbus cloud with R1.
 
     
-*Messaging Namespace*
+Messaging Namespace
+-------------------
 
-.. code-block:: none
+.. code-block:: bash
 
     export EXCHANGE_SCOPE="sysname123"
     
 If you are running your own Cassandra instance outside the launch plan, this HAS to change every launch.  If you are rebooting a system with data from a previous launch, this HAS to be the same as the previous launch.
 
 
-*Pre-existing services*
+Pre-existing services
+---------------------
 
-.. code-block:: none
+.. code-block:: bash
 
     export BROKER_HOSTNAME="rabbitmq-dev0.oceanobservatories.org"
     export CASSANDRA_HOSTNAME="cassandra.oceanobservatories.org"
@@ -158,7 +163,7 @@ Tear down the whole system:
 Launch Plan Conventions
 =======================
 
-For launch plan authors: conventions
+This section describes conventions for launch plan authors.
 
 There are three layers of value substitutions to understand.
 
@@ -166,11 +171,13 @@ There are three layers of value substitutions to understand.
    
    There are two kinds of values.  Examples:
    
-      1A. Literal
-      epu_git_repo: https://github.com/ooici/epu.git
+   Literal::
+
+     epu_git_repo: https://github.com/ooici/epu.git
    
-      1B. Variable
-      broker_ip_address: ${rabbit.hostname}
+   Variable::
+
+     broker_ip_address: ${rabbit.hostname}
      
    In the literal kind, you have a straight string value.
    
@@ -207,10 +214,10 @@ There are three layers of value substitutions to understand.
 Launch Plan JSON
 ================
 
-Rules for the bootconf json files when using the main recipe "X" which is
+Rules for the bootconf json files when using the main recipe "r1app" which is
 what we use most of the time.
 
-* appretrieve:retrieve_method
+* ``appretrieve:retrieve_method``
 
   This can have the value 'archive' or 'git'.
   
@@ -218,9 +225,10 @@ what we use most of the time.
   retrieved over http and it is assumed to be a tar.gz archive.
   
   When it is 'git', the following configurations are used:
-  * appretrieve:git_repo
-  * appretrieve:git_branch
-  * appretrieve:git_commit
+  
+  * ``appretrieve:git_repo``
+  * ``appretrieve:git_branch``
+  * ``appretrieve:git_commit``
   
   Note that those are the controls for the "thing installed".
   
@@ -228,35 +236,35 @@ what we use most of the time.
   come as part of that installation -- by way of the server listed in the
   "appinstall:package_repo" configuration.
   
-* appinstall:package_repo
+* ``appinstall:package_repo``
 
   The "thing installed" has a dependency list and this package repository
   configuration is what is used during the installation process to resolve
   the dependencies.
 
-* appinstall:install_method
+* ``appinstall:install_method``
 
   This can have the following values:
   
-  * py_venv_setup
+  * ``py_venv_setup``
     Create a new virtualenv, install using "python setup.py install"
 
-  * py_venv_buildout
+  * ``py_venv_buildout``
     Create a new virtualenv, install using "bootstrap.py" and "bin/buildout"
     
   * Future: more options for "burned" setups.
     
-* apprun:run_method
+* ``apprun:run_method``
 
   This can have the following values:
 
-  * sh
+  * ``sh``
     The old default, create a shell script for each service listed in the
     "services" section in the json file.  Then start that shell script (unless
     the service is also listed in the "do_not_start" section, for an example
     see the provisioner.json file).
     
-  * supervised
+  * ``supervised``
     The new default, each service listed in the "services" section in the json
     file is watched by a supervisor process.  This will monitor the unix process
     and communicate failures off of the machine.
