@@ -65,8 +65,6 @@ So first there is a conceptual walkthrough:
 Quickstart
 ==========
 
-Time to get this party started:
-
 - `Dependencies <dependencies.html>`_
 - `Install <install.html>`_
 - `Launch the Sleeper Service <sleeper.html>`_
