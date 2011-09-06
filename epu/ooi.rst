@@ -27,14 +27,46 @@ No matter what the `installation <install.html>`_ instructions say to install, t
 Launch plan
 ===========
 
-Retrieve the OOICI launch plan:
-
-.. code-block:: none
+Retrieve the OOICI launch plan::
 
     $ git clone https://github.com/ooici/launch-plans.git
     $ cd launch-plans/R1/r1c3
 
 There is no git tag to use yet.
+
+There are a few different launch plans in this repository but the one of interest
+is in ``R1/r1c3/``. The plan is organized into a directory per level (``00`` - ``11``)
+plus an optional ``test`` level. There are two plan entry points: ``integration.conf``
+and ``production.conf``.
+
+While cloudinit.d can launch many VMs, in this plan it only launches one and starts many services on it. These services in turn are used to boot further VMs.
+
+Levels
+------
+
+Each level has a directory under ``R1/r1c3/`` including its level ``.conf`` file
+and other boot config files and scripts. To understand each level, start with the
+conf and see how each other file is referenced and used.
+
+Level 1
+    base node launch and Cassandra keyspace creation for EPU
+
+Level 2
+    Cassandra keyspace creation for ioncore
+
+Level 3
+    EPU Provisioner service installed and started on basenode, in ``/home/cc``
+
+Levels 4-11
+    EPU Controller installed and started on basenode, in ``/home/epu*``. Each
+    EPU Controller starts one or more worker VMs and waits for them to be ready
+    before the level is completed. Note the ``lv*ready.py`` ready script in each
+    level's directory.
+
+Test Level (``test/``)
+    This level is included in the integration plan only. It is run after level 11 and
+    executes a series of integration test suites, to validate the running system.
+    
 
 
 Environment
@@ -133,11 +165,11 @@ Launch
 
     $ cloudinitd boot integration.conf -v -v -v -l debug -n $RUN_NAME
 
-You should give each launch a unique name (*$RUN_NAME*), to tell them apart.  See *cloudinitd -h* for the meaning of the various flags.
+You should give each launch a unique name (``$RUN_NAME``), to tell them apart.  See ``cloudinitd -h`` for the meaning of the various flags.
 
-This command will launch the *integration.conf* launch plan.  You could pick the production one to start with instead -- but make sure you understand the implications, see the "Integration Mode" section above.  The *integration.conf* launch plan also includes an extra level of tests at the end.  This is used from buildbot to understand if the code is in good shape or not.
+This command will launch the ``integration.conf`` launch plan.  You could pick the production one to start with instead -- but make sure you understand the implications, see the "Integration Mode" section above.  The integration launch plan also includes an extra level of tests at the end.  This is used from buildbot to understand if the code is in good shape or not.
 
-An instructive exercise is to actually consult the difference between *integration.conf* and *production.conf*
+An instructive exercise is to actually consult the difference between ``integration.conf`` and ``production.conf``.
 
 
 After Launch
