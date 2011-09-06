@@ -7,7 +7,6 @@ This page is part of the EPU quickstart, it assumes you have read the `EPU overv
 After this page you will have installed the software necessary to launch EPUs, it assumes you have read the `dependencies section <dependencies.html>`_ and followed any necessary instructions. 
 
 
-===============
 cloudinit.d 1.0
 ===============
 
@@ -32,7 +31,6 @@ Install cloudinit.d 1.0:
     $ easy_install cloudinitd==1.0
 
 
-=======
 epumgmt
 =======
 
@@ -46,7 +44,6 @@ Next, with the same virtualenv activated, install epumgmt:
     $ python setup.py install
 
 
-=============
 Install Check
 =============
 

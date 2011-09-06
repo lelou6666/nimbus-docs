@@ -21,7 +21,6 @@ Dependencies you will need:
 * Context Broker credentials
 
 
-======
 Python
 ======
 
@@ -35,7 +34,6 @@ Installed to your system via package manager. This has all only been tested on L
     Python 2.6.6
 
 
-==========
 virtualenv
 ==========
 
@@ -65,7 +63,6 @@ A nice thing to have is an alias that gets you into your different environments 
     $ alias epu="source /tmp/epu/bin/activate && cd /tmp/epu"
 
 
-================
 git installation
 ================
 
@@ -78,7 +75,6 @@ For the timebeing we will get some of the software directly from git (based on t
     $ git
 
     
-===============
 EC2 Credentials
 ===============
 
@@ -91,7 +87,6 @@ You will also need to register an SSH key with EC2 (the examples will use the US
 For later, note the location of your EC2 SSH key (something like "~/.ssh/ec2.pem") and the values of the two mentioned environment variables.
 
 
-===============
 EC2 Firewall
 ===============
 
@@ -105,7 +100,6 @@ Here is what the tested one looks like in the AWS control panel (click the pictu
    :target: _images/rabbit-firewall.png
 
 
-==============
 Context Broker
 ==============
 
