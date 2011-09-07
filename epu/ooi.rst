@@ -66,7 +66,17 @@ Levels 4-11
 Test Level (``test/``)
     This level is included in the integration plan only. It is run after level 11 and
     executes a series of integration test suites, to validate the running system.
-    
+
+Deployment Diagram
+------------------
+
+The full deployment of levels 1-10 and any pre-existing services can be seen together in the following diagram (click the image to see a larger version):
+
+.. TODO: image is too close to text
+
+.. image:: images/R1-deployment-thumb.png
+   :target: _images/R1-deployment.png
+
 
 
 Environment
