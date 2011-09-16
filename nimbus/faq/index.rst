@@ -412,7 +412,30 @@ How do I enable LANTorrent?
 See the document `here </docs/current/admin/reference.html#lantorrent>`_.
 
 
+I am seeing boot errors from 'mount' when I try to launch an image I created
+============================================================================
 
+If when launching a VM image that you create from cloud client you see 
+something like::
+    
+    OK: /opt/nimbus/var/workspace-control/tmp/5afba46b-a365-4565-b222
+
+     - target OK: /root/.ssh/authorized_keys
+
+     Altering image (dryrun = false):
+
+     command = /bin/mount -o loop,noexec,nosuid,nodev,noatime,sync
+     /opt/nimbus/var/workspace-control/secureimages/wrksp-XXXX/tmpXsw7ZQRepo__VMS__XXXXXXXXXXXXXXXXX
+     /opt/nimbus/var/workspace-control/mnt/wrksp-XXXX
+
+     mount: you must specify the filesystem type
+
+     Exiting with error code: 3
+
+     Workspace "vm-XXX" did NOT reach target state "Running"
+
+You may need to make sure that your VM image has the directory: /root/.ssh 
+created.
 
 
 
