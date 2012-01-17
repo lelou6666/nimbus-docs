@@ -3,6 +3,9 @@
 import sys
 import os
 
+cmd = "sudo sh -c 'env DEBIAN_FRONTEND=noninteractive apt-get -q -y install apache2'"
+os.system(cmd)
+
 f = open("hello.html", "w")
 f.write("<html><body>Hello cloudinit.d!</body></html>")
 f.close()
