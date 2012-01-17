@@ -24,7 +24,7 @@ that section is a user defined key value pair.  The key is a unique name
 that can be referenced by the bootpgm and readypgm and by higher level 
 services as well.  
 
-The bootconf file is a json formated file that allows the user to assemble
+The bootconf file is a json formatted file that allows the user to assemble
 variables into a format that the services bootpgm/readypgm can process.
 Variable substitution is performed on this file by processing both the 
 deps file, and all lower level services dep files if they were specified.
@@ -48,7 +48,7 @@ Wordpress Example
 =================
 
 To illustrate how to setup up dependency information we will look back at the
-:wordpress: example.  In this example two VMs are create.  The first runs
+:wordpress: example.  In this example two VMs are created.  The first runs
 a MySQL data base, and the second runs an web server and connects to that 
 web server.  In order for the web server to connect to the MySQL server it
 needs the following information:
