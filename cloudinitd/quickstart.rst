@@ -6,7 +6,7 @@ Download
 ========
 
 cloudinit.d is a python setup package registered with
-`pypi <http://www.pypi.com/>`_ which means you can ``easy_install``
+`PyPI <http://pypi.python.org/pypi>`_ which means you can ``easy_install``
 it.  From a python ``virtualenv`` or an account with access to the system
 libraries and python in its path run::
 
@@ -55,7 +55,7 @@ You can now test it out! ::
 Create a launch plan
 ====================
 
-A launch plan is set of configuration files that tell cloudinit.d what
+A launch plan is a set of configuration files that tell cloudinit.d what
 VM images to boot and in what order.  It is where the specific cloud
 to use is set along with the credentials needed to access that cloud.
 All aspects of contextualization and testing are also set in the
@@ -85,7 +85,7 @@ Top level launch plan
 
 In this very simple example the top level configuration file simply enumerates
 the run levels.  Because we are only launching a single virtual machine
-there is only 1 run level.  The entire configuration file follows::
+there is only one run level.  The entire configuration file follows::
 
     [runlevels]
     level1: helloec2_level1.conf
@@ -160,11 +160,11 @@ The remaining entries have the following meanings:
 Boot program
 ------------
 
-This value points to a program that will be run on your once to contextualize
-it.  Once you boot your launch program cloudinit.d will wait until its
-sshd service is running.  Once it is this program is uploaded and run as the
-user defined by ``ssh_username``, in our case ``ubuntu``.  Below
-is the example bootpgm:
+This value points to a program that will be run on your virtual machine once to
+contextualize it.  Once you boot your launch program cloudinit.d will wait
+until its sshd service is running.  Once it is this program is uploaded and run
+as the user defined by ``ssh_username``, in our case ``ubuntu``.  Below is the
+example bootpgm:
 
 .. literalinclude:: ec2bootpgm.py
 

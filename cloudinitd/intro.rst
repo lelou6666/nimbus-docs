@@ -17,7 +17,7 @@ to assume the use of reliable/redundant data stores like
 `Cassandra <http://en.wikipedia.org/wiki/Apache_Cassandra>`_ and
 reliable messaging services like
 `RabbitMQ <http://www.rabbitmq.com>`_. While this has brought great 
-opportunity, i has also brought an unruly amount
+opportunity, it has also brought an unruly amount
 of system administration, coordination and management.
 
 It is the goal of cloudinit.d to solve this problem.  cloudinit.d
