@@ -59,7 +59,8 @@ Testing Installation
 
 To test your installation, you should log in to your Cloud Foundry VM, and
 switch to the cf user. You can get the domain name of the VM from the cloudinit.d
-output (These instructions are based on the ones from the [Cloud Foundry README])::
+output (These instructions are based on the ones from the `Cloud Foundry
+README <https://github.com/cloudfoundry/vcap/blob/master/README.md>`_)::
 
     $ ssh ubuntu@ec2-0-0-0-0.compute-1.amazonaws.com
     [on vm]
