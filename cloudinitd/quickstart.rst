@@ -183,7 +183,7 @@ Now that we have and understand a launch plan, lets put it into action with clou
             instance: i-2ae3a245
     SUCCESS level 1
 
-The above session shows a successful boot of a launch plan.  Notice the use
+The above session shows a successful boot of a launch plan.  Notice the use of
 the ``-v`` option.  This simply increases the amount of output that we will
 see.
 
