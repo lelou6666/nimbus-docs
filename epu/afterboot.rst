@@ -70,7 +70,7 @@ That would be for some pretty advanced cases: in the quickstart we are going to 
 N-preserving
 ============
 
-The npreserving decision engine maintains a certain "N" number of worker instances. If one exhibits an issue, it will be replaced. You configure this number in the initial configuration but there is also a remote operation that lets you reconfigure it (the SQLStream/ANF dynamic controller integrates with this).
+The npreserving decision engine maintains a certain "N" number of worker instances. If one exhibits an issue, it will be replaced. You configure this number in the initial configuration but there is also a remote operation that let's you reconfigure it (the SQLStream/ANF dynamic controller integrates with this).
 
 
 Queue-length

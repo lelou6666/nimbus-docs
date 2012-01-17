@@ -74,7 +74,7 @@ out in the first line of the boot output::
 
     Starting up run c80e7e2c
 
-In out case it is ``c80e7e2c``.  To terminate the launch run the following command::
+In our case it is ``c80e7e2c``.  To terminate the launch run the following command::
 
     $ cloudinitd -v -v -v terminate c80e7e2c
     Terminating c80e7e2c
@@ -145,7 +145,7 @@ If we look at the two run level files ``mysql_level.conf`` and
 ``svc``.  What follows ``svc-`` is the name of the service to be
 described.  In ``svc-wordpress`` and ``svc-mysql``
 we see three similar values and three different ones.
-First lets look at the similar values::
+First let's look at the similar values::
 
     ssh_username: ubuntu
     image: ami-ccf405a5
@@ -156,7 +156,7 @@ These lines tell cloudinit.d to launch the image name ``ami-ccf405a5``
 ``ssh_username`` tells cloudinit.d which username can be accessed with
 the previously established keys.
 
-Those line are enough to establish two base virtual machines in the associated
+Those lines are enough to establish two base virtual machines in the associated
 cloud.  From there the next  thing to do is customize these VMs to do their
 needed jobs, become a MySQL server and a WordPress server.  The next three
 lines of the configuration file handle this.
@@ -177,8 +177,6 @@ example for how this works.
 Troubleshooting
 ===============
 
-When a service is launched a series of log files are created under:
+When a service is launched, a series of log files are created under:
 ``~/.cloudinitd/<run name>``.  Valuable information about the progress
 of a launch can be found in these directories.
-
-

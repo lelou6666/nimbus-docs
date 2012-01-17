@@ -165,7 +165,7 @@ creates a web page.  You can also download it here: :download:`ec2bootpgm.py
 Boot
 ====
 
-Now that we have and understand a launch plan, lets put it into action with cloudinit.d.
+Now that we have and understand a launch plan, let's put it into action with cloudinit.d.
 
 .. note:: You will be charged by AWS for running this command.  At the time
     of this writing the charges are less than 3 cents per hour.
