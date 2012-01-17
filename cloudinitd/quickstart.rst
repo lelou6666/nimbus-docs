@@ -115,21 +115,9 @@ environment variables in the following way::
     $ export CLOUDBOOT_IAAS_SSHKEYNAME=<path to the matching ssh key>
 
 Now that we have all of the security information in place we will look
-at the run level configuration file::
+at the run level configuration file:
 
-    [svc-sampleservice]
-
-    iaas_key: env.CLOUDBOOT_IAAS_ACCESS_KEY
-    iaas_secret: env.CLOUDBOOT_IAAS_SECRET_KEY
-    localsshkeypath: env.CLOUDBOOT_IAAS_SSHKEY
-    keyname: env.CLOUDBOOT_IAAS_SSHKEYNAME
-
-    iaas: us-east-1
-    image: ami-30f70059
-    ssh_username: ubuntu
-    allocation: t1.micro
-
-    bootpgm: bootpgm.py
+.. literalinclude:: helloec2_level1.conf
 
 The name of this configuration section is ``svc-sampleservice``.
 What this tells cloudinit.d is that it is a service (svc-) named
