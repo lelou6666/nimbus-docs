@@ -31,7 +31,7 @@ entirely without a VM, and further many cloudinit.d service's can all
 run on the same machine.  However, in the classic case a VM is started
 specifically to accommodate the needs of a single server.  That VM is
 launched by cloudinit.d, a set of user defined configuration scripts are
-then copied into that VM and run to contextualize it.  The healthy of that
+then copied into that VM and run to contextualize it.  The health of that
 service is then monitored by another service program.
 
 The presentation at the beginning of this page illustrates this.
@@ -120,14 +120,14 @@ The goal of cloudinit.d is to orchestrate many services to work in concert
 together to form a single application.  In order for this to be possible
 the services need a way to discover information about each other.  For example,
 if we are making a web server backed by a database we would make the database
-one service and the webserver another (as is the case in our 
-:doc:`wordpress example <wordpress>`.
-Because the web server is dependent upon the database, We would
+one service and the webserver another (as is the case in our
+:doc:`wordpress example <wordpress>`).
+Because the web server is dependent upon the database, we would
 put the database at bootlevel 1 and the web server at boot level 2.
 
 However, just having the web server wait for the database to be ready is
 not enough.  The web server must know the IP address and the port number
-of the data base in order to connect to it.  Further they likely need some
+of the database in order to connect to it.  Further they likely need some
 sort of shared secret for making a secure connection.  Cloudinit.d handles
 the exchange of this, and similar types of dependency information.  Any
 service is allowed to lookup another service (that is at a lower boot level)
