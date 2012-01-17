@@ -1,5 +1,5 @@
 =================
-Wordpress example
+WordPress example
 =================
 
 
@@ -7,9 +7,9 @@ Introduction
 ============
 
 This example will launch an EC2 cloud application which runs a
-`wordpress <http://www.wordpress.com>`_ system.  Two virtual machines
+`WordPress <http://wordpress.org/>`_ system.  Two virtual machines
 will be launched, the first runs a `MySQL <http://www.mysql.com>`_
-database, and the second runs the wordpress service.
+database, and the second runs the WordPress service.
 
 .. warning::
     Running VMs on EC2 requires an EC2 account which will be charged.  At the
@@ -21,7 +21,7 @@ Quickstart
 ==========
 
 Once you have cloudinit.d installed the following commands will get this
-example, boot it in EC2, and present you will a functional wordpress service. ::
+example, boot it in EC2, and present you with a functional WordPress service. ::
 
     $ export CLOUDINITD_IAAS_ACCESS_KEY=<your EC2 access key>
     $ export CLOUDINITD_IAAS_SECRET_KEY=<your EC2 secret key>
@@ -31,7 +31,7 @@ example, boot it in EC2, and present you will a functional wordpress service. ::
     $ tar -zxf wordpress.tar.gz
     $ cloudinitd -v -v -v boot wordpress/top.conf
 
-When this completes a full wordpress service will be ready for your use.
+When this completes a full WordPress service will be ready for your use.
 The output of cloudinit.d will look something like this:
 
 .. code-block:: none
@@ -58,7 +58,7 @@ Note the second hostname printed under the ``wordpress`` service
 information: ``ec2-174-129-163-229.compute-1.amazonaws.com``.  Simply
 point your web browser at
 ``http://ec2-174-129-163-229.compute-1.amazonaws.com/wordpress/wp-admin/install.php``
-and you have your own personal wordpress service!
+and you have your own personal WordPress service!
 
 .. note::
     For this example to work you need your default security group to have
@@ -137,8 +137,8 @@ The details of the launch are found in the launch plan.  The first file is ``top
 Here we see above that key security information is gathered from the
 environment variables (this is why we had to set the prior to launch
 in the quick start).  We also see that there are two run levels.  The
-first handles the MySQL server, and once that is done, The second uses
-it to handle the wordpress service.
+first handles the MySQL server, and once that is done, the second uses
+it to handle the WordPress service.
 
 If we look at the two run level files ``mysql_level.conf`` and
 ``wp_level.conf`` we see that each has a section that starts with
@@ -158,17 +158,17 @@ the previously established keys.
 
 Those line are enough to establish two base virtual machines in the associated
 cloud.  From there the next  thing to do is customize these VMs to do their
-needed jobs, become a mysql server and a wordpress server.  The next three
+needed jobs, become a MySQL server and a WordPress server.  The next three
 lines of the configuration file handle this.
 
 ``bootpgm`` points to a script that is copied into the virtual machine
 where it is run.  This script should download, install, and configure
 the machine to do its job.  In the case of the MySQL server software
-is installed with apt-get and configured.  In the wordpress case
-wordpress is downloaded and installed.
+is installed with apt-get and configured.  In the WordPress case
+WordPress is downloaded and installed.
 
 Further, the hostname where
-the MySQL service is running is passed to the wordpress VM so that it
+the MySQL service is running is passed to the WordPress VM so that it
 can connect to it.  This is handled with the ``deps`` directive and the
 ``bootconf`` directive.  The files in this launch plan serve as a good
 example for how this works.
