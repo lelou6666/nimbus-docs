@@ -109,10 +109,10 @@ familiar with these items please check out the
 Once you have obtained the above information please set the following
 environment variables in the following way::
     
-    $ export CLOUDBOOT_IAAS_ACCESS_KEY=<EC2 access key>
-    $ export CLOUDBOOT_IAAS_SECRET_KEY=<EC2 secret key>
-    $ export CLOUDBOOT_IAAS_SSHKEY=<EC2 ssh key name>
-    $ export CLOUDBOOT_IAAS_SSHKEYNAME=<path to the matching ssh key>
+    $ export CLOUDINITD_IAAS_ACCESS_KEY=<EC2 access key>
+    $ export CLOUDINITD_IAAS_SECRET_KEY=<EC2 secret key>
+    $ export CLOUDINITD_IAAS_SSHKEY=<EC2 ssh key name>
+    $ export CLOUDINITD_IAAS_SSHKEYNAME=<path to the matching ssh key>
 
 Now that we have all of the security information in place we will look
 at the run level configuration file:

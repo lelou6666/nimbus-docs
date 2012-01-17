@@ -23,10 +23,10 @@ Quickstart
 Once you have cloudinit.d installed the following commands will get this
 example, boot it in EC2, and present you will a functional wordpress service. ::
 
-    $ export CLOUDBOOT_IAAS_ACCESS_KEY=<your EC2 access key>
-    $ export CLOUDBOOT_IAAS_SECRET_KEY=<your EC2 secret key>
-    $ export CLOUDBOOT_IAAS_SSHKEY=<the path to your ssh key>
-    $ export CLOUDBOOT_IAAS_SSHKEYNAME=<the name of your ssh key in EC2>
+    $ export CLOUDINITD_IAAS_ACCESS_KEY=<your EC2 access key>
+    $ export CLOUDINITD_IAAS_SECRET_KEY=<your EC2 secret key>
+    $ export CLOUDINITD_IAAS_SSHKEY=<the path to your ssh key>
+    $ export CLOUDINITD_IAAS_SSHKEYNAME=<the name of your ssh key in EC2>
     $ wget http://www.nimbusproject.org/downloads/wordpress.tar.gz
     $ tar -zxf wordpress.tar.gz
     $ cloudinitd -v -v -v boot wordpress/top.conf
@@ -125,10 +125,10 @@ Launch plan
 The details of the launch are found in the launch plan.  The first file is ``top.conf``::
 
     [defaults]
-    iaas_key: env.CLOUDBOOT_IAAS_ACCESS_KEY
-    iaas_secret: env.CLOUDBOOT_IAAS_SECRET_KEY
-    localsshkeypath: env.CLOUDBOOT_IAAS_SSHKEY
-    sshkeyname: env.CLOUDBOOT_IAAS_SSHKEYNAME
+    iaas_key: env.CLOUDINITD_IAAS_ACCESS_KEY
+    iaas_secret: env.CLOUDINITD_IAAS_SECRET_KEY
+    localsshkeypath: env.CLOUDINITD_IAAS_SSHKEY
+    sshkeyname: env.CLOUDINITD_IAAS_SSHKEYNAME
 
     [runlevels]
     level1: mysql_level.conf

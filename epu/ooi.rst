@@ -108,8 +108,8 @@ Credentials for cloudinit.d: Nimbus IaaS
 
 .. code-block:: bash
 
-    export CLOUDBOOT_IAAS_ACCESS_KEY="$NIMBUS_KEY"
-    export CLOUDBOOT_IAAS_SECRET_KEY="$NIMBUS_SECRET"
+    export CLOUDINITD_IAAS_ACCESS_KEY="$NIMBUS_KEY"
+    export CLOUDINITD_IAAS_SECRET_KEY="$NIMBUS_SECRET"
 
 cloudinit.d only needs IaaS credentials, it does not use the context broker.  It can be configured to launch the base services anywhere but as depicted here it will probably use the same IaaS system and credentials that the provisioner service does.
 
