@@ -135,8 +135,10 @@ The remaining entries have the following meanings:
 * ``image`` This is a handle to an image.  The format of this handle
   will vary with different clouds.  In our case we are using EC2 so the
   format is ``ami-XXXXXXX``.  The specific AMI for use with this example is
-  ``ami-30f70059``.  It is a publicly available ubuntu image with an apache
-  server installed.
+  ``ami-6fa27506``.  It is a publicly available Ubuntu image. Note that this
+  AMI is managed by the Ubuntu project and could become unavailable in the
+  future.  In such case, you can simply pick a new AMI from the `AMI locator
+  page <http://cloud.ubuntu.com/ami/>`_.
 * ``ssh_username`` This is the username that the VM image has associated with 
   the ``localsshkeypath`` defined above.
 * ``allocation`` This string tells the cloud details of the resources
@@ -156,8 +158,9 @@ example bootpgm:
 
 .. literalinclude:: ec2bootpgm.py
 
-This is a very simple program which simply creates a web page.  You can also
-download it here: :download:`ec2bootpgm.py <ec2bootpgm.py>`.
+This is a very simple program which simply installs the Apache web server and
+creates a web page.  You can also download it here: :download:`ec2bootpgm.py
+<ec2bootpgm.py>`.
 
 Boot
 ====
