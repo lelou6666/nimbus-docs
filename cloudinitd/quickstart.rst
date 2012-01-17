@@ -187,8 +187,8 @@ see.
 Your VM was successfully started!  The output shows the hostname assigned to
 the boot as **ec2-50-17-4-154.compute-1.amazonaws.com**.  If we point a
 web browser at ``http://ec2-50-17-4-154.compute-1.amazonaws.com/hello.html``
-we should see the message we configured with our bootpgm.py program. Note that
-your URL will be different.
+we should see the message we configured with our ec2bootpgm.py program. Note
+that your URL will be different.
 
 Terminate
 =========
