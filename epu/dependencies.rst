@@ -17,7 +17,7 @@ Dependencies you will need:
 * git installation
 * EC2 credentials
 * EC2 credentials for EPU infrastructure
-* A default security group in EC2 that allows incoming connections to port 22 and port
+* A default security group in EC2 that allows incoming connections to port 22 and port 5672
 * Context Broker credentials
 
 
