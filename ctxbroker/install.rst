@@ -110,9 +110,4 @@ To add users follow the instructions in the following file:
 
   .. code-block:: none
 
-    $NIMBUS_HOMEservices/etc/nimbus-context-broker/user-mapfile
-
-
-
-
-
+    $NIMBUS_HOME/services/etc/nimbus-context-broker/user-mapfile
