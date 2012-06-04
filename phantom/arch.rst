@@ -6,6 +6,10 @@ Those interested in how the Nimbus Autoscale service works under
 the hood will find this page helpful.  Here we will provide a quick
 introduction to how the service works.
 
+.. image:: images/phantom_arch.png
+   :width: 1058
+   :height: 794
+
 User Interfaces
 ===============
 
