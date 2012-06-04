@@ -24,7 +24,14 @@ which have been implemented byt the Nimbus Autoscaling service:
   associate a VM image with an instane type (the number of CPUs,
   ammount of memory, and network configuration) and a security
   key.  It basically describes the details of every VM instance
-  that will be launched in a group.  The REST protocol details 
+  that will be launched in a group.  An important difference between
+  the Nimbus system and the AWS protocol is the name given to a launch
+  configuration.  On Nimbus you must use the following naming convention:
+  <unique user selected name>@<target cloud name>.  The 
+  user selected name can be anything the user wishes, it just must be 
+  unique.  The cloudname must be one of the Nimbus futuregrid clouds:
+  1) hotel, 2) sierra, 3) foxtrot, 4) alamo.
+  The REST protocol details 
   can be found `here <http://docs.amazonwebservices.com/AutoScaling/latest/APIReference/API_CreateLaunchConfiguration.html>`_.
 
 * ``DeleteLaunchConfiguration``.  This simply deletes a launch 

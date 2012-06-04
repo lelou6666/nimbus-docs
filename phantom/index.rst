@@ -8,7 +8,12 @@ It currently is running available on
 `FutureGrid <http://www.futurerid.org/>`_ and allows users to scale
 VMs that are running on the many clouds of FutureGrid. 
 
-This service implements portions of the
-`AWS Auto Scaling service <http://aws.amazon.com/autoscaling/>`_.
+.. toctree::
 
+    :maxdepth: 1
+
+    webapp
+    protocol
+    arch
+    
 
