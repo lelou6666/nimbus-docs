@@ -9,6 +9,14 @@ Nimbus Autoscale Frequently Asked Questions
 What is the Autoscale Service?
 ==============================
 
+The Autoscaling service is software-as-a-service for the scientific community.
+The goal of the service is to make using the cloud easier for the 
+scientific applications.  Virtualization adds amazing elastic scaling
+possibilities the scientific applications can leverage, however in the 
+current state of the industry the users must be virtualization experts
+in order to do so.  This service provides an easy to use interfae to the 
+elasticity of the cloud.
+
 What is Phantom?
 ================
 
@@ -20,7 +28,6 @@ How is the software licensed?
 =============================
 
 Nimbus code is licensed under the terms of the `Apache License, version 2 <http://www.apache.org/licenses/LICENSE-2.0>`_.
-
 
 Where is the source code?
 =========================
@@ -34,7 +41,6 @@ It is stored in several different repositories including:
 `PhantomSQL <https://github.com/nimbusproject/PhantomSQL>`_,
 `ceiclient <https://github.com/nimbusproject/ceiclient>`_,
 `epu <https://github.com/ooici/epu>`_
-
 
 Where is this service running?
 ==============================
@@ -79,25 +85,69 @@ Yes.  Please use it!  If can be found at:
 What is FutureGrid?
 ===================
 
+FutureGrid is a community cloud which provides free services for qualifying
+applications.  More information about FutureGrid can be found 
+`here <http://www.futuregrid.org>`_.
+
 How can I get a FutureGrid account?
 ===================================
+
+You can apply for a `FutureGrid  <http://www.futuregrid.org>`_ account
+`here <https://portal.futuregrid.org/user/register>`_.
 
 Can I automatically scale my VMs based on a policy?
 ===================================================
 
+This is definitely possible and is the ultimate goal of Phantom.  In
+the 0.1 release of Phantom the user must run their own policy engine.
+The user is responsible for having their own software running and monitoring
+their workload.  When that workload is too heavy or too light that software
+can tell phantom to make the needed adjustment.  In future releases we
+plan to have software that will help the user create such policies.
+
 What are the planned future features?
 =====================================
+
+In the near future we will add a set of common sensors that will make 
+autoscaling an application trivial.  We will also add automated 
+VM contextualization.  We have many other useful features planned and you
+can follow our progress on `github <https://github.com/nimbusproject/>`_.
 
 What is the REST API service?
 =============================
 
+The REST service API is a AWS Autoscaling Service clone.  It implements
+the same protocol, and thus allows you to use the same clients, however
+it does have some minor semantic differences.
+
 What is the EPUM?
 =================
+
+The EPU Management Service is an internal component of the scaling service.
+The EPUM is responsible for creating, monitoring, 
+and destroying all of the Deployable Units under its control. This 
+service evaluates sensor data (such as VM lifecycle and health state) 
+against policies, and regulates the population of a domain by deploying or 
+terminating additional VMs.
+
 
 What is the provisioner?
 ========================
 
+The provisioner is an internal component of the scaling service that
+communicates with compute clouds.
+The task of the Provisioner is to deploy and contextualize VMs, terminate 
+them as needed, and keep track of the Lifecycle State
+
 What is the DTRS?
 =================
+
+The Deployable Type Registry Service (DTRS) is an internal component 
+of the scaling service that
+stores information relating to a users launch configuration.
+DTRS is a key/value store that 
+maps DT identifiers into launchable data.  It contains a VM image name
+(or identifier), a cloud instance type (like m1.small, m1.large), and
+a keyname.
 
 

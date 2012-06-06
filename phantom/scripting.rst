@@ -10,7 +10,7 @@ some simple boto applications for interacting with the Nimbus
 Auto Scale service.
 
 Sample scripts
---------------
+==============
 
 The following sample programs can be used to aid in understanding.  For 
 all of the programs to work the user must first set three environment

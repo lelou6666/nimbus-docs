@@ -9,7 +9,8 @@ It currently is running available on
 VMs that are running on the many clouds of FutureGrid. 
 
 This service is similar to the Amazon Autoscaling Service.  However there
-are some terminology differences.
+are some minor differences.  Ths service only implements a subset of 
+the AWS functionality.  Details can be found here.
 
 .. toctree::
 
@@ -18,7 +19,8 @@ are some terminology differences.
     webapp
     protocol
     arch
+    scripting
     faq
-    terms
     
+
 
