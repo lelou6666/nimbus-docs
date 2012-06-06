@@ -35,12 +35,12 @@ Where is the source code?
 All of the source code can be found on 
 `GitHub <https://github.com/nimbusproject/>`_.  
 It is stored in several different repositories including:
-`epu <>`_, 
-`REST API <https://github.com/nimbusproject/Phantom>`_,
-`Web Application <https://github.com/nimbusproject/PhantomWebApp>`_,
-`PhantomSQL <https://github.com/nimbusproject/PhantomSQL>`_,
-`ceiclient <https://github.com/nimbusproject/ceiclient>`_,
-`epu <https://github.com/ooici/epu>`_
+
+* `REST API <https://github.com/nimbusproject/Phantom>`_,
+* `Web Application <https://github.com/nimbusproject/PhantomWebApp>`_,
+* `PhantomSQL <https://github.com/nimbusproject/PhantomSQL>`_,
+* `ceiclient <https://github.com/nimbusproject/ceiclient>`_,
+* `epu <https://github.com/ooici/epu>`_
 
 Where is this service running?
 ==============================

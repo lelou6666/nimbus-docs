@@ -7,8 +7,8 @@ the hood will find this page helpful.  Here we will provide a quick
 introduction to how the service works.
 
 .. image:: images/phantom_arch.png
-   :width: 1058
-   :height: 794
+   :width: 529
+   :height: 397
 
 User Interfaces
 ===============
@@ -21,8 +21,7 @@ the user will be running VMs.  The web application was created using the
 inside of a VM on FutureGrid's hotel cloud.  The application is backed
 by a MySQL server.
 
-The REST API is a python `WSGI <http://wsgi.readthedocs.org/en/latest/index.html>`_
- application.  It is run using the `cherrypy <http://www.cherrypy.org/>`_ 
+The REST API is a python `WSGI <http://wsgi.readthedocs.org/en/latest/index.html>`_ application.  It is run using the `cherrypy <http://www.cherrypy.org/>`_ 
 framework inside of a FutureGrid VM.  The REST service requires no 
 state to do its work.  All of the state is contained inside of other 
 system components.  This allows for horizontal scaling and high levels

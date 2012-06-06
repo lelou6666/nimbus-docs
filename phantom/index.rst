@@ -13,7 +13,6 @@ are some minor differences.  This service only implements a subset of
 the AWS functionality.  Details can be found here.
 
 .. toctree::
-
     :maxdepth: 1
 
     quickstart

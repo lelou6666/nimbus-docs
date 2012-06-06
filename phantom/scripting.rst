@@ -19,26 +19,18 @@ EC2_SECRET_KEY=<your FutureGrid access secret>,
 PHANTOM_URL=https://svc.uc.futuregrid.org:8445.  All of these values 
 can be found in your FutureGrid cloud-client cloud.properties file.
 
-* ``Create a Launch Configuration`` 
-   `example <https://github.com/nimbusproject/Phantom/blob/master/sandbox/lc_create.py>`_.
+* `Create a Launch Configuration <https://github.com/nimbusproject/Phantom/blob/master/sandbox/lc_create.py>`_.
 
-* ``Delete a Launch Configuration``
-   `example <https://github.com/nimbusproject/Phantom/blob/master/sandbox/lc_delete.py>`_.
+* `Delete a Launch Configuration <https://github.com/nimbusproject/Phantom/blob/master/sandbox/lc_delete.py>`_.
 
-* ``List all Launch Configurations`` 
-   `example <https://github.com/nimbusproject/Phantom/blob/master/sandbox/lc_list.py>`_.
+* `List all Launch Configurations <https://github.com/nimbusproject/Phantom/blob/master/sandbox/lc_list.py>`_.
 
-* ``Create a Domain``
-  `example <https://github.com/nimbusproject/Phantom/blob/master/sandbox/asg_create.py>`_.
+* `Create a Domain <https://github.com/nimbusproject/Phantom/blob/master/sandbox/asg_create.py>`_.
 
-* ``Delete a Domain``
-  `example <https://github.com/nimbusproject/Phantom/blob/master/sandbox/asg_delete.py>`_.
+* `Delete a Domain <https://github.com/nimbusproject/Phantom/blob/master/sandbox/asg_delete.py>`_.
 
-* ``List all running domains``
-  `example <https://github.com/nimbusproject/Phantom/blob/master/sandbox/asg_list.py>`_.
+* `List all running domains <https://github.com/nimbusproject/Phantom/blob/master/sandbox/asg_list.py>`_.
 
-* ``Change the n-preserving value``
-  `example <https://github.com/nimbusproject/Phantom/blob/master/sandbox/asg_alter.py>`_.
-
+* `Change the n-preserving value <https://github.com/nimbusproject/Phantom/blob/master/sandbox/asg_alter.py>`_.
 
 

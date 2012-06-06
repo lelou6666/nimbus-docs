@@ -74,5 +74,7 @@ You now have boto installed and ready to use.  Please note the command:
 You will need to run this command in every session where you 
 wish to use your python boto environment.
 
-You can now look at the example scripts to see how to use boto to 
+You can now look at the example 
+:doc:`scripting` 
+page to see how to use boto to 
 interact with the service.
