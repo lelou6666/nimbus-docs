@@ -3,7 +3,7 @@ Scripting with the REST API
 ===========================
 
 Because the Nimbus autoscaling service is protocol complaint with 
-the AWS autocaling service there are many clients and libraries
+the AWS autoscaling service there are many clients and libraries
 that can be used.  However, the only one tested thus far is 
 `boto <https://github.com/boto/boto>`_.  On this page we will describe 
 some simple boto applications for interacting with the Nimbus
@@ -19,10 +19,10 @@ EC2_SECRET_KEY=<your FutureGrid access secret>,
 PHANTOM_URL=https://svc.uc.futuregrid.org:8445.  All of these values 
 can be found in your FutureGrid cloud-client cloud.properties file.
 
-* ``Create a Launch Confiuration`` 
+* ``Create a Launch Configuration`` 
    `example <https://github.com/nimbusproject/Phantom/blob/master/sandbox/lc_create.py>`_.
 
-* ``Delete a Launch Confiuration``
+* ``Delete a Launch Configuration``
    `example <https://github.com/nimbusproject/Phantom/blob/master/sandbox/lc_delete.py>`_.
 
 * ``List all Launch Configurations`` 

@@ -1,20 +1,20 @@
 ===========================================
-Nimbus Autoscale Frequently Asked Questions
+Nimbus Auto-scale Frequently Asked Questions
 ===========================================
 
 .. contents::
     :local:
 
 
-What is the Autoscale Service?
+What is the Auto-scale Service?
 ==============================
 
-The Autoscaling service is software-as-a-service for the scientific community.
+The Auto-scaling service is software-as-a-service for the scientific community.
 The goal of the service is to make using the cloud easier for the 
 scientific applications.  Virtualization adds amazing elastic scaling
 possibilities the scientific applications can leverage, however in the 
-current state of the industry the users must be virtualization experts
-in order to do so.  This service provides an easy to use interfae to the 
+current state of the industry the users must be Virtualization experts
+in order to do so.  This service provides an easy to use interface to the 
 elasticity of the cloud.
 
 What is Phantom?
@@ -62,7 +62,7 @@ Is this service highly available?
 =================================
 
 Much care and expertise went into designing a scalable and highly 
-available service.  Of course there are some practicle limits based
+available service.  Of course there are some practical limits based
 on our available hardware and maintenance schedules.
 
 Can I use this service to scale any cloud?
@@ -109,14 +109,14 @@ What are the planned future features?
 =====================================
 
 In the near future we will add a set of common sensors that will make 
-autoscaling an application trivial.  We will also add automated 
+auto-scaling an application trivial.  We will also add automated 
 VM contextualization.  We have many other useful features planned and you
 can follow our progress on `github <https://github.com/nimbusproject/>`_.
 
 What is the REST API service?
 =============================
 
-The REST service API is a AWS Autoscaling Service clone.  It implements
+The REST service API is a AWS Auto-scaling Service clone.  It implements
 the same protocol, and thus allows you to use the same clients, however
 it does have some minor semantic differences.
 
@@ -126,7 +126,7 @@ What is the EPUM?
 The EPU Management Service is an internal component of the scaling service.
 The EPUM is responsible for creating, monitoring, 
 and destroying all of the Deployable Units under its control. This 
-service evaluates sensor data (such as VM lifecycle and health state) 
+service evaluates sensor data (such as VM life cycle and health state) 
 against policies, and regulates the population of a domain by deploying or 
 terminating additional VMs.
 
@@ -137,7 +137,7 @@ What is the provisioner?
 The provisioner is an internal component of the scaling service that
 communicates with compute clouds.
 The task of the Provisioner is to deploy and contextualize VMs, terminate 
-them as needed, and keep track of the Lifecycle State
+them as needed, and keep track of the Life cycle State
 
 What is the DTRS?
 =================

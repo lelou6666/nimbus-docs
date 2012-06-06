@@ -1,8 +1,8 @@
 ===========
-Architeture
+Architecture
 ===========
 
-Those interested in how the Nimbus Autoscale service works under
+Those interested in how the Nimbus Auto-scale service works under
 the hood will find this page helpful.  Here we will provide a quick
 introduction to how the service works.
 
@@ -31,7 +31,7 @@ all of the user authentication information is contained in a MySQL server.
 We did this because it was much more convenient for our FutureGrid users to
 interact with an existing account system them it was to use a highly 
 available one.  Further, the MySQL server can easily handle orders of
-magnatude beyond our predicted load, or any load that the underlying compute
+magnitude beyond our predicted load, or any load that the underlying compute
 resources can handle.
 
 nginx
@@ -39,7 +39,7 @@ nginx
 
 Both the REST service and the web application are fronted by an nginx
 load balancer.  This is done so that we can dynamically add and subtract
-replicated instances of each service without interferring with the users.
+replicated instances of each service without interfering with the users.
 Further this allows us to us VMs (with potentially changing IP addresses)
 to handle the workload.  nginx handles SSL and holds the certificates
 needed in a safe and known location.
@@ -56,7 +56,7 @@ Zookeeper
 =========
 
 All of our components use a `zookeeper <http://zookeeper.apache.org/>`_ 
-cluster for persistant storage.  This again allows for high scalablity.
+cluster for persistent storage.  This again allows for high scalability.
 
 DTRS
 ====
