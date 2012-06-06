@@ -16,6 +16,7 @@ the AWS functionality.  Details can be found here.
 
     :maxdepth: 1
 
+    quickstart
     webapp
     protocol
     arch
