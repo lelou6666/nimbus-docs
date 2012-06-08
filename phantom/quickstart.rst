@@ -14,14 +14,14 @@ You can apply for a one `here <https://portal.futuregrid.org/user/register>`_.
 Once you have a FutureGrid account you should join the project 
 `Nimbus Auto Scale <https://portal.futuregrid.org/projects/224>`_.
 
-Once you have a FutureGrid please request a Phantom account by sending
+Once you have a FutureGrid account, please request a Phantom account by sending
 email to workspace-user@lists.globus.org.
 
 REST API
 ========
 
 The first thing you will need in order to use the REST API is your 
-FutureGrid access tokens.  Acquiring your FutureGrid credentials is 
+FutureGrid access tokens.  Acquiring your FutureGrid access tokens is 
 described `here <https://portal.futuregrid.org/tutorials/nimbus>`_.
 Inside of your hotel.conf file you will find the access tokens under the
 entries: 
@@ -29,7 +29,7 @@ entries:
     * vws.repository.s3id=<access key>
     * vws.repository.s3key=<secret key>
 
-You will also need to know the url of the REST service:
+You will also need to know the url of the REST service. It is:
 https://svc.uc.futuregrid.org:8445.
 
 For convenience store those values in the following environment variables
@@ -45,7 +45,7 @@ boto
 We recommend using `boto <https://github.com/boto/boto>`_ to interact with 
 the system.  The first thing you should do is create a python
 `virtual environment <http://pypi.python.org/pypi/virtualenv>`_ and install
-boto into it.  The follow commands should do this for you.
+boto into it.  The following commands should do this for you.
 
 
 .. code-block:: none
