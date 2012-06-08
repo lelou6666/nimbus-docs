@@ -19,8 +19,8 @@ You will first be presented with a login screen similar to the
 below:
 
 .. image:: images/phantom_login.png
-   :width: 1004
-   :height: 248
+   :width: 502
+   :height: 124
 
 If you have forgotten your account information you can click on the 
 `Forgot Password <https://svc.uc.futuregrid.org:8440/accounts/reset_password/>`_
@@ -28,6 +28,8 @@ link.  After successfully logging in you will be presented with
 a screen similar to the following:
 
 .. image:: images/phantom_main.png
+   :width: 500
+   :height: 313
 
 Launch a domain
 ===============
@@ -58,6 +60,8 @@ domain and running it.  Click on your domain name and you should see
 a screen similar to the one below:
 
 .. image:: images/phantom_details_pane.png
+   :width: 500
+   :height: 313
 
 Notice that details about your domain are listed in the right pane.  Each
 entry represents the state of one of your requested VMs.  When a VM
