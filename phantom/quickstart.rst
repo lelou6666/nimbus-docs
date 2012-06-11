@@ -29,13 +29,13 @@ entries::
     vws.repository.s3id=<access key>
     vws.repository.s3key=<secret key>
 
-You will also need to know the url of the REST service. It is:
+You will also need to know the URL of the REST service. It is:
 https://svc.uc.futuregrid.org:8445.
 
 For convenience store those values in the following environment variables::
 
 
-    export EC2_ACCESS_KEY=<<access key>
+    export EC2_ACCESS_KEY=<access key>
     export EC2_SECRET_KEY=<secret key>
     export PHANTOM_URL=https://svc.uc.futuregrid.org:8445
 
