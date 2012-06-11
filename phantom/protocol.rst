@@ -12,7 +12,7 @@ REST API
 ========
 
 The AWS protocol on which the Nimbus Auto-scale service is based is
-well documented 
+well documented
 `here <http://docs.amazonwebservices.com/AutoScaling/latest/APIReference/>`_.
 Understanding how the AWS service works is not necessary to understand
 the Nimbus service; however, since the two services are wire protocol
@@ -27,16 +27,16 @@ which have been implemented by the Nimbus Auto-scaling service:
   that will be launched in a group.  An important difference between
   the Nimbus system and the AWS protocol is the name given to a launch
   configuration.  On Nimbus Auto-scale you must use the following naming convention:
-  <unique user selected name>@<target cloud name>.  The 
-  user selected name can be anything the user wishes, but it must be 
+  <unique user selected name>@<target cloud name>.  The
+  user selected name can be anything the user wishes, but it must be
   unique.  The cloud name must be one of the Nimbus Futuregrid clouds:
   1) hotel, 2) sierra, 3) foxtrot, 4) alamo.
-  The REST protocol details 
+  The REST protocol details
   can be found `here <http://docs.amazonwebservices.com/AutoScaling/latest/APIReference/API_CreateLaunchConfiguration.html>`_.
 
-* ``DeleteLaunchConfiguration``.  This simply deletes a launch 
+* ``DeleteLaunchConfiguration``.  This simply deletes a launch
   configuration that the user previously created with a call to
-  CreateLaunchConfiguration. 
+  CreateLaunchConfiguration.
   The REST protocol details
   can be found `here <http://docs.amazonwebservices.com/AutoScaling/latest/APIReference/API_DeleteLaunchConfiguration.html>`_.
 
@@ -55,13 +55,13 @@ which have been implemented by the Nimbus Auto-scaling service:
   The REST protocol details
   can be found `here <http://docs.amazonwebservices.com/AutoScaling/latest/APIReference/API_DeleteAutoScalingGroup.html>`_.
 
-* ``DescribeAutoScalingGroups``  This API call lists all of the calling 
+* ``DescribeAutoScalingGroups``  This API call lists all of the calling
   users currently running autoscaling groups.
   The REST protocol details
   can be found `here <http://docs.amazonwebservices.com/AutoScaling/latest/APIReference/API_DescribeAutoScalingGroups.html>`_.
 
 * ``SetDesiredCapacity``.  This API call sets the number of VMs currently
-  running in a given Auto Scaling Group.  The user is free to adjust this 
+  running in a given Auto Scaling Group.  The user is free to adjust this.
   The REST protocol details
   can be found `here <http://docs.amazonwebservices.com/AutoScaling/latest/APIReference/API_SetDesiredCapacity.html>`_.
 
@@ -69,7 +69,7 @@ which have been implemented by the Nimbus Auto-scaling service:
 Typical Flow
 ============
 
-Here we will describe a typical user execution flow.  The first thing 
+Here we will describe a typical user execution flow.  The first thing
 a user will do is create a VM image.  This task is outside of the scope
 of this document and we assume that the reader is familiar with this.
 Once the user has selected the VM image they wish to use, they will
@@ -77,28 +77,25 @@ pick an `instance type <http://aws.amazon.com/ec2/instance-types/>`_.
 The instance type describes the hardware in which the VM image
 will run.  The last thing the user must pick is a ssh key to use.
 The ssh key should already be associated with the cloud (or clouds)
-on which the user will run their Auto Scale Group.  The process of 
+on which the user will run their Auto Scale Group.  The process of
 associating a ssh public key with a cloud is described `here <http://docs.amazonwebservices.com/AWSEC2/latest/UserGuide/generating-a-keypair.html>`_.
 
 When these three items are selected the user can create a Launch
 Configuration (a single reference to the tuple of the above described
-values.  The AWS concept of `Launch 
-Configuration <http://docs.amazonwebservices.com/AutoScaling/latest/GettingStartedGuide/CreateASGroup.html#create-launch-config>` is similar and may   
-be helpful to understand.  Launch Configurations can be stored for 
+values.  The AWS concept of `Launch
+Configuration <http://docs.amazonwebservices.com/AutoScaling/latest/GettingStartedGuide/CreateASGroup.html#create-launch-config>` is similar and may
+be helpful to understand.  Launch Configurations can be stored for
 many runs and reused.
 
-Once a launch configuration is created, the user will launch an 
+Once a launch configuration is created, the user will launch an
 "Auto Scale Group".  To do this the user picks a target cloud, and
-a target number of VMs to preserve.  Once the Auto Scale Group is 
+a target number of VMs to preserve.  Once the Auto Scale Group is
 created the service will make sure that the desired number of VMs will
 be running at all times.  If a VM unexpectedly dies, the service will
-start a new one in its place.  
+start a new one in its place.
 
 During the life-cycle of the user's application, they may decide to change the
 number of VMs they have.  They can do this with a call to 'SetDesiredCapacity'.
 
 When the user's application is complete, a call to 'DeleteAutoScalingGroup'
 will terminate all the associated running VMs.
-
-
-
