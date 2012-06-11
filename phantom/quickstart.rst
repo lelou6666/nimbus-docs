@@ -34,7 +34,6 @@ https://svc.uc.futuregrid.org:8445.
 
 For convenience store those values in the following environment variables::
 
-
     export EC2_ACCESS_KEY=<access key>
     export EC2_SECRET_KEY=<secret key>
     export PHANTOM_URL=https://svc.uc.futuregrid.org:8445
@@ -49,7 +48,7 @@ boto into it.  The following commands should do this for you::
 
     $ virtualenv phantom
     New python executable in phantom/bin/python
-    Installing distribute....................................................................................................................................................................................done.
+    Installing distribute...............done.
     Installing pip...............done.
 
     $ source phantom/bin/activate

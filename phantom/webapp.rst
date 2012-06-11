@@ -15,7 +15,7 @@ Login
 =====
 
 Once you have the needed accounts you can log into the web application.
-You will first be presented with a login screen similar to the
+You will first be presented with a login screen similar to the one
 below:
 
 .. image:: images/phantom_login.png
@@ -44,7 +44,7 @@ number of VMs you wish to run in this domain by typing that number in the
 
 Next select one of the FutureGrid clouds on which your domain will run.
 There are four clouds, hotel, sierra, alamo, and foxtrot.  Note that as
-you select different clouds the 'Person Images' and 'Public Images' 
+you select different clouds the 'Personal Image' and 'Public Image' 
 boxes change.  This is because the set of images available on each cloud
 need not be identical.
 
@@ -65,7 +65,8 @@ a screen similar to the one below:
 
 Notice that details about your domain are listed in the right pane.  Each
 entry represents the state of one of your requested VMs.  When a VM
-instance is listed as 'RUNNING' it is ready for use (you can ssh into it).
+instance is listed as 'RUNNING' it is ready for use (you can ssh into it as
+root).
 Click the 'Update' Button until you see your VMs are all running.
 
 Resize a domain
@@ -75,13 +76,13 @@ Select your domain from the list in the lowest box in the bottom left pane.
 When you select it notice that all the options for running a domain are
 set to represent your domain, including the 'Size' field.  If you wish, you
 can change the size.  Simply enter a new value and click the 'Resize'
-button.  You should now see the status car working and changes on the right
+button.  You should now see the status bar working and changes on the right
 pane begin to take effect.
 
 Delete a domain
 ===============
 
-When you wish to terminate a VM simply select it and click the terminate 
+When you wish to terminate a domain simply select it and click the terminate
 button.  This will begin terminating all of the VMs under the domain
 and stopping all other processes associated with the domain.  It may
 take a few moments to complete and you may need to click update to see
