@@ -83,7 +83,7 @@ associating a ssh public key with a cloud is described `here <http://docs.amazon
 When these three items are selected the user can create a Launch
 Configuration (a single reference to the tuple of the above described
 values.  The AWS concept of `Launch
-Configuration <http://docs.amazonwebservices.com/AutoScaling/latest/GettingStartedGuide/CreateASGroup.html#create-launch-config>` is similar and may
+Configuration <http://docs.amazonwebservices.com/AutoScaling/latest/GettingStartedGuide/CreateASGroup.html#create-launch-config>`_ is similar and may
 be helpful to understand.  Launch Configurations can be stored for
 many runs and reused.
 
