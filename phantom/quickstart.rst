@@ -10,7 +10,7 @@ Get an account
 ==============
 
 In order to use this service you will first need to have a FutureGrid account.
-You can apply for a one `here <https://portal.futuregrid.org/user/register>`_.
+You can apply for one `here <https://portal.futuregrid.org/user/register>`_.
 Once you have a FutureGrid account you should join the project 
 `Nimbus Auto Scale <https://portal.futuregrid.org/projects/224>`_.
 
