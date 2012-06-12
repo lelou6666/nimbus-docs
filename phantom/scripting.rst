@@ -14,7 +14,7 @@ Sample scripts
 
 The following sample programs can be used to aid in understanding.  For
 all of the programs to work the user must first set three environment
-variables:
+variables::
 
     EC2_ACCESS_KEY=<your FutureGrid access key>
     EC2_SECRET_KEY=<your FutureGrid access secret>
