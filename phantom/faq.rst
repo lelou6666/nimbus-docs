@@ -10,10 +10,10 @@ What is the Auto-scale Service?
 ==============================
 
 The Auto-scaling service is software-as-a-service for the scientific community.
-The goal of the service is to make using the cloud easier for the 
-scientific applications.  Virtualization adds amazing elastic scaling
-possibilities the scientific applications can leverage, however in the 
-current state of the industry the users must be Virtualization experts
+The goal of this service is to make it easier to use the cloud for scientific
+applications.  Virtualization adds amazing elastic scaling
+possibilities that scientific applications can leverage. However, in the 
+current state of the industry, users must be virtualization experts
 in order to do so.  This service provides an easy to use interface to the 
 elasticity of the cloud.
 
@@ -55,8 +55,8 @@ How is this serviced released?
 ==============================
 
 This application is currently being released as a service.  The 
-software is freely available on github, but at this time no formal 
-releases are being packed and announced.
+software is freely available on GitHub, but at this time no formal 
+releases are being packaged and announced.
 
 Is this service highly available?
 =================================
@@ -68,19 +68,19 @@ on our available hardware and maintenance schedules.
 Can I use this service to scale any cloud?
 ==========================================
 
-This service was designed to run against any cloud the speaks
+This service was designed to run against any cloud that speaks
 the AWS EC2 query interface protocol.  This includes Nimbus, OpenStack,
 AWS EC2, and Eucalyptus.  The service has been tested in scale against
 Nimbus and EC2.  A project known as `the Ocean Observatories Initiative 
 <http://www.oceanobservatories.org/>`_ uses it heavily against EC2.
 However, the hosted version running on FutureGrid can only be used 
-against the FutureGrid Nimbus clouds.  This is a operations choice,
+against the FutureGrid Nimbus clouds.  This is an operations choice,
 not a software limitation.
 
-Is there an easy to use web applications?
+Is there an easy to use web application?
 =========================================
 
-Yes.  Please use it!  If can be found at: 
+Yes.  Please use it!  It can be found at: 
 https://svc.uc.futuregrid.org:8440/phantom
 
 What is FutureGrid?
@@ -103,7 +103,7 @@ This is definitely possible and is the ultimate goal of Phantom.  In
 the 0.1 release of Phantom the user must run their own policy engine.
 The user is responsible for having their own software running and monitoring
 their workload.  When that workload is too heavy or too light that software
-can tell phantom to make the needed adjustment.  In future releases we
+can tell Phantom to make the needed adjustment.  In future releases we
 plan to have software that will help the user create such policies.
 
 What are the planned future features?
@@ -112,7 +112,7 @@ What are the planned future features?
 In the near future we will add a set of common sensors that will make 
 auto-scaling an application trivial.  We will also add automated 
 VM contextualization.  We have many other useful features planned and you
-can follow our progress on `github <https://github.com/nimbusproject/>`_.
+can follow our progress on `GitHub <https://github.com/nimbusproject/>`_.
 
 What is the REST API service?
 =============================
@@ -138,7 +138,7 @@ What is the provisioner?
 The provisioner is an internal component of the scaling service that
 communicates with compute clouds.
 The task of the Provisioner is to deploy and contextualize VMs, terminate 
-them as needed, and keep track of the Life cycle State
+them as needed, and keep track of the life cycle state.
 
 What is the DTRS?
 =================
@@ -150,5 +150,3 @@ DTRS is a key/value store that
 maps DT identifiers into launchable data.  It contains a VM image name
 (or identifier), a cloud instance type (like m1.small, m1.large), and
 a keyname.
-
-
