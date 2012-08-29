@@ -1,15 +1,16 @@
 ===========================================
-Nimbus Auto-scale Frequently Asked Questions
+Nimbus Phantom Frequently Asked Questions
 ===========================================
 
 .. contents::
     :local:
 
 
-What is the Auto-scale Service?
-==============================
+What is the Nimbus Phantom Service?
+===================================
 
-The Auto-scaling service is software-as-a-service for the scientific community.
+The Nimbus Phantom service is software-as-a-service for the 
+scientific community.
 The goal of this service is to make it easier to use the cloud for scientific
 applications.  Virtualization adds amazing elastic scaling
 possibilities that scientific applications can leverage. However, in the 
@@ -95,16 +96,6 @@ How can I get a FutureGrid account?
 
 You can apply for a `FutureGrid  <http://www.futuregrid.org>`_ account
 `here <https://portal.futuregrid.org/user/register>`_.
-
-Can I automatically scale my VMs based on a policy?
-===================================================
-
-This is definitely possible and is the ultimate goal of Phantom.  In
-the 0.1 release of Phantom the user must run their own policy engine.
-The user is responsible for having their own software running and monitoring
-their workload.  When that workload is too heavy or too light that software
-can tell Phantom to make the needed adjustment.  In future releases we
-plan to have software that will help the user create such policies.
 
 What are the planned future features?
 =====================================

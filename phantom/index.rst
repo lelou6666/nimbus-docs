@@ -1,16 +1,18 @@
-================
-Nimbus Auto-scale
-================
+==============
+Nimbus Phantom
+==============
 
-This guide contains configuration information about the Nimbus Auto-scale
+Provisioning new resources to counteract failures or cater to increasing 
+demand requires constant attention and is a repetitive task that 
+can be automated. 
+Nimbus Phantom monitors the health and happiness of your resources and 
+automatically provisions and configures new ones based on demand.
+
+This guide contains configuration information about the Nimbus Phantom
 service.  This service dynamically scales and preserves VMs for users.
 It currently is running and available on
 `FutureGrid <http://www.futuregrid.org/>`_ allowing users to scale
 VMs that are running on the many clouds of FutureGrid. 
-
-This service is similar to the Amazon Auto-scaling Service.  However there
-are some minor differences.  This service only implements a subset of 
-the AWS functionality.  Details can be found here.
 
 .. toctree::
     :maxdepth: 1
@@ -18,7 +20,6 @@ the AWS functionality.  Details can be found here.
     quickstart
     webapp
     protocol
-    arch
     scripting
     faq
     

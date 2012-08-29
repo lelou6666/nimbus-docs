@@ -2,7 +2,7 @@
 Web Application
 ===============
 
-The best way to get familiar with the Nimbus Auto-scale service is to
+The best way to get familiar with the Nimbus Phantom service is to
 check out the web application 
 `here <https://svc.uc.futuregrid.org:8440/phantom>`_.
 

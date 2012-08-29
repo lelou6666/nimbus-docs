@@ -2,7 +2,7 @@
 Architecture
 ===========
 
-Those interested in how the Nimbus Auto-scale service works under
+Those interested in how the Nimbus Phantom service works under
 the hood will find this page helpful.  Here we will provide a quick
 introduction to how the service works.
 
