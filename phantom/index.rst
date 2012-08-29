@@ -24,4 +24,6 @@ VMs that are running on the many clouds of FutureGrid.
     faq
     
 
-
+For additional details about Phantom please see our 
+`Infrastructure Outsourcing in Multi-Cloud Environment publication 
+<http://www.nimbusproject.org/files/keahey_wcs_ocs_2012.pdf>`_.

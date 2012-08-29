@@ -51,3 +51,4 @@ machines in an IaaS cloud or over a set of IaaS clouds.  A single launch
 can consist of many VMs and can span multiple IaaS providers, including
 offerings from commercial and academic space.
 
+You can read more about cloudinit.d in our `Teragrid 2011 Publication <http://www.nimbusproject.org/files/cloudinitd_tg11_submit3c.pdf>`_
