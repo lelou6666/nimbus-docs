@@ -16,7 +16,7 @@ effortlessly, automating and facilitating much of the process. We also aim to
 provide a bridge allowing a user to overlay familiar concepts, such as virtual
 clusters, onto the resources provisioned in the cloud.
 
-Nimbus Platform tools released so far include:
+The current Nimbus Platform tools are described below.
 
 cloudinit.d
 ===========
@@ -26,6 +26,14 @@ applications. If the application is simple or complex, single cloud or
 multi-cloud, VM based or bare metal, or any combination of the above,
 cloudinit.d is designed to make the management and coordination of that
 application easy. `Learn more <http://www.nimbusproject.org/doc/cloudinitd/>`_.
+
+Phantom
+=======
+
+Phantom is a service that provides auto-scaling and high availability for
+collections of resources deployed over multiple IaaS cloud providers allowing
+users to develop scalable and reliable applications.
+`Learn more <http://www.nimbusproject.org/doc/phantom/>`_.
 
 Context Broker
 ==============
