@@ -16,6 +16,7 @@ application coordination tool cloudinit.d.
    install
    deps
    monitor
+   launchplans
 
 .. image:: images/cloudinitd_dia.png
    :width: 600
