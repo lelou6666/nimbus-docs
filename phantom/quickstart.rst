@@ -41,8 +41,12 @@ For convenience store those values in the following environment variables::
 boto
 ====
 
-We recommend using `boto <https://github.com/boto/boto>`_ to interact with 
-the system.  The first thing you should do is create a python
+We recommend using boto to interact with the system.  Unfortunately
+the latest released version of boto does not yet include a needed
+patch so you will need to get our forked version 
+`here <https://github.com/buzztroll/boto>`_
+
+The first thing you should do is create a python
 `virtual environment <http://pypi.python.org/pypi/virtualenv>`_ and install
 boto into it.  The following commands should do this for you::
 
@@ -52,15 +56,19 @@ boto into it.  The following commands should do this for you::
     Installing pip...............done.
 
     $ source phantom/bin/activate
-    $ easy_install boto
-    Searching for boto
-    Best match: boto 2.0
-    Adding boto 2.0 to easy-install.pth file
 
-    Using /usr/lib/python2.7/dist-packages
-    Processing dependencies for boto
-    Finished processing dependencies for boto
-
+    ~$ git clone git://github.com/buzztroll/boto.git
+    Cloning into 'boto'...
+    remote: Counting objects: 22004, done.
+    remote: Compressing objects: 100% (5802/5802), done.
+    Receiving objects: 100% (22004/22004), 5.27 MiB | 414 KiB/s, done.
+    remote: Total 22004 (delta 16804), reused 21222 (delta 16144)
+    Resolving deltas: 100% (16804/16804), done.
+    $ cd boto/
+    $ python setup.py install
+    .......
+    Processing dependencies for boto==2.5.2
+    Finished processing dependencies for boto==2.5.2
 
 You now have boto installed and ready to use.  Please note the command::
 

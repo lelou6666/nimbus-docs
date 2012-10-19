@@ -51,10 +51,10 @@ A `RabbitMQ <http://www.rabbitmq.com/>`_ server is running inside of a
 VM.  This approach allows us to scale up the messaging system and the 
 components interacting with it.
 
-ZooKeeper
+Zookeeper
 =========
 
-All of our components use a `ZooKeeper <http://zookeeper.apache.org/>`_ 
+All of our components use a `Zookeeper <http://zookeeper.apache.org/>`_ 
 cluster for persistent storage.  This again allows for high scalability.
 
 DTRS

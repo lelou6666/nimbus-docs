@@ -5,7 +5,7 @@ Scripting with the REST API
 Because the Nimbus autoscaling service is protocol compliant with
 the AWS autoscaling service there are many clients and libraries
 that can be used.  However, the only one tested thus far is
-`boto <https://github.com/boto/boto>`_.  On this page we will describe
+`boto <https://github.com/buzztroll/boto>`_.  On this page we will describe
 some simple boto applications for interacting with the Nimbus
 Auto Scale service.
 

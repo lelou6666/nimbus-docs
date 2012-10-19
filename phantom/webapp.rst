@@ -24,12 +24,59 @@ below:
 
 If you have forgotten your account information you can click on the 
 `Forgot Password <https://svc.uc.futuregrid.org:8440/accounts/reset_password/>`_
-link.  After successfully logging in you will be presented with 
-a screen similar to the following:
+link.  After successfully logging in you will be presented with the landing
+page:
 
-.. image:: images/phantom_main.png
+.. image:: images/phantom_home.png
    :width: 500
    :height: 313
+
+That screen explains the basic steps.  The first thing you need to do is
+go to the 
+`Edit Clouds <https://svc.uc.futuregrid.org:8440/phantom/sites>`_
+page and add your site credentials.  The page should look like this:
+
+.. image:: images/phantom_sites.png
+   :width: 500
+   :height: 313
+
+All FutureGrid accounts should come pre-loaded with your credentials.  If you
+wish to use EC2 you can add your credentials by selecting the EC2 cloud,
+adding your access and secret key, and then click save.  Once the system
+has your keys you can select the keyname that you wish to use.  Select it
+and click save a second time.
+
+Create a launch configuration
+=============================
+
+Once you have all of your site information configured it is time to create
+a launch configuration.  Got to the 
+`Launch Configuration <https://svc.uc.futuregrid.org:8440/phantom/launchconfig>`_
+page and you will see a screen like the following:
+
+.. image:: images/phantom_lc.png
+   :width: 500
+   :height: 313
+
+This is where you create a launch plan.  The first thing to do is to select
+a name for the launch configuration, for this example we will use 
+*testoverflow*.   Now the ordered list of clouds must be created.  On the left
+panel *Cloud Options* select a cloud from the list.  Then give it a max
+number of VMs that you will allow on that cloud (-1 means infinity).  
+Select an instance type (if you are unsure choose m1.small).  Finally 
+select the image you wish to launch.  In the combo box labeled * Personal Image*
+you will find a list of all of the images you have created and uploaded.
+If you have not yet done this you can specify the name of a public image.
+If you are using a FutureGrid cloud enter *hello-cloud*. 
+
+Click *Add* to add the cloud configuration to the list.  Now you can configure
+the next cloud by repeating the above process with another cloud in the 
+Cloud Options panel. 
+
+Once you have added all of the clouds you can use the *Up* and *Down* buttons
+to order them.  When you are happy with the order click the *Save* button
+at the top.  Once successfully saved you can launch a domain using this launch
+configuration.
 
 Launch a domain
 ===============
@@ -37,33 +84,28 @@ Launch a domain
 At this point you can use the application to create new domains, monitor
 existing domains, resize existing domains, and terminate existing domains.
 
-To launch a new domain the first thing you should do is select a name for
-it and enter it into the 'Domain Name' text box.  After that set the 
-number of VMs you wish to run in this domain by typing that number in the 
-"Size" box.  
+To launch a new domain go to the 
+`domains <https://svc.uc.futuregrid.org:8440/phantom/domain>`_
+page.  You should see something like this:
 
-Next select one of the FutureGrid clouds on which your domain will run.
-There are four clouds, hotel, sierra, alamo, and foxtrot.  Note that as
-you select different clouds the 'Personal Image' and 'Public Image' 
-boxes change.  This is because the set of images available on each cloud
-need not be identical.
-
-Once you have selected a cloud select an image that you wish to run.  You 
-may choose from the list of publicly available images (images that are
-available for all cloud users) or from your set of personal images (images
-that are just for your use).
-
-The final step is to select and instance type and click 'Start'.  Once you 
-start it you will notice that your 'domain name' is now listed in the 
-lowest box on the left panel.  This means that the system is aware of your
-domain and running it.  Click on your domain name and you should see
-a screen similar to the one below:
-
-.. image:: images/phantom_details_pane.png
+.. image:: images/phantom_lc.png
    :width: 500
    :height: 313
 
-Notice that details about your domain are listed in the right pane.  Each
+The first thing you should do is select a name for
+it and enter it into the 'Domain Name' text box.  After that set the 
+number of VMs you wish to run in this domain by typing that number in the 
+"Size" box.  Finally select the launch configuration you wish to use.
+In the screen above we selected *testoverflow*.
+
+The final step is to select click 'Start'.  Once you 
+start it you will notice that your 'domain name' is now listed in the 
+lowest box on the left panel.  This means that the system is aware of your
+domain and running it.  
+
+Click on your domain name and you should see
+the domain details panel populated with information about your domain.
+Each
 entry represents the state of one of your requested VMs.  When a VM
 instance is listed as 'RUNNING' it is ready for use (you can ssh into it as
 root).

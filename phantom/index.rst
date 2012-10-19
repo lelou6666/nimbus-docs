@@ -12,7 +12,7 @@ This guide contains configuration information about the Nimbus Phantom
 service.  This service dynamically scales and preserves VMs for users.
 It currently is running and available on
 `FutureGrid <http://www.futuregrid.org/>`_ allowing users to scale
-VMs that are running on the many clouds of FutureGrid. 
+VMs that are running on the many clouds of FutureGrid as well as EC2. 
 
 .. toctree::
     :maxdepth: 1
