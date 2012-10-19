@@ -69,7 +69,7 @@ which have been implemented by the Nimbus Phantom service:
   specify some Tags that control how your autoscale group will interact
   between clouds.  The following 3 tags are needed:
 
-    * key: PHANTOM_DEFINTION, value: error_overflow_n_preserving
+    * key: PHANTOM_DEFINITION, value: error_overflow_n_preserving
       In this version of Phantom that is the only accepted value
 
     * key: clouds, value: a comma separated ordered list of 
