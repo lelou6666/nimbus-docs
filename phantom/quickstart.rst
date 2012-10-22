@@ -59,7 +59,7 @@ boto into it.  The following commands should do this for you::
 
     $ pip install -e git://github.com/buzztroll/boto.git@asgcreatetags#egg=boto
     Obtaining boto from git+git://github.com/buzztroll/boto.git@asgcreatetags#egg=boto
-      Cloning git://github.com/buzztroll/boto.git (to asgcreatetags) to /Users/priteau/.virtualenvs/boto/src/boto
+      Cloning git://github.com/buzztroll/boto.git (to asgcreatetags) to ./phantom/src/boto
       Running setup.py egg_info for package boto
 
     .......
