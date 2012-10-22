@@ -44,7 +44,7 @@ boto
 We recommend using boto to interact with the system.  Unfortunately
 the latest released version of boto does not yet include a needed
 patch so you will need to get our forked version 
-`here <https://github.com/buzztroll/boto>`_
+`here <https://github.com/buzztroll/boto>`_ (use the asgcreatetags branch).
 
 The first thing you should do is create a python
 `virtual environment <http://pypi.python.org/pypi/virtualenv>`_ and install
@@ -57,18 +57,15 @@ boto into it.  The following commands should do this for you::
 
     $ source phantom/bin/activate
 
-    ~$ git clone git://github.com/buzztroll/boto.git
-    Cloning into 'boto'...
-    remote: Counting objects: 22004, done.
-    remote: Compressing objects: 100% (5802/5802), done.
-    Receiving objects: 100% (22004/22004), 5.27 MiB | 414 KiB/s, done.
-    remote: Total 22004 (delta 16804), reused 21222 (delta 16144)
-    Resolving deltas: 100% (16804/16804), done.
-    $ cd boto/
-    $ python setup.py install
+    $ pip install -e git://github.com/buzztroll/boto.git@asgcreatetags#egg=boto
+    Obtaining boto from git+git://github.com/buzztroll/boto.git@asgcreatetags#egg=boto
+      Cloning git://github.com/buzztroll/boto.git (to asgcreatetags) to /Users/priteau/.virtualenvs/boto/src/boto
+      Running setup.py egg_info for package boto
+
     .......
-    Processing dependencies for boto==2.5.2
-    Finished processing dependencies for boto==2.5.2
+
+    Successfully installed boto
+    Cleaning up...
 
 You now have boto installed and ready to use.  Please note the command::
 
