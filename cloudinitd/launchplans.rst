@@ -11,10 +11,10 @@ Typically each launch plan will need a couple of environment variables
 set before they can be used (mainly for security reasons) but otherwise
 no customization should be needed.
 
-* :ref:`Wordpress <wpref>`
+* :ref:`WordPress <wpref>`
 * :ref:`CloudFoundry <cfref>`
 
-Wordpress
+WordPress
 =========
 
 .. _wpref: 
@@ -45,7 +45,7 @@ Wordpress
     cloudinitd -v -v -v boot wordpress/top.conf
 
 This launch plan will boot two VMs.  One that runs a MySQL server and 
-the other runs an apache2 server with Wordpress.  More details on this
+the other runs an apache2 server with WordPress.  More details on this
 launch plan can be found :doc:`here <wordpress>`.
 
 

@@ -44,7 +44,7 @@ and process.  In this way the dependency information is propagated to all
 the services.
 
 
-Wordpress Example
+WordPress Example
 =================
 
 To illustrate how to setup up dependency information we will look back at the
