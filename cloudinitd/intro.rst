@@ -2,6 +2,36 @@
 Introduction
 ============
 
+
+Motivation
+==========
+
+Solving the problems in computing often requires a set of services all
+working together in concert.  As distributed computing has evolved, the
+management and coordination of these services has become a complicated
+task.  The advent of cloud computing has exacerbated this problem by
+providing its users with an explosion of virtual resources
+that need to be started, managed, monitored, and notified of each others
+existence and operational state.
+
+Very little can be assumed about the network locations of these
+virtual machines, their IP addresses are dynamically provisioned and
+they can be spread across many clouds potentially all over the world.
+In order for the VMs to work in concert, it is critical that communication
+channels are established.
+
+How can we organize, manage, and coordinate
+the bootstrap process of these ever growing cloud applications?
+Infrastructure clouds have delivered the resources but can they be
+leveraged in a sane and repeatable way?  Once these applications are
+running how can we ensure that they continue to work and can we recover
+from failures without having to waste valuable time and potential data
+by completely restarting them?
+
+
+Overview
+========
+
 cloudinit.d is a tool for launching, controlling, and monitoring cloud
 applications.  If the application is simple or complex, single cloud or
 multi-cloud, VM based or bare metal, or any combination of the above,
@@ -39,10 +69,6 @@ configuration file syntax, and advanced features are described elsewhere.
 .. image:: images/cloudinitd_pres1.png
    :width: 460
    :height: 376
-
-
-Overview
-========
 
 cloudinit.d arranges an application into three basic constructs:
 
@@ -100,4 +126,3 @@ balancer.  The plan is configured in such a way as to route the important
 connection information from the mongo DB cluster, to each HTTP server.
 And similarly the list of HTTP servers is sent to the load balancer once
 boot level 2 completes.
-
