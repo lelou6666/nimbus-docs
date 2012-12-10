@@ -1,10 +1,9 @@
-============
+=====================
+cloudinit.d tutorial
+=====================
+
 Introduction
 ============
-
-
-Motivation
-==========
 
 Solving the problems in computing often requires a set of services all
 working together in concert.  As distributed computing has evolved, the
@@ -126,3 +125,14 @@ balancer.  The plan is configured in such a way as to route the important
 connection information from the mongo DB cluster, to each HTTP server.
 And similarly the list of HTTP servers is sent to the load balancer once
 boot level 2 completes.
+
+Organization
+============
+
+.. toctree::
+   :maxdepth: 1
+
+   service
+   install
+   deps
+   monitor

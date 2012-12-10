@@ -211,3 +211,11 @@ in our case ``54c03415`` and giving it as an option to the terminate directive::
     deleting the db file /home/bresnaha/.cloudinitd/cloudinitd-54c03415.db
 
 
+Example launch plans
+====================
+
+.. toctree::
+   :maxdepth: 1
+
+   wordpress
+   cloudfoundry
