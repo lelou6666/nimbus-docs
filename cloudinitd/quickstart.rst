@@ -16,10 +16,10 @@ This will download cloudinit.d and all of its dependencies and install them.
 
 .. todo::
     We need the real download link 
-    `here <http://www.nimbusproject.org/downloads/cloudinitd-1.0.tar.gz>`_. Hopefully in some automated way?
+    `here <http://www.nimbusproject.org/downloads/cloudinitd-1.2.tar.gz>`_. Hopefully in some automated way?
 
 If you prefer to fetch the tarball and have a more manual install you can
-get the latest release `here <http://www.nimbusproject.org/downloads/cloudinitd-1.0.tar.gz>`_.  To install it::
+get the latest release `here <http://www.nimbusproject.org/downloads/cloudinitd-1.2.tar.gz>`_.  To install it::
 
     $ tar -zxf cloudinitd-latest.tar.gz
     $ cd cloudinitd-<version>
