@@ -31,16 +31,20 @@ You can now test it out! ::
     Usage: [options] <command> [<top level launch plan> | <run name>]
     Boot and manage a launch plan
     Run with the command 'commands' to see a list of all possible commands
-    
+
+
     Options:
       --version             show program's version number and exit
       -h, --help            show this help message and exit
       -v, --verbose         Print more output
       -x, --validate        Check that boot plan is valid before launching it.
-      -y, --dryrun          Check that boot plan is valid before launching it.
+      -y, --dryrun          Perform dry run on the boot plan.  The IaaS service is
+                            never contacted but all other actions are performed.
+                            This option offers an addition level of plan
+                            validation of -x.
       -q, --quiet           Print no output
-      -n NAME, --name=NAME  Set the run name, only relevant for boot (by default
-                            the system picks)
+      -n NAME, --name=NAME  Set the run name, only relevant for boot and reload
+                            (by default the system picks)
       -d DATABASE, --database=DATABASE
                             Path to the db directory
       -f LOGDIR, --logdir=LOGDIR
@@ -48,8 +52,22 @@ You can now test it out! ::
       -l LOGLEVEL, --loglevel=LOGLEVEL
                             Controls the level of detail in the log file : {debug
                             | info | warn | error}
+      -s, --logstack        Log stack trace information (extreme debug level)
       -c, --noclean         Do not delete the database, only relevant for the
                             terminate command
+      -k, --kill            This option only applies to the iceage command.  When
+                            on it will terminate all VMs started with IaaS
+                            associated with this run to date.  This should be
+                            considered an extreme measure to prevent IaaS resource
+                            leaks.
+      -o OUTPUT, --output=OUTPUT
+                            Create an json document which describes the
+                            application and write it to the associated file.
+                            Relevant for boot and status
+      -g GLOBALVAR, --globalvar=GLOBALVAR
+                            Add a variable to global variable space
+      -G GLOBALVARFILE, --globalvarfile=GLOBALVARFILE
+                            Add a file to global variable space
 
 
 Create a launch plan
