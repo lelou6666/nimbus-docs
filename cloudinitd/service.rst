@@ -124,13 +124,13 @@ To use the EU region of Amazon EC2:
 
     iaas: eu-west-1
 
-To use the Nimbus cloud in FutureGrid Hotel:
+To use the Nimbus cloud in FutureGrid Hotel with the Boto library:
 
 ::
 
     iaas_url: https://svc.uc.futuregrid.org:8444
 
-To use the Nimbus libcloud driver:
+To use the Nimbus cloud in FutureGrid Hotel with the Libcloud library:
 
 ::
 
