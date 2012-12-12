@@ -13,7 +13,7 @@ database, and the second runs the WordPress service.
 
 .. warning::
     Running VMs on EC2 requires an EC2 account which will be charged.  At the
-    time of this writing the rates for an m1.small instance is $0.085 per hour.
+    time of this writing the rates for an m1.small instance is $0.065 per hour.
     Rates can be checked `here <http://aws.amazon.com/ec2/pricing/>`_.
 
 
