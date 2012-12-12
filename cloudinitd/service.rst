@@ -108,10 +108,29 @@ be run on is set at the service level.  Thus a cloudinit.d application
 can run across many clouds.  It is entirely possible (and encouraged) to
 have an application launched with cloudinit.d such that some services are
 in a private cloud and others are in a public cloud.  Right now cloudinit.d
-works on EC2, Nimbus, and Eucalyptus.  It has a very modular interface that
-will allow us to quickly add other infrastructure cloud types so we expect
-that list to grow quickly.
+works on EC2, Nimbus, and Eucalyptus using the Boto library, and on many other
+clouds using the libcloud library.
 
+Selecting a cloud is done using the ``iaas`` and ``iaas_url`` variables.  If
+only a ``iaas`` value is provided and it does not start with ``libcloud-``, it
+is treated as the region name for Boto.  If ``iaas_url`` is provided, it is
+treated as the cloud API endpoint. In this case the value of ``iaas`` does not
+matter, unless it starts with ``libcloud-``.  If you want cloudinit.d to use
+Libcloud, set ``iaas`` to ``libcloud-<libcloud driver>`` and ``iaas_url`` to
+the cloud API endpoint.
+
+To use the EU region of Amazon EC2:
+
+    iaas: eu-west-1
+
+To use the Nimbus cloud in FutureGrid Hotel:
+
+    iaas_url: https://svc.uc.futuregrid.org:8444
+
+To use the Nimbus libcloud driver:
+
+    iaas: libcloud-nimbus
+    iaas_url: https://svc.uc.futuregrid.org:8444
 
 Dependencies
 ============
