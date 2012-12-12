@@ -3,6 +3,9 @@
 import sys
 import os
 
+cmd = "sudo sh -c 'env DEBIAN_FRONTEND=noninteractive apt-get update'"
+os.system(cmd)
+
 cmd = "sudo sh -c 'env DEBIAN_FRONTEND=noninteractive apt-get -q -y install apache2'"
 os.system(cmd)
 
