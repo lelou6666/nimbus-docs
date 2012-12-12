@@ -48,17 +48,15 @@ WordPress Example
 =================
 
 To illustrate how to setup up dependency information we will look back at the
-:wordpress: example.  In this example two VMs are created.  The first runs
-a MySQL data base, and the second runs an web server and connects to that 
-web server.  In order for the web server to connect to the MySQL server it
-needs the following information:
+wordpress example.  In this example two VMs are created.  The first runs a
+MySQL database, and the second runs a web server and connects to that database.
+In order for the web server to connect to the MySQL server it needs the
+following information:
 
-.. code-block:: none
-
-    database name
-    database username
-    database password
-    database hostname
+    * database name
+    * database username
+    * database password
+    * database hostname
 
 In order for the web server to look up this information the MySQL service
 must export it.  This is done with a 'deps' file.  If we look at the 
@@ -102,7 +100,7 @@ of the boot process the following 3 files are added:
 
 The wordpress bootpgm opens the json file (it could work with the bootenv.sh
 file instead if it were more convenient) and extracts all the values
-needed to configure the wordpress service to connect to the MySQL data base.
+needed to configure the wordpress service to connect to the MySQL database.
 
 The bootconf.json file looks like this when expanded:
 

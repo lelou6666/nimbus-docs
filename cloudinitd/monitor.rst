@@ -3,14 +3,14 @@ Automated Monitoring of a cloudinit.d Application
 =================================================
 
 This document explains how to use cloudinit.d as an automated monitoring 
-tool with a service such as pingdom, nagios, or crond.   To simplify the
-instruction we will use an example based on crond, but the concepts should
+tool with a service such as pingdom, nagios, or crond.   To simplify
+instructions we will use an example based on crond, but the concepts should
 easily transfer to more sophisticated monitoring services.
 
 cloudinit.d functionality
 =========================
 
-cloudinit.d is not only used to launch sophisticated multi-node cloud 
+cloudinit.d is not only used to launch sophisticated multi-node cloud
 applications, but it can also be used to monitor them, and automatically
 repair them.  This can be done manually with operator issued console
 commands, but it can also be automated with tools such as crond.
@@ -22,7 +22,7 @@ First let us take a look at how to manually use cloudinit.d for monitoring
 and repair.
 We take for example the CloudFoundry reference launch plan.  In the 
 example an operator launches CloundFoundry with 1 head node and 8
-dea nodes.  It is important that all the nodes remain up and function 
+DEA nodes.  It is important that all the nodes remain up and function
 to handle the expected load of this CloudFoundry application.  If (when)
 something does go wrong the operator would like to repair it as quickly
 and surgically as possible.  cloudinit.d is well suited for this task.
@@ -59,8 +59,8 @@ convenient to have automated monitoring that only interrupts the operator
 if a problem is solved.  Because cloudinit.d is careful about its exit codes
 it can easily be configured to work with automated tools like crond.
 
-The following script can be run every hour from crond to test and repair
-a cloudinitd launched application::
+The following script can be run every hour from crond to test and repair an
+application launched by cloudinit.d::
 
 
     #/bin/bash
@@ -86,5 +86,3 @@ failure it will output a warning and then attempt to repair the application.
 It then outputs a message indicating the success of the repair command. Crond
 will email all of the output to the operator notifying her that the application 
 experienced some turbulence.
-
-
