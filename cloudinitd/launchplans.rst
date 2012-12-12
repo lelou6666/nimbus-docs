@@ -12,7 +12,6 @@ set before they can be used (mainly for security reasons) but otherwise
 no customization should be needed.
 
 * :ref:`WordPress <wpref>`
-* :ref:`CloudFoundry <cfref>`
 
 WordPress
 =========
@@ -47,35 +46,3 @@ WordPress
 This launch plan will boot two VMs.  One that runs a MySQL server and 
 the other runs an apache2 server with WordPress.  More details on this
 launch plan can be found :doc:`here <wordpress>`.
-
-
-Cloud Foundry
-=============
-.. _cfref:
-
-.. image:: vmware_cloud_foundry.png
-   :width: 256
-   :height: 256
-
-#. `Download <http://www.nimbusproject.org/downloads/cloudfoundry-multinode.tar.gz>`_
-
-   .. code-block:: none
-
-        wget http://www.nimbusproject.org/downloads/cloudfoundry-multinode.tar.gz
-        tar -zxvf cloudfoundry.tar.gz
-
-#. Set the security information
-
-   .. code-block:: none
-
-    $ export CLOUDINITD_IAAS_ACCESS_KEY=<your EC2 access key>
-    $ export CLOUDINITD_IAAS_SECRET_KEY=<your EC2 secret key>
-    $ export CLOUDINITD_IAAS_SSHKEY=<the path to your ssh key>
-    $ export CLOUDINITD_IAAS_SSHKEYNAME=<the name of your ssh key in EC2>
-
-#. Boot it
-
-   .. code-block:: none
-
-    cloudinitd -v -v -v boot cloudfoundry-multinode/main.conf
-

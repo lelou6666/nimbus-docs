@@ -236,4 +236,3 @@ Example launch plans
    :maxdepth: 1
 
    wordpress
-   cloudfoundry

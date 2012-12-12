@@ -18,13 +18,12 @@ commands, but it can also be automated with tools such as crond.
 Manual Monitoring
 =================
 
-First let us take a look at how to manually use cloudinit.d for monitoring
-and repair.
-We take for example the CloudFoundry reference launch plan.  In the 
-example an operator launches CloundFoundry with 1 head node and 8
-DEA nodes.  It is important that all the nodes remain up and function
-to handle the expected load of this CloudFoundry application.  If (when)
-something does go wrong the operator would like to repair it as quickly
+First let us take a look at how to manually use cloudinit.d for monitoring and
+repair.  We take for example a typical web application platform with a load
+balancer and web servers.  An operator launches the infrastructure with 1 load
+balancer and 8 web servers.  It is important that all the web server nodes
+remain up and function to handle the expected load of this web application.  If
+(when) something does go wrong the operator would like to repair it as quickly
 and surgically as possible.  cloudinit.d is well suited for this task.
 
 To launch an application the user simply runs::
