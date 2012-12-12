@@ -112,9 +112,9 @@ works on EC2, Nimbus, and Eucalyptus using the Boto library, and on many other
 clouds using the libcloud library.
 
 Selecting a cloud is done using the ``iaas`` and ``iaas_url`` variables.  To
-use EC2 (with the Boto library Boto), select the region with the ``iaas``
-variable. To use another cloud than EC2 with the Boto library, set ``iaas_url``
-to the cloud API endpoint (in this case the value of ``iaas`` does not matter).
+use EC2 (with the Boto library), select the region with the ``iaas`` variable.
+To use another cloud than EC2 with the Boto library, set ``iaas_url`` to the
+cloud API endpoint (in this case the value of ``iaas`` does not matter).
 Finally, to use the Libcloud library instead of Boto, set ``iaas`` to
 ``libcloud-<libcloud driver>`` and ``iaas_url`` to the cloud API endpoint.
 
