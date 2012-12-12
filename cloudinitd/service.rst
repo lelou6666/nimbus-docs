@@ -111,13 +111,12 @@ in a private cloud and others are in a public cloud.  Right now cloudinit.d
 works on EC2, Nimbus, and Eucalyptus using the Boto library, and on many other
 clouds using the libcloud library.
 
-Selecting a cloud is done using the ``iaas`` and ``iaas_url`` variables.  If
-only a ``iaas`` value is provided and it does not start with ``libcloud-``, it
-is treated as the region name for Boto.  If ``iaas_url`` is provided, it is
-treated as the cloud API endpoint. In this case the value of ``iaas`` does not
-matter, unless it starts with ``libcloud-``.  If you want cloudinit.d to use
-Libcloud, set ``iaas`` to ``libcloud-<libcloud driver>`` and ``iaas_url`` to
-the cloud API endpoint.
+Selecting a cloud is done using the ``iaas`` and ``iaas_url`` variables.  To
+use EC2 (with the Boto library Boto), select the region with the ``iaas``
+variable. To use another cloud than EC2 with the Boto library, set ``iaas_url``
+to the cloud API endpoint (in this case the value of ``iaas`` does not matter).
+Finally, to use the Libcloud library instead of Boto, set ``iaas`` to
+``libcloud-<libcloud driver>`` and ``iaas_url`` to the cloud API endpoint.
 
 To use the EU region of Amazon EC2:
 
