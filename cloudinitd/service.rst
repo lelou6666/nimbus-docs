@@ -120,13 +120,19 @@ Finally, to use the Libcloud library instead of Boto, set ``iaas`` to
 
 To use the EU region of Amazon EC2:
 
+::
+
     iaas: eu-west-1
 
 To use the Nimbus cloud in FutureGrid Hotel:
 
+::
+
     iaas_url: https://svc.uc.futuregrid.org:8444
 
 To use the Nimbus libcloud driver:
+
+::
 
     iaas: libcloud-nimbus
     iaas_url: https://svc.uc.futuregrid.org:8444
