@@ -17,10 +17,10 @@ for instructions.
 
 Ensure that you have your IaaS credentials exported into your environment::
 
-    $ export CLOUDINITD_IAAS_ACCESS_KEY=<EC2 access key>
-    $ export CLOUDINITD_IAAS_SECRET_KEY=<EC2 secret key>
-    $ export CLOUDINITD_IAAS_SSHKEY=<EC2 ssh key name>
-    $ export CLOUDINITD_IAAS_SSHKEYNAME=<path to the matching ssh key>
+    $ export CLOUDINITD_IAAS_ACCESS_KEY=<your EC2 access key>
+    $ export CLOUDINITD_IAAS_SECRET_KEY=<your EC2 secret key>
+    $ export CLOUDINITD_IAAS_SSHKEY=<the path to your ssh key>
+    $ export CLOUDINITD_IAAS_SSHKEYNAME=<the name of your ssh key in EC2>
 
 Boot Cloud Foundry
 ------------------
