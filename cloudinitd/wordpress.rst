@@ -163,8 +163,7 @@ lines of the configuration file handle this.
 
 ``bootpgm`` points to a script that is copied into the virtual machine
 where it is run.  This script should download, install, and configure
-the machine to do its job.  In the case of the MySQL server software
-is installed with apt-get and configured.  In the WordPress case
+the machine to do its job.  MySQL is installed with apt-get and configured.
 WordPress is downloaded and installed.
 
 Further, the hostname where
