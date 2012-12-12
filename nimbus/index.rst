@@ -20,6 +20,7 @@ Nimbus Infrastructure
 cloudinit.d
 ===========
 
+* `v1.2 (latest stable) <http://www.nimbusproject.org/doc/cloudinitd/1.2>`_
 * `v1.0 <http://www.nimbusproject.org/doc/cloudinitd/1.0>`_
 
 
@@ -27,4 +28,3 @@ Context Broker
 ==============
 
 * `v2.8 <http://www.nimbusproject.org/doc/ctxbroker/2.8>`_
-
