@@ -11,11 +11,10 @@ Get an account
 
 In order to use this service you will first need to have a FutureGrid account.
 You can apply for one `here <https://portal.futuregrid.org/user/register>`_.
-Once you have a FutureGrid account you should join the project 
-`Nimbus Auto Scale <https://portal.futuregrid.org/projects/224>`_.
-
-Once you have a FutureGrid account, please request a Phantom account by sending
-email to workspace-user@lists.globus.org.
+Once you have a FutureGrid account, request to join the `Nimbus Auto Scale
+<https://portal.futuregrid.org/projects/224>`_ project.
+We will create your Phantom account when your project join request has been
+accepted.
 
 REST API
 ========

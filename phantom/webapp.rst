@@ -8,8 +8,10 @@ check out the web application
 
 In order to use the web application you will need a `FutureGrid account 
 <https://portal.futuregrid.org/user/register>`_ and a Phantom account.
-To get a Phantom account please send email requesting one to 
-workspace-user@globus.org.
+To get a Phantom account, request to join the `Nimbus Auto Scale
+<https://portal.futuregrid.org/projects/224>`_ project.
+We will create your Phantom account when your project join request has been
+accepted.
 
 Login
 =====
