@@ -137,11 +137,43 @@ the *Refresh* button to see updated information.
 
 When you see that your VM is RUNNING, it is now ready to use.
 
+Creating a sensor autoscaling domain
+------------------------------------
+
+If you would like to create a sensor autoscaling domain, ensure that you
+have tcollector installed and configured on your VM image, then:
+
+1. Click *Add Domain*
+2. Choose a name for the domain in the popup window
+3. Pick the Launch Configuration you created earlier
+4. Type a Sensors to Monitor at the *Add Sensor* box, and then a space
+5. Make sure *Scaling Policy* is set to "Sensor"
+6. Fill out the sensor policy parameters:
+   a) *Metric* is the metric to base scaling actions on
+   b) *Cooldown* is the number of seconds Phantom should wait between scaling 
+   actions. This prevents Phantom from starting and stopping VMs too often
+   c) *Minimum* is the minimum number of VMs to maintain
+   d) *Maximum* is the maximum number of VMs to start
+   e) *Scale Up Threshold*: When the metric value is above this value, Phantom
+   will start VMs to compensate
+   f) *Scale Up By*: The number of VMs to start when the Scale Up Threshold is
+   exceeded
+   g) *Scale Down Threshold*: When the metric value is below this value, Phantom
+   will terminate VMs to compensate
+   h) *Scale Down By*: The number of VMs to terminate when the Scale Down Threshold is
+   exceeded
+7. Click *Start*
+
 Update a domain
 ===============
 
 Once you have started a Domain, you may wish to adjust the settings you picked 
-earlier. For example, you may wish to increase or decrease the number of VMs
+earlier.
+
+Changing the number of running VMs
+----------------------------------
+
+For example, you may wish to increase or decrease the number of VMs
 that are running as a part of your domain. To do this:
 
 1. Select your domain from the list of domains on the left
@@ -149,7 +181,20 @@ that are running as a part of your domain. To do this:
 3. Click Update
 
 You should now see the status bar working and the details view should show the 
-updated number of VMs. 
+updated number of VMs.
+
+Adding a sensor to monitor
+--------------------------
+
+If you would like to start monitoring specific sensors for your domain:
+
+1. Select your domain from the list of domains on the left
+2. Type the name of a tcollector sensor, like *proc.loadavg.1min* in the
+   *Add Sensor* box, and then a space
+3. Click Update
+
+If your VM image has tcollector installed on it, you should now see the status
+bar working and the details view should show the sensor value.
 
 Terminate a domain
 ===============
