@@ -16,6 +16,10 @@ Once you have a FutureGrid account, request to join the `Nimbus Auto Scale
 We will create your Phantom account when your project join request has been
 accepted.
 
+You should also subscribe to the `Nimbus Phantom mailing list
+<https://lists.mcs.anl.gov/mailman/listinfo/nimbus-phantom>`_ to receive
+announcements, report bugs, or request new features.
+
 REST API
 ========
 
