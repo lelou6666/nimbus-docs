@@ -4,9 +4,9 @@ Using Sensors with your VM Images
 
 Introduction
 ============
-`tcollector<http://opentsdb.net/tcollector.html>`_ is a simple program that
+`tcollector <http://opentsdb.net/tcollector.html>`_ is a simple program that
 provides sensor monitoring information about your deployed virtual machines.
-It works with the `OpenTSDB<http://opentsdb.net/>`_ Monitoring System to keep
+It works with the `OpenTSDB <http://opentsdb.net/>`_ Monitoring System to keep
 track of the metrics of your Virtual Machines, which Phantom can use to scale
 the VMs for your application. This guide explains how to install tcollector on
 your VM image.
@@ -18,7 +18,7 @@ available on FutureGrid clouds. You may also base your application image on it.
 Installation and Prerequisites
 ==============================
 
-tcollector requires that you have (at least) Python 2.6 installed on your VM image. This can generally be installed with your distribution's package manager, or built from source from `python.org<http://python.org/>`_.
+tcollector requires that you have (at least) Python 2.6 installed on your VM image. This can generally be installed with your distribution's package manager, or built from source from `python.org <http://python.org/>`_.
 
 Once you have tcollecor installed, you can install it like so::
 
@@ -71,5 +71,5 @@ while True:
 When this script is running on your VM, you will have the test.my.value metric
 available.
 
-If you would like to create your own sensors, check out the `tcollector documentation<http://opentsdb.net/tcollector.html>`_, and for inspiration, check out the `phantom sensors<https://github.com/nimbusproject/phantom-sensors>`_ that are included with the
+If you would like to create your own sensors, check out the `tcollector documentation <http://opentsdb.net/tcollector.html>`_, and for inspiration, check out the `phantom sensors <https://github.com/nimbusproject/phantom-sensors>`_ that are included with the
 tcollector tarball.
