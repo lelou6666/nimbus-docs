@@ -19,6 +19,7 @@ VMs that are running on the many clouds of FutureGrid as well as EC2.
 
     quickstart
     webapp
+    sensors
     protocol
     scripting
     faq
