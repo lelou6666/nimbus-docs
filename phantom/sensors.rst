@@ -28,7 +28,7 @@ Once you have tcollecor installed, you can install it like so::
 
 That's it! You can start tcollector like so to test it::
 
-# /usr/local/tcollector/tcollector.py --host vm-148-101.uc.futuregrid.org --port 4242
+# /usr/local/tcollector/tcollector.py --host nimbus-opentsdb.no-ip.org --port 4242
 
 Now to make tcollector start on system start, you can use the provided startstop script. Install it like so::
 
@@ -41,13 +41,13 @@ OpenTSDB installation::
 
 Line 5 should look like::
 
-TSD_HOST=vm-148-101.uc.futuregrid.org
+TSD_HOST=nimbus-opentsdb.no-ip.org
 
 You can confirm that you've set this right by running the following, and
 verifying that the output is the same::
 
 # grep 'TSD_HOST=' /etc/init.d/tcollector
-TSD_HOST=vm-148-101.uc.futuregrid.org
+TSD_HOST=nimbus-opentsdb.no-ip.org
 
 Now save your image, and you're finished.
 
