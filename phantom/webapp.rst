@@ -140,13 +140,19 @@ When you see that your VM is RUNNING, it is now ready to use.
 Creating a sensor autoscaling domain
 ------------------------------------
 
-If you would like to create a sensor autoscaling domain, ensure that you
-have tcollector installed and configured on your VM image, then:
+If you would like to create a sensor autoscaling domain, ensure that you have
+tcollector installed and configured on your VM image. You can also use the
+hello-phantom.gz public image on FutureGrid, as described on the
+:doc:`sensors`
+page.
+
+Then:
 
 1. Click *Add Domain*
 2. Choose a name for the domain in the popup window
 3. Pick the Launch Configuration you created earlier
-4. Type a Sensors to Monitor at the *Add Sensor* box, and then a space
+4. Type a sensor to monitor (for instance *proc.loadavg.1min*) at the *Add
+   Sensor* box, and then a space
 5. Make sure *Scaling Policy* is set to "Sensor"
 6. Fill out the sensor policy parameters:
    a) *Metric* is the metric to base scaling actions on
