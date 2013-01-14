@@ -29,14 +29,14 @@ link.  After logging in you will see the home page:
 .. image:: images/phantom_home.png
    :width: 500
 
-This page should guide you through the steps to start launching set of 
+This page should guide you through the steps to start launching sets of
 virtual machines, which are called Domains in Phantom.
 
 Setting up your Cloud Credentials
 =============================
 
 Go to the `Clouds <https://svc.uc.futuregrid.org:8440/phantom/sites>`_
-page and add your site credentials:
+page and add your cloud credentials for each site you intend to use:
 
 .. image:: images/phantom_sites.png
    :width: 500
@@ -67,7 +67,7 @@ which clouds. You will provide an ordering for the list of clouds to start VMs
 on.
 
 Go to the 
-`Launch Configuration <https://svc.uc.futuregrid.org:8440/phantom/launchconfig>`_
+`Launch Configurations <https://svc.uc.futuregrid.org:8440/phantom/launchconfig>`_
 page:
 
 .. image:: images/phantom_lc.png
@@ -132,8 +132,8 @@ To create a domain:
 7. Click *Start*
 
 Phantom is now starting your Domain, and in turn, starting your VMs. You should
-see the list of VMs that Phantom has started on the right under Details. Click
-the *Refresh* button to see updated information.
+see the list of VMs that Phantom has started on the right under Details. This
+information is updated automatically.
 
 When you see that your VM is RUNNING, it is now ready to use.
 
