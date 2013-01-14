@@ -22,32 +22,32 @@ tcollector requires that you have (at least) Python 2.6 installed on your VM ima
 
 Once you have tcollecor installed, you can install it like so::
 
-# wget http://build.nimbusproject.org:8000/tcollector/master/tcollector-HEAD.tar.gz
-# tar xzvf tcollector-HEAD.tar.gz
-# mv tcollector /usr/local/tcollector
+    # wget http://build.nimbusproject.org:8000/tcollector/master/tcollector-HEAD.tar.gz
+    # tar xzvf tcollector-HEAD.tar.gz
+    # mv tcollector /usr/local/tcollector
 
 That's it! You can start tcollector like so to test it::
 
-# /usr/local/tcollector/tcollector.py --host nimbus-opentsdb.no-ip.org --port 4242
+    # /usr/local/tcollector/tcollector.py --host nimbus-opentsdb.no-ip.org --port 4242
 
 Now to make tcollector start on system start, you can use the provided startstop script. Install it like so::
 
-# cp /usr/local/tcollector/startstop /etc/init.d/tcollector
+    # cp /usr/local/tcollector/startstop /etc/init.d/tcollector
 
 Open up the script and set the TSD_HOST variable to point to the Phantom
 OpenTSDB installation::
 
-# vim /etc/init.d/tcollector
+    # vim /etc/init.d/tcollector
 
 Line 5 should look like::
 
-TSD_HOST=nimbus-opentsdb.no-ip.org
+    TSD_HOST=nimbus-opentsdb.no-ip.org
 
 You can confirm that you've set this right by running the following, and
 verifying that the output is the same::
 
-# grep 'TSD_HOST=' /etc/init.d/tcollector
-TSD_HOST=nimbus-opentsdb.no-ip.org
+    # grep 'TSD_HOST=' /etc/init.d/tcollector
+    TSD_HOST=nimbus-opentsdb.no-ip.org
 
 Now save your image, and you're finished.
 
@@ -57,16 +57,16 @@ Custom Sensors
 Creating custom tcollector sensors is easy. To do this, you simply need to
 create a script that periodically outputs your metric data. As an example::
 
-#!/usr/bin/python
-import sys
-import time
-COLLECTION_INTERVAL = 15  # seconds
+    #!/usr/bin/python
+    import sys
+    import time
+    COLLECTION_INTERVAL = 15  # seconds
 
-while True:
-    ts = int(time.time())
-    print "test.my.value %s 42" % ts
-    sys.stdout.flush()
-    time.sleep(COLLECTION_INTERVAL)
+    while True:
+        ts = int(time.time())
+        print "test.my.value %s 42" % ts
+        sys.stdout.flush()
+        time.sleep(COLLECTION_INTERVAL)
 
 When this script is running on your VM, you will have the test.my.value metric
 available.
