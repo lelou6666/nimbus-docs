@@ -35,10 +35,10 @@ virtual machines, which are called Domains in Phantom.
 Setting up your Cloud Credentials
 =============================
 
-Go to the `Clouds <https://svc.uc.futuregrid.org:8440/phantom/sites>`_
+Go to your `Profile <https://svc.uc.futuregrid.org:8440/phantom/profile>`_
 page and add your cloud credentials for each site you intend to use:
 
-.. image:: images/phantom_sites.png
+.. image:: images/phantom_profile.png
    :width: 500
 
 All FutureGrid accounts should come pre-loaded with your credentials.  If you
