@@ -73,9 +73,13 @@ page:
 .. image:: images/phantom_lc.png
    :width: 500
 
-First, name your launch configuration. Type the name in the top field. This
-example will be named 
-*testoverflow*.
+Create a Launch Configuration
+-----------------------------
+
+1. Click Add Launch Config
+2. Name your Launch Configuration
+
+Our example is named *testoverflow*.
 
 Now we will create a list of clouds in the order we would like to have Phantom
 use them. This way you can prioritize your preferred clouds, while still using
@@ -84,7 +88,7 @@ other clouds when your preferred ones are not available.
 Adding a Cloud
 --------------
 
-1. Select a cloud from the list of clouds under *Cloud Options*
+1. Select a cloud from the list of clouds under *Launch Configuration*
 2. Specify the maximum number of VMs you would like on this cloud (-1 means infinity)
 3. Select an instance type (m1.small is a good choice if you have no preference)
 4. Select the image you wish to launch. You can either pick a *Personal Image* from
@@ -92,17 +96,17 @@ Adding a Cloud
    If you are using a FutureGrid cloud, you can use *hello-cloud*, for example.
 5. If you like, you can provide User Data that will be provided on the VM via the
    EC2 or Nimbus metadata server.
-6. Click *Add* to add the cloud configuration to the list of clouds on the right.
+6. Click *Enable* to add the cloud configuration to the list of clouds on the right.
 
 You can now add aditional clouds if you like by repeating the above steps.
 
-Once you have added the clouds you would like to use, you can use the *Up* and
-*Down* buttons to change the launch priority of these clouds. Phantom will try
+Once you have enabled the clouds you would like to use, you can drag and drop
+the clouds change the launch priority of these clouds. Phantom will try
 to start as many VMs as it can (up to the maximum you specified) on the first
 cloud in the list before starting VMs on the second.
 
 When you are happy with the order you have selected, click the *Save* button
-at the top.  Once saved,  you can now launch a domain using this launch
+Once saved,  you can now launch a domain using this launch
 configuration.
 
 Launching a domain
