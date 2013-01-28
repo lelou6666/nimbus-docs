@@ -1,23 +1,23 @@
-=========================
-Nimbus Phantom protocol
-=========================
+==============================
+Phantom Autoscale API protocol
+==============================
 
-The Nimbus Phantom service implements a subset of the
+Phantom implements a subset of the
 `AWS Auto Scaling service <http://aws.amazon.com/autoscaling/>`_.
-It is a REST API that allows users to interact with a service which
-will monitor the health of VMs and preserve N VMs at one time on
-various different clouds.
+It is an API that allows users to interact with a service which
+will monitor the health of VMs and preserve N VMs, or autoscale based on
+sensor attributes on various clouds.
 
-REST API
+Phantom Autoscale API
 ========
 
-The AWS protocol on which the Nimbus Phantom service is based is
+The AWS protocol on which the Phantom Autoscale API is based is
 well documented
 `here <http://docs.amazonwebservices.com/AutoScaling/latest/APIReference/>`_.
 Understanding how the AWS service works is not necessary to understand
-the Nimbus service; however, since the two services are wire protocol
+the Phantom API; however, since the two services are wire protocol
 compatible, it is helpful to understand the subset of commands
-which have been implemented by the Nimbus Phantom service:
+which have been implemented by the Phantom service:
 
 
 * ``CreateLaunchConfiguration``. This API call allows a user to
@@ -25,10 +25,10 @@ which have been implemented by the Nimbus Phantom service:
   amount of memory, and network configuration) and a security
   key.  It describes the details of every VM instance
   that will be launched in a group.  An important difference between
-  the Nimbus system and the AWS protocol is the name given to a launch
+  Phantom and the AWS protocol is the name given to a launch
   configuration.  
 
-  On Nimbus Phantom you must use the following naming convention:
+  With Phantom you must use the following naming convention:
   <launch configuration name>@<target cloud name>.  The
   launch configuration name can be anything the user wishes, but it must be
   unique.  The cloud name must be one of the site names which you have 

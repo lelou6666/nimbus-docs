@@ -2,24 +2,75 @@
 Scripting with the REST API
 ===========================
 
-Because the Nimbus autoscaling service is protocol compliant with
-the AWS autoscaling service there are many clients and libraries
-that can be used.  However, the only one tested thus far is
-`boto <https://github.com/buzztroll/boto>`_.  On this page we will describe
-some simple boto applications for interacting with the Nimbus
-Auto Scale service.
+Phantom uses the AWS Autoscaling protocol, and we
+`boto <https://github.com/buzztroll/boto>`_ for scripting Phantom.
+On this page we will describe
+some simple boto applications for interacting with Phantom.
+
+Autoscale API
+========
+
+The first thing you will need in order to use the Autoscale API is your 
+FutureGrid access tokens.  Acquiring your FutureGrid access tokens is 
+described `here <https://portal.futuregrid.org/tutorials/nimbus>`_.
+Inside of your hotel.conf file you will find the access tokens under the
+entries::
+
+    vws.repository.s3id=<access key>
+    vws.repository.s3key=<secret key>
+
+You will also need to know the URL of the Phantom Autoscale API service. It is:
+https://svc.uc.futuregrid.org:8445.
+
+For convenience store those values in the following environment variables::
+
+    export EC2_ACCESS_KEY=<access key>
+    export EC2_SECRET_KEY=<secret key>
+    export PHANTOM_URL=https://svc.uc.futuregrid.org:8445
+
+Installinig boto
+==============
+
+We recommend using boto to interact with Phantom Autoscale API.  Unfortunately
+the latest released version of boto does not yet include a needed
+patch, so we have created a fork which implements this patch
+`on github <https://github.com/buzztroll/boto/tree/non_aws_asg_connection>`_.
+
+.. warning:: 
+   You *must* install the `patched version <https://github.com/buzztroll/boto/tree/non_aws_asg_connection>`_ of boto or your scripts *will not work*. Please follow the instructions below exactly.
+
+To get started, create a new
+`virtual environment <http://pypi.python.org/pypi/virtualenv>`_ and install
+boto into it.  The following commands should do this for you::
+
+    $ virtualenv phantom
+    New python executable in phantom/bin/python
+    Installing distribute...............done.
+    Installing pip...............done.
+
+    $ source phantom/bin/activate
+
+    $ pip install https://github.com/buzztroll/boto/archive/non_aws_asg_connection.tar.gz\#egg\=boto-2.6
+    Obtaining boto from git+git://github.com/buzztroll/boto.git@asgcreatetags#egg=boto
+      Cloning git://github.com/buzztroll/boto.git (to asgcreatetags) to ./phantom/src/boto
+      Running setup.py egg_info for package boto
+
+    .......
+
+    Successfully installed boto
+    Cleaning up...
+
+You now have boto installed and ready to use.  Please note the command::
+
+    $ source phantom/bin/activate
+
+You will need to run this command in every session where you 
+wish to use your python boto environment.
 
 Sample scripts
 ==============
 
-The following sample programs can be used to aid in understanding.  For
-all of the programs to work the user must first set three environment
-variables::
-
-    EC2_ACCESS_KEY=<your FutureGrid access key>
-    EC2_SECRET_KEY=<your FutureGrid access secret>
-    PHANTOM_URL=https://svc.uc.futuregrid.org:8445
-
+The following sample programs can be used to aid in understanding.
 All of these values can be found in your FutureGrid cloud-client
 cloud.properties file.
 

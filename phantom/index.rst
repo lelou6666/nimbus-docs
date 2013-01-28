@@ -8,21 +8,19 @@ can be automated.
 Nimbus Phantom monitors the health and happiness of your resources and 
 automatically provisions and configures new ones based on demand.
 
-This guide contains configuration information about the Nimbus Phantom
-service.  This service dynamically scales and preserves VMs for users.
-It currently is running and available on
-`FutureGrid <http://www.futuregrid.org/>`_ allowing users to scale
+This guide will help you configure and use Phantom.
+This service dynamically scales and preserves VMs for you.
+Phantom is available on 
+`FutureGrid <http://www.futuregrid.org/>`_ infrastucture  allowing users to scale
 VMs that are running on the many clouds of FutureGrid as well as EC2. 
 
 .. toctree::
     :maxdepth: 1
 
-    quickstart
-    webapp
-    sensors
-    protocol
-    scripting
-    faq
+    Phantom <https://svc.uc.futuregrid.org:8440/>
+    Phantom Quickstart <webapp>
+    Phantom Advanced Documentation <advanced>
+    Phantom FAQ <faq>
     
 
 For additional details about Phantom please see our 

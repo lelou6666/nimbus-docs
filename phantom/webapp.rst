@@ -1,17 +1,26 @@
-===============
-Phantom Web App
-===============
+==================
+Phantom Quickstart
+==================
 
-The best way to get familiar with the Nimbus Phantom service is to
-check out the Phantom Web App
-`here <https://svc.uc.futuregrid.org:8440/phantom>`_.
+The best way to get familiar with Phantom is to
+`try it out <https://svc.uc.futuregrid.org:8440/phantom>`_.
 
-In order to use the Phantom Web App you will need a `FutureGrid account 
+In order to use Phantom you will need a `FutureGrid account 
 <https://portal.futuregrid.org/user/register>`_ and a Phantom account.
 To get a Phantom account, request to join the `Nimbus Auto Scale
-<https://portal.futuregrid.org/projects/224>`_ project.
-We will create your Phantom account when your project join request has been
-accepted.
+<https://portal.futuregrid.org/projects/224>`_ testing project. Once we have accepted
+your request to join this project, you can use this account to test Phantom.
+If you find Phantom useful, you can create your own FutureGrid project, which
+you can use for any project you like.
+
+Once you have set up your account, log on to `Phantom <https://svc.uc.futuregrid.org:8440/>`_.
+
+* `Login`_
+* `Configuring your Profile`_
+* `Creating a Launch Configuration`_
+* `Launching a Domain`_
+* `Updating a Domain`_
+* `Terminating a Domain`_
 
 Login
 =====
@@ -32,11 +41,16 @@ link.  After logging in you will see the home page:
 This page should guide you through the steps to start launching sets of
 virtual machines, which are called Domains in Phantom.
 
-Setting up your Cloud Credentials
-=============================
+Configuring your Profile
+========================
 
-Go to your `Profile <https://svc.uc.futuregrid.org:8440/phantom/profile>`_
-page and add your cloud credentials for each site you intend to use:
+Your profile is where your overall Phantom settings are stored. You can change
+your Phantom password here, and more importantly, you can set up your credentials
+with each cloud you use.
+
+To set up your cloud credentials, 
+go to your `Profile <https://svc.uc.futuregrid.org:8440/phantom/profile>`_
+page and add your cloud credentials for each cloud you intend to use:
 
 .. image:: images/phantom_profile.png
    :width: 500
@@ -48,18 +62,19 @@ you can add your credentials:
 Adding EC2 Credentials
 ----------------------
 
-1. Select the EC2 cloud
-2. Add your access key
-3. Add your secret key
-4. Click Save
+1. Visit your `profile <https://svc.uc.futuregrid.org:8440/phantom/profile#cloud-credentials>`_
+2. Select the EC2 cloud
+3. Add your access key
+4. Add your secret key
+5. Click Save
 
 Phantom will now fetch your ssh keys from EC2. When this is done:
 
-5. Choose an ssh keyname for your VMs
-6. Click Save again
+6. Choose an ssh keyname for your VMs
+7. Click Save again
 
 Creating a Launch Configuration
-=============================
+===============================
 
 Now that your credentials are configured, you can create a launch configuration.
 A launch configuration is a list of which VM images you would like to start on
@@ -109,7 +124,7 @@ When you are happy with the order you have selected, click the *Save* button
 Once saved,  you can now launch a domain using this launch
 configuration.
 
-Launching a domain
+Launching a Domain
 ==================
 
 Now that you have set up your credentials and created a launch configuration, 
@@ -174,8 +189,8 @@ Then:
    exceeded
 7. Click *Start*
 
-Update a domain
-===============
+Updating a Domain
+=================
 
 Once you have started a Domain, you may wish to adjust the settings you picked 
 earlier.
@@ -206,8 +221,8 @@ If you would like to start monitoring specific sensors for your domain:
 If your VM image has tcollector installed on it, you should now see the status
 bar working and the details view should show the sensor value.
 
-Terminate a domain
-===============
+Terminating a Domain
+====================
 
 When you wish to terminate a domain:
 
