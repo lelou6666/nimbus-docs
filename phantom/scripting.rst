@@ -28,7 +28,7 @@ For convenience store those values in the following environment variables::
     export EC2_SECRET_KEY=<secret key>
     export PHANTOM_URL=https://svc.uc.futuregrid.org:8445
 
-Installinig boto
+Installing boto
 ==============
 
 We recommend using boto to interact with Phantom Autoscale API.  Unfortunately
