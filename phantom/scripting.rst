@@ -1,5 +1,5 @@
 ===========================
-Scripting with the REST API
+Scripting with the Phantom Autoscale API
 ===========================
 
 Phantom uses the AWS Autoscaling protocol, and we

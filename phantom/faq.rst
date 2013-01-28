@@ -37,7 +37,7 @@ All of the source code can be found on
 `GitHub <https://github.com/nimbusproject/>`_.  
 It is stored in several different repositories including:
 
-* `REST API <https://github.com/nimbusproject/Phantom>`_,
+* `Phantom Autoscale API <https://github.com/nimbusproject/Phantom>`_,
 * `Web Application <https://github.com/nimbusproject/PhantomWebApp>`_,
 * `PhantomSQL <https://github.com/nimbusproject/PhantomSQL>`_,
 * `ceiclient <https://github.com/nimbusproject/ceiclient>`_,

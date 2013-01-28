@@ -45,21 +45,21 @@ which have been implemented by the Phantom service:
   2 are on EC2, you would need to call CreateLaunchConfiguration twice,
   first with mylaunch@hotel and next with mylaunch@ec2.
 
-  The REST protocol details
+  The Autoscale protocol details
   can be found `here <http://docs.amazonwebservices.com/AutoScaling/latest/APIReference/API_CreateLaunchConfiguration.html>`_.
 
 * ``DeleteLaunchConfiguration``.  This simply deletes a launch
   configuration that the user previously created with a call to
   CreateLaunchConfiguration.  You must use the 
   <launch configuration name>@<target cloud name> name here.
-  The REST protocol details
+  The Autoscale protocol details
   can be found `here <http://docs.amazonwebservices.com/AutoScaling/latest/APIReference/API_DeleteLaunchConfiguration.html>`_.
 
 * ``DescribeLaunchConfigurations``.  List all of the launch configurations
   that the user previously created with calls to CreateLaunchConfiguration.
   You must use the
   <launch configuration name>@<target cloud name> name here.
-  The REST protocol details
+  The Autoscale protocol details
   can be found `here <http://docs.amazonwebservices.com/AutoScaling/latest/APIReference/API_DescribeLaunchConfigurations.html>`_.
 
 * ``CreateAutoScalingGroup``.  This API function will start running a group
@@ -84,22 +84,22 @@ which have been implemented by the Phantom service:
    * key: n_preserve, value: an integer specifying the maximum number of 
      VMs to schedule across all the clouds.
 
-  The REST protocol details
+  The Autoscale protocol details
   can be found `here <http://docs.amazonwebservices.com/AutoScaling/latest/APIReference/API_CreateAutoScalingGroup.html>`_.
 
 * ``DeleteAutoScalingGroup``.   This API call will stop a running auto scale
   group.
-  The REST protocol details
+  The Autoscale protocol details
   can be found `here <http://docs.amazonwebservices.com/AutoScaling/latest/APIReference/API_DeleteAutoScalingGroup.html>`_.
 
 * ``DescribeAutoScalingGroups``  This API call lists all of the calling
   users currently running autoscaling groups.
-  The REST protocol details
+  The Autoscale protocol details
   can be found `here <http://docs.amazonwebservices.com/AutoScaling/latest/APIReference/API_DescribeAutoScalingGroups.html>`_.
 
 * ``SetDesiredCapacity``.  This API call sets the number of VMs currently
   running in a given Auto Scaling Group.  The user is free to adjust this.
-  The REST protocol details
+  The Autoscale protocol details
   can be found `here <http://docs.amazonwebservices.com/AutoScaling/latest/APIReference/API_SetDesiredCapacity.html>`_.
 
 
@@ -128,7 +128,7 @@ For every cloud on which you want your domain to run you must call
 `Create Launch Configuration <http://docs.amazonwebservices.com/AutoScaling/latest/GettingStartedGuide/CreateASGroup.html#create-launch-config>`_
 Pick a launch configuration name and append "@<sitename>" to it.
 Then that name will be used to manage what each site will run via 
-the Create Launch Configuration REST API call.
+the Create Launch Configuration Autoscale API call.
 
 Once a launch configuration is created, the user will launch an
 "Auto Scale Group".  To do this the user must pick three things:
