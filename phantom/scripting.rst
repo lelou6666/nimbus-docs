@@ -34,10 +34,10 @@ Installing boto
 We recommend using boto to interact with Phantom Autoscale API.  Unfortunately
 the latest released version of boto does not yet include a needed
 patch, so we have created a fork which implements this patch
-`on github <https://github.com/buzztroll/boto/tree/non_aws_asg_connection>`_.
+`on github <https://github.com/buzztroll/boto/tree/asgcreatetags>`_.
 
 .. warning:: 
-   You *must* install the `patched version <https://github.com/buzztroll/boto/tree/non_aws_asg_connection>`_ of boto or your scripts *will not work*. Please follow the instructions below exactly.
+   You *must* install the `patched version <https://github.com/buzztroll/boto/tree/asgcreatetags>`_ of boto or your scripts *will not work*. Please follow the instructions below exactly.
 
 To get started, create a new
 `virtual environment <http://pypi.python.org/pypi/virtualenv>`_ and install
@@ -50,10 +50,10 @@ boto into it.  The following commands should do this for you::
 
     $ source phantom/bin/activate
 
-    $ pip install https://github.com/buzztroll/boto/archive/non_aws_asg_connection.tar.gz\#egg\=boto-2.6
-    Obtaining boto from git+git://github.com/buzztroll/boto.git@asgcreatetags#egg=boto
-      Cloning git://github.com/buzztroll/boto.git (to asgcreatetags) to ./phantom/src/boto
-      Running setup.py egg_info for package boto
+    $ pip install https://github.com/buzztroll/boto/archive/asgcreatetags.zip
+    Downloading/unpacking https://github.com/buzztroll/boto/archive/asgcreatetags.zip
+      Downloading asgcreatetags.zip (930Kb): 930Kb downloaded
+      Running setup.py egg_info for package from https://github.com/buzztroll/boto/archive/asgcreatetags.zip
 
     .......
 

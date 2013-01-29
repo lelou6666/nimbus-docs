@@ -60,10 +60,10 @@ boto into it.  The following commands should do this for you::
 
     $ source phantom/bin/activate
 
-    $ pip install -e git://github.com/buzztroll/boto.git@asgcreatetags#egg=boto
-    Obtaining boto from git+git://github.com/buzztroll/boto.git@asgcreatetags#egg=boto
-      Cloning git://github.com/buzztroll/boto.git (to asgcreatetags) to ./phantom/src/boto
-      Running setup.py egg_info for package boto
+    $ pip install https://github.com/buzztroll/boto/archive/asgcreatetags.zip
+    Downloading/unpacking https://github.com/buzztroll/boto/archive/asgcreatetags.zip
+      Downloading asgcreatetags.zip (930Kb): 930Kb downloaded
+      Running setup.py egg_info for package from https://github.com/buzztroll/boto/archive/asgcreatetags.zip
 
     .......
 
