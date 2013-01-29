@@ -13,16 +13,16 @@ introduction to how the service works.
 User Interfaces
 ===============
 
-We have two user interfaces: a REST API and a Web Application.  The 
-web application is effectively a user of the REST API; however, to 
+We have two user interfaces: the Phantom Autoscale API and a Web Application.
+The web application is effectively a user of the Autoscale API; however, to
 provide some conveniences it also speaks directly to the clouds on which
 the user will be running VMs.  The web application was created using the 
 `Django <https://www.djangoproject.com/>`_ framework and is running 
 inside a VM on FutureGrid's hotel cloud.  The application is backed
 by a MySQL server.
 
-The REST API is a Python `WSGI <http://wsgi.readthedocs.org/en/latest/index.html>`_ application.  It is run using the `cherrypy <http://www.cherrypy.org/>`_ 
-framework inside a FutureGrid VM.  The REST service requires no 
+The Autoscale API is a Python `WSGI <http://wsgi.readthedocs.org/en/latest/index.html>`_ application.  It is run using the `cherrypy <http://www.cherrypy.org/>`_ 
+framework inside a FutureGrid VM.  The Autoscale service requires no
 state to do its work.  All of the state is contained inside other 
 system components.  This allows for horizontal scaling and high levels
 of replication.  However, there is one exception to this.  At the moment
@@ -36,7 +36,7 @@ resources can handle.
 nginx
 -----
 
-Both the REST service and the web application are fronted by an nginx
+Both the Autoscale service and the web application are fronted by an nginx
 load balancer.  This is done so that we can dynamically add and subtract
 replicated instances of each service without interrupting users.
 Further, this allows us to use VMs (with potentially changing IP addresses)

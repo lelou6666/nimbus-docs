@@ -20,10 +20,10 @@ You should also subscribe to the `Nimbus Phantom mailing list
 <https://lists.mcs.anl.gov/mailman/listinfo/nimbus-phantom>`_ to receive
 announcements, report bugs, or request new features.
 
-REST API
-========
+Phantom Autoscale API
+=====================
 
-The first thing you will need in order to use the REST API is your 
+The first thing you will need in order to use the Phantom Autoscale API is your
 FutureGrid access tokens.  Acquiring your FutureGrid access tokens is 
 described `here <https://portal.futuregrid.org/tutorials/nimbus>`_.
 Inside of your hotel.conf file you will find the access tokens under the
@@ -32,7 +32,7 @@ entries::
     vws.repository.s3id=<access key>
     vws.repository.s3key=<secret key>
 
-You will also need to know the URL of the REST service. It is:
+You will also need to know the URL of the Autoscale API service. It is:
 https://svc.uc.futuregrid.org:8445.
 
 For convenience store those values in the following environment variables::
