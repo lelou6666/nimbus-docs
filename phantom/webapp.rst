@@ -5,22 +5,36 @@ Phantom Quickstart
 The best way to get familiar with Phantom is to
 `try it out <https://svc.uc.futuregrid.org:8440/phantom>`_.
 
-In order to use Phantom you will need a `FutureGrid account 
-<https://portal.futuregrid.org/user/register>`_ and a Phantom account.
-To get a Phantom account, request to join the `Nimbus Auto Scale
-<https://portal.futuregrid.org/projects/224>`_ testing project. Once we have accepted
-your request to join this project, you can use this account to test Phantom.
-If you find Phantom useful, you can create your own FutureGrid project, which
-you can use for any project you like.
-
-Once you have set up your account, log on to `Phantom <https://svc.uc.futuregrid.org:8440/>`_.
-
+* `Getting Access`_
 * `Login`_
 * `Configuring your Profile`_
 * `Creating a Launch Configuration`_
 * `Launching a Domain`_
 * `Updating a Domain`_
 * `Terminating a Domain`_
+
+
+Getting Access
+==============
+
+Phantom has been deployed as a service on `FutureGrid <https://futuregrid.org/>`_
+and you can start using it there.
+In order to use Phantom, you will need a Phantom account and accounts
+on clouds you want to use with Phantom. 
+
+FutureGrid provides several different IaaS clouds that you can use with Phantom.
+Requesting a FutureGrid account will give you access to all FutureGrid clouds.
+Thus your first step to gain access is to `request a FutureGrid account 
+<https://portal.futuregrid.org/user/register>`_. 
+
+To get a Phantom account, request to join the FutureGrid `Nimbus Auto Scale
+testing project <https://portal.futuregrid.org/projects/224>`_.
+Once we have accepted your request to join this project,
+your account will be created and you can use this account to test Phantom.
+If you find Phantom useful, you can create your own FutureGrid project,
+which you can use for any project you like.
+
+Once you have set up your account, log on to `Phantom <https://svc.uc.futuregrid.org:8440/>`_.
 
 Login
 =====
