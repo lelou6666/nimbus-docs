@@ -235,6 +235,13 @@ If you would like to start monitoring specific sensors for your domain:
 If your VM image has tcollector installed on it, you should now see the status
 bar working and the details view should show the sensor value.
 
+You can discover other sensors available to you by typing partial names of
+sensors in the *Add Sensor* box, and seeing a list of what is available. Some
+good prefixes to explore are *df*, *proc*, *net*, and *io*. Each of these prefixes
+has a number of interesting metrics available. For example, *df.1kblocks.used*,
+for used disk space, *proc.loadavg.1min* for load, or *proc.meminfo.highfree*
+for available memory.
+
 Terminating a Domain
 ====================
 
