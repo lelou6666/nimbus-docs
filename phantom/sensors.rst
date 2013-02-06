@@ -20,7 +20,7 @@ Installation and Prerequisites
 
 tcollector requires that you have (at least) Python 2.6 installed on your VM image. This can generally be installed with your distribution's package manager, or built from source from `python.org <http://python.org/>`_.
 
-Once you have tcollecor installed, you can install it like so::
+Once you have Python installed, you can install it like so::
 
     # wget http://build.nimbusproject.org:8000/tcollector/master/tcollector-HEAD.tar.gz
     # tar xzvf tcollector-HEAD.tar.gz
@@ -73,3 +73,74 @@ available.
 
 If you would like to create your own sensors, check out the `tcollector documentation <http://opentsdb.net/tcollector.html>`_, and for inspiration, check out the `phantom sensors <https://github.com/nimbusproject/phantom-sensors>`_ that are included with the
 tcollector tarball.
+
+Domain Sensors
+==============
+
+If you would like to set up a sensor that is not associated with a particular
+hostname, that is simple as well. You may want to do this if you would like to
+scale based on some external metric, like say you had a system set up with 
+Torque on a static headnode, and you set Phantom up to scale based on your 
+queue length. 
+
+Installing tcollector
+---------------------
+
+Installing tcollector to use as a domain sensor is simple, and very similar to
+installing it on your VM image. 
+
+tcollector requires that you have (at least) Python 2.6 installed on your VM image. This can generally be installed with your distribution's package manager, or built from source from `python.org <http://python.org/>`_.
+
+Once you have Python installed, you can install it like so::
+
+    # wget http://build.nimbusproject.org:8000/tcollector/master/tcollector-HEAD.tar.gz
+    # tar xzvf tcollector-HEAD.tar.gz
+    # mv tcollector /usr/local/tcollector
+
+That's it! You can start tcollector like so to test it::
+
+    # /usr/local/tcollector/tcollector.py --host nimbus-opentsdb.no-ip.org --port 4242
+
+Now to make tcollector start on system start, you can use the provided startstop script. Install it like so::
+
+    # cp /usr/local/tcollector/startstop /etc/init.d/tcollector
+
+Open up the script and set the TSD_HOST variable to point to the Phantom
+OpenTSDB installation::
+
+    # vim /etc/init.d/tcollector
+
+Line 5 should look like::
+
+    TSD_HOST=nimbus-opentsdb.no-ip.org
+
+You can confirm that you've set this right by running the following, and
+verifying that the output is the same::
+
+    # grep 'TSD_HOST=' /etc/init.d/tcollector
+    TSD_HOST=nimbus-opentsdb.no-ip.org
+
+Configuring tcollector for your Domain
+--------------------------------------
+
+Now that you have tcollector installed, you can configure it to push metrics 
+for your domain. To do this, open up the configuration as follows:
+
+    # vim /usr/local/tcollector/collectors/etc/config.py
+
+and set the USER and DOMAIN lines to your Phantom username and Domain, by
+removing the leading '#' and setting the correct values. Check your values with:
+
+    # egrep '^USER|^DOMAIN' /usr/local/tcollector/collectors/etc/config.py
+    USER = "iamauser"
+    DOMAIN = "iamadomain"
+
+You will probably also want to remove the existing metrics, since they probably
+won't be helpful to your domain. You can do this with:
+
+   # rm /usr/local/tcollector/collectors/0/*
+
+You can now place your custom domain collector into your tcollector install:
+
+  # cp mycollector.py /usr/local/tcollector/collectors/0/
+
