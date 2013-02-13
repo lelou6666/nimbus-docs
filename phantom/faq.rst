@@ -9,32 +9,98 @@ Nimbus Phantom Frequently Asked Questions
 What is the Nimbus Phantom Service?
 ===================================
 
-The Nimbus Phantom service is software-as-a-service for the 
-scientific community.
-The goal of this service is to make it easier to use the cloud for scientific
-applications.  Virtualization adds amazing elastic scaling
-possibilities that scientific applications can leverage. However, in the 
-current state of the industry, users must be virtualization experts
-in order to do so.  This service provides an easy to use interface to the 
-elasticity of the cloud.
+The Nimbus Phantom service is a hosted service that makes it easy to leverage
+on-demand resources provided by infrastructure clouds. Phantom allows the user
+to easily deploy a set of virtual machines over multiple private, community,
+and commercial clouds and then automatically grows or shrinks this set based on
+policies defined by the user. This functionality can be used to implement
+elastic services (growing and shrinking to demand) or highly available services
+(where failed resources always get restarted).  Phantom itself has been
+implemented as a highly available service.
 
-What is Phantom?
-================
+Where can I work with Phantom?
+==============================
 
-Phantom was the original code name for this project.  It remains used 
-by the development community in conversation and is thus referenced in
-documentation as well.
+Phantom is currently being released as a service deployed on `FutureGrid
+<https://futuregrid.org/>`_ and is freely available to all comers via an
+easy-to-use web interface.  Instructions on :doc:`how to get an account </webapp>` and a
+:doc:`quickstart </webapp>` are available.
 
-How is the software licensed?
-=============================
+Another instantiation of Phantom is being operated by the `Ocean Observatory
+Initiative project <http://www.oceanobservatories.org/>`_ whose infrastructure
+is built on its capabilities; however this version is only available to users
+within that project.
 
-Nimbus code is licensed under the terms of the `Apache License, version 2 <http://www.apache.org/licenses/LICENSE-2.0>`_.
+How can I use Phantom?
+======================
 
-Where is the source code?
+Most users use Phantom to enhance a specific application, such as a job
+scheduler, a workflow engine, a data transfer service, or a caching service.
+For example, a job scheduler may want to increase the number of available
+resources in proportion to the size of a job queue. In this case, a sensor
+agent monitors the length of the job queue overtime and directs Phantom to add
+resources as needed. The resources are added to the set available to the job
+scheduler so that jobs can be run on them. When the length of the scheduler’s
+queue goes below a certain threshold the resources are relinquished. One such
+scenario was described in `Elastic Site: Using Clouds to Elastically Extend
+Site Resources
+<http://www.nimbusproject.org/files/elasticsite_ccgrid_2010.pdf>`_.
+
+Similarly, a caching service, implemented as a set of workers that fetch data
+from a remote location and cache them locally may want to acquire additional
+resources  and start up additional workers based on the number of requests it
+receives. In this case, a sensor agent monitors the number of requests to the
+service and provisions additional resources as needed.
+
+In both cases, additional resources can also be provided based on examining the
+load and other system properties of used resources.
+
+What clouds can I use with Phantom?
+===================================
+
+Phantom is currently in active use with AWS EC2, OpenStack, and Nimbus clouds.
+However this is primarily an operational choice reflecting popularity among our
+users; Phantom can be configured to run against any infrastructure cloud
+supported by `Apache Libcloud <http://libcloud.apache.org/>`_.
+
+What clients can I use with Phantom?
+====================================
+
+Phantom currently provides a :doc:`Web Application </webapp>` as well as a
+scripting client.  Since Phantom implements the `AWS Autoscaling API
+<http://docs.aws.amazon.com/AutoScaling/latest/APIReference/Welcome.html>`_ you
+can simply use the `boto Autoscale client
+<http://boto.cloudhackers.com/en/latest/autoscale_tut.html>`_ for scripting.
+Documentation on how to use the web application is available in our
+:doc:`Quickstart Guide </webapp>` and the documentation on how to use scripting
+in our :doc:`Advanced Documentation </advanced>`.
+
+For developers, Phantom also provides an `AMQP <http://www.amqp.org/>`_
+interface.
+
+How can I extend Phantom?
 =========================
 
-All of the source code can be found on 
-`GitHub <https://github.com/nimbusproject/>`_.  
+Phantom can be extended by developing new *Decision Engines* – components that
+determine the behavior of the service. Most users extend Phantom by developing
+an *external Decision Engine*, i.e. an agent that monitors a desired behavior
+(potentially based on data provided by Phantom), makes decisions on how to
+evolve a group of VMs, and then calls out to Phantom to enforce those
+decisions.
+
+Decision Engines that capture frequently occurring behaviors, such as
+regulating deployment over multiple cloud or scaling based on frequently
+considered system factors such as load, are captured by *internal Decision
+Engines*. Those are contributed to Phantom code directly and, like every open
+source contribution, require review.
+
+
+Is the software for Phantom available?
+======================================
+
+The software is freely available on
+`GitHub <https://github.com/nimbusproject/>`_, licensed under the terms of the
+`Apache License, Version 2.0 <http://www.apache.org/licenses/LICENSE-2.0>`_
 It is stored in several different repositories including:
 
 * `Phantom Autoscale API <https://github.com/nimbusproject/Phantom>`_,
@@ -43,56 +109,18 @@ It is stored in several different repositories including:
 * `ceiclient <https://github.com/nimbusproject/ceiclient>`_,
 * `epu <https://github.com/ooici/epu>`_
 
-Where is this service running?
-==============================
-
-The service is running on the University of Chicago FutureGrid resources.
-The hardware is located at `Argonne National Lab <http://www.anl.gov>`_.
-The vast majority of the services are run inside of VMs on the Nimbus 
-cloud called "hotel".  This allows us to provide a highly available 
-and scalable service.
-
-How is this serviced released?
-==============================
-
-This application is currently being released as a service.  The 
-software is freely available on GitHub, but at this time no formal 
+However, at this time Phantom is primarily available as a service and no formal
 releases are being packaged and announced.
 
-Is this service highly available?
-=================================
+Where can I find out more about how to use Phantom?
+===================================================
 
-Much care and expertise went into designing a scalable and highly 
-available service.  Of course there are some practical limits based
-on our available hardware and maintenance schedules.
+Our :doc:`Quickstart </webapp>` guide is a good place to start and our
+:doc:`Advanced Documentation </advanced>` will take you further.
 
-Can I use this service to scale any cloud?
-==========================================
+Where can I find out more about Phantom architecture?
+=====================================================
 
-This service was designed to run against any cloud that speaks
-the AWS EC2 query interface protocol.  This includes Nimbus, OpenStack,
-AWS EC2, and Eucalyptus.  The service has been tested in scale against
-Nimbus and EC2.  A project known as `the Ocean Observatories Initiative 
-<http://www.oceanobservatories.org/>`_ uses it heavily against EC2.
-However, the hosted version running on FutureGrid can only be used 
-against the FutureGrid Nimbus clouds.  This is an operations choice,
-not a software limitation.
-
-Is there an easy to use web application?
-=========================================
-
-Yes.  Please use it!  It can be found at: 
-https://svc.uc.futuregrid.org:8440/phantom
-
-What is FutureGrid?
-===================
-
-FutureGrid is a community cloud which provides free services for qualifying
-applications.  More information about FutureGrid can be found 
-`here <http://www.futuregrid.org>`_.
-
-How can I get a FutureGrid account?
-===================================
-
-You can apply for a `FutureGrid  <http://www.futuregrid.org>`_ account
-`here <https://portal.futuregrid.org/user/register>`_.
+The architecture has been described in `Infrastructure Outsourcing in
+Multi-Cloud Environment
+<http://www.nimbusproject.org/files/keahey_wcs_ocs_2012.pdf>`_.
