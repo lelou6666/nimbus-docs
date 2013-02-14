@@ -124,23 +124,30 @@ Configuring tcollector for your Domain
 --------------------------------------
 
 Now that you have tcollector installed, you can configure it to push metrics 
-for your domain. To do this, open up the configuration as follows:
+for your domain. To do this, open up the configuration as follows::
 
     # vim /usr/local/tcollector/collectors/etc/config.py
 
 and set the USER and DOMAIN lines to your Phantom username and Domain, by
-removing the leading '#' and setting the correct values. Check your values with:
+removing the leading '#' and setting the correct values. Check your values with::
 
     # egrep '^USER|^DOMAIN' /usr/local/tcollector/collectors/etc/config.py
     USER = "iamauser"
     DOMAIN = "iamadomain"
 
 You will probably also want to remove the existing metrics, since they probably
-won't be helpful to your domain. You can do this with:
+won't be helpful to your domain. You can do this with::
 
    # rm /usr/local/tcollector/collectors/0/*
 
-You can now place your custom domain collector into your tcollector install:
+You can now place your custom domain collector into your tcollector install::
 
   # cp mycollector.py /usr/local/tcollector/collectors/0/
 
+Using Domain Metrics with Phantom
+---------------------------------
+
+Use these metrics in the same way you use regular host metrics, but prefix the
+name of the metric with "domain:" for example, with a metric named 
+*my.domain.metric*, use "domain:my.domain.metric" when adding the sensor, the 
+same way that is explained in the :doc:`webapp`.
