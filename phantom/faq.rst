@@ -10,12 +10,9 @@ What is the Nimbus Phantom Service?
 ===================================
 
 The Nimbus Phantom service is a hosted service that makes it easy to leverage
-on-demand resources provided by infrastructure clouds. Phantom allows the user
-to easily deploy a set of virtual machines over multiple private, community,
-and commercial clouds and then automatically grows or shrinks this set based on
-policies defined by the user. This functionality can be used to implement
-elastic services (growing and shrinking to demand) or highly available services
-(where failed resources always get restarted).  Phantom itself has been
+on-demand resources provided by infrastructure clouds. 
+Phantom allows the user to easily deploy a set of virtual machines over multiple private, community, and commercial clouds and then automatically grows or shrinks this set based on policies defined by the user. The user can also supplement resources in a local cluster with cloud resources. Phantom can then be used to implement elastic services (growing and shrinking to demand) or highly available services (where failed resources always get restarted).
+Phantom itself has been
 implemented as a highly available service.
 
 Where can I work with Phantom?
@@ -37,9 +34,11 @@ How can I use Phantom?
 Most users use Phantom to enhance a specific application, such as a job
 scheduler, a workflow engine, a data transfer service, or a caching service.
 For example, a job scheduler may want to increase the number of available
-resources in proportion to the size of a job queue. In this case, a sensor
-agent monitors the length of the job queue overtime and directs Phantom to add
-resources as needed. The resources are added to the set available to the job
+resources in proportion to the size of a job queue. 
+In this case, a sensor agent monitors the length of the job queue overtime and
+directs Phantom to add resources as needed; the added resources can be
+supplementing a local cluster or other resources provisioned in the cloud.
+The resources are added to the set available to the job
 scheduler so that jobs can be run on them. When the length of the scheduler’s
 queue goes below a certain threshold the resources are relinquished. One such
 scenario was described in `Elastic Site: Using Clouds to Elastically Extend
