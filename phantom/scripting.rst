@@ -3,7 +3,7 @@ Scripting with the Phantom Autoscale API
 ===========================
 
 Phantom uses the AWS Autoscaling protocol, and we
-`boto <https://github.com/buzztroll/boto>`_ for scripting Phantom.
+`boto <https://github.com/boto/boto>`_ for scripting Phantom.
 On this page we will describe
 some simple boto applications for interacting with Phantom.
 
@@ -31,13 +31,10 @@ For convenience store those values in the following environment variables::
 Installing boto
 ==============
 
-We recommend using boto to interact with Phantom Autoscale API.  Unfortunately
-the latest released version of boto does not yet include a needed
-patch, so we have created a fork which implements this patch
-`on github <https://github.com/buzztroll/boto/tree/asgcreatetags>`_.
+We recommend using boto to interact with Phantom Autoscale API.
 
 .. warning:: 
-   You *must* install the `patched version <https://github.com/buzztroll/boto/tree/asgcreatetags>`_ of boto or your scripts *will not work*. Please follow the instructions below exactly.
+   You *must* use boto 2.7.0 or greater.
 
 To get started, create a new
 `virtual environment <http://pypi.python.org/pypi/virtualenv>`_ and install
@@ -50,10 +47,10 @@ boto into it.  The following commands should do this for you::
 
     $ source phantom/bin/activate
 
-    $ pip install https://github.com/buzztroll/boto/archive/asgcreatetags.zip
-    Downloading/unpacking https://github.com/buzztroll/boto/archive/asgcreatetags.zip
-      Downloading asgcreatetags.zip (930Kb): 930Kb downloaded
-      Running setup.py egg_info for package from https://github.com/buzztroll/boto/archive/asgcreatetags.zip
+    $ pip install boto
+    Downloading/unpacking boto
+      Downloading boto-2.8.0.tar.gz (743Kb): 743Kb downloaded
+        Running setup.py egg_info for package boto
 
     .......
 
@@ -136,4 +133,3 @@ Now we clean everything up::
     deleting AutoScaleGroup<testDomain1>
     $ python lc_delete.py testlc1@hotel
     $ python lc_delete.py testlc1@sierra
-
