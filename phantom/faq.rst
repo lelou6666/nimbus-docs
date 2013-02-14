@@ -11,7 +11,12 @@ What is the Nimbus Phantom Service?
 
 The Nimbus Phantom service is a hosted service that makes it easy to leverage
 on-demand resources provided by infrastructure clouds. 
-Phantom allows the user to easily deploy a set of virtual machines over multiple private, community, and commercial clouds and then automatically grows or shrinks this set based on policies defined by the user. The user can also supplement resources in a local cluster with cloud resources. Phantom can then be used to implement elastic services (growing and shrinking to demand) or highly available services (where failed resources always get restarted).
+Phantom allows the user to easily deploy a set of virtual machines over
+multiple private, community, and commercial clouds and then automatically grows
+or shrinks this set based on policies defined by the user. The user can also
+supplement resources in a local cluster with cloud resources. Phantom can then
+be used to implement elastic services (growing and shrinking to demand) or
+highly available services (where failed resources always get restarted).
 Phantom itself has been
 implemented as a highly available service.
 
@@ -122,4 +127,7 @@ Where can I find out more about Phantom architecture?
 
 The architecture has been described in `Infrastructure Outsourcing in
 Multi-Cloud Environment
-<http://www.nimbusproject.org/files/keahey_wcs_ocs_2012.pdf>`_.
+<http://www.nimbusproject.org/files/keahey_wcs_ocs_2012.pdf>`_. Our `other
+publications <http://www.nimbusproject.org/papers/>`_ also describe the effect
+of various policies on resource scaling in multi-cloud environment and explore
+relevant techniques. 
