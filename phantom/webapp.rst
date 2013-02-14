@@ -3,7 +3,7 @@ Phantom Quickstart
 ==================
 
 The best way to get familiar with Phantom is to
-`try it out <https://svc.uc.futuregrid.org:8440/phantom>`_.
+`try it out <https://phantom.nimbusproject.org/>`_.
 
 * `Getting Access`_
 * `Login`_
@@ -34,7 +34,7 @@ your account will be created and you can use this account to test Phantom.
 If you find Phantom useful, you can create your own FutureGrid project,
 which you can use for any project you like.
 
-Once you have set up your account, log on to `Phantom <https://svc.uc.futuregrid.org:8440/>`_.
+Once you have set up your account, log on to `Phantom <https://phantom.nimbusproject.org/>`_.
 
 Login
 =====
@@ -46,7 +46,7 @@ You will first be presented with a login screen:
    :width: 502
 
 If you have forgotten your account information you can click on the 
-`Forgot Password <https://svc.uc.futuregrid.org:8440/accounts/reset_password/>`_
+`Forgot Password <https://phantom.nimbusproject.org/accounts/reset_password/>`_
 link.  After logging in you will see the home page:
 
 .. image:: images/phantom_home.png
@@ -63,7 +63,7 @@ your Phantom password here, and more importantly, you can set up your credential
 with each cloud you use.
 
 To set up your cloud credentials, 
-go to your `Profile <https://svc.uc.futuregrid.org:8440/phantom/profile>`_
+go to your `Profile <https://phantom.nimbusproject.org/phantom/profile>`_
 page and add your cloud credentials for each cloud you intend to use:
 
 .. image:: images/phantom_profile.png
@@ -76,7 +76,7 @@ you can add your credentials:
 Adding EC2 Credentials
 ----------------------
 
-1. Visit your `profile <https://svc.uc.futuregrid.org:8440/phantom/profile#cloud-credentials>`_
+1. Visit your `profile <https://phantom.nimbusproject.org/phantom/profile#cloud-credentials>`_
 2. Select the EC2 cloud
 3. Add your access key
 4. Add your secret key
@@ -96,7 +96,7 @@ which clouds. You will provide an ordering for the list of clouds to start VMs
 on.
 
 Go to the 
-`Launch Configurations <https://svc.uc.futuregrid.org:8440/phantom/launchconfig>`_
+`Launch Configurations <https://phantom.nimbusproject.org/phantom/launchconfig>`_
 page:
 
 .. image:: images/phantom_lc.png
@@ -145,7 +145,7 @@ Now that you have set up your credentials and created a launch configuration,
 you can launch and manage domains that will launch and monitor VMs for you.
 
 To launch a new domain, go to the 
-`domains <https://svc.uc.futuregrid.org:8440/phantom/domain>`_
+`domains <https://phantom.nimbusproject.org/phantom/domain>`_
 page:
 
 .. image:: images/phantom_domain.png

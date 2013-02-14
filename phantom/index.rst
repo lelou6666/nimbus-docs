@@ -17,7 +17,7 @@ VMs that are running on the many clouds of FutureGrid as well as EC2.
 .. toctree::
     :maxdepth: 1
 
-    Phantom <https://svc.uc.futuregrid.org:8440/>
+    Phantom <https://phantom.nimbusproject.org/>
     Phantom Quickstart <webapp>
     Phantom Advanced Documentation <advanced>
     Phantom FAQ <faq>
