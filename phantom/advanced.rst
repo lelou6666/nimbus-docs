@@ -12,3 +12,4 @@ you through these more advanced topics.
     sensors
     protocol
     scripting
+    buildingadecisionengine
