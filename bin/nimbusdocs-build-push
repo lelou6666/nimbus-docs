@@ -12,7 +12,7 @@ from fabric.api import lcd, cd, local, settings, run
 # hardcoding project/version pairs here now, should be from config file
 # a version of None means docs are pushed into the top level directory of
 # the project.
-ALL_PROJECTS = [('cloudinitd', '1.2'), ('ctxbroker', '2.8'), ('nimbus', None), ('epu', '0.5'), ('phantom', '0.2')]
+ALL_PROJECTS = [('cloudinitd', '1.2'), ('ctxbroker', '2.10.1'), ('nimbus', None), ('epu', '0.5'), ('phantom', '0.2')]
 PROJECT_VERSIONS = dict(ALL_PROJECTS)
 
 REMOTE_HOST = "login.mcs.anl.gov"

@@ -28,4 +28,7 @@ cloudinit.d
 Context Broker
 ==============
 
+* `v2.10.1 <http://www.nimbusproject.org/doc/ctxbroker/2.10.1>`_
+* `v2.10 <http://www.nimbusproject.org/doc/ctxbroker/2.10>`_
+* `v2.9 <http://www.nimbusproject.org/doc/ctxbroker/2.9>`_
 * `v2.8 <http://www.nimbusproject.org/doc/ctxbroker/2.8>`_
