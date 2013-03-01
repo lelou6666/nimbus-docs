@@ -82,7 +82,14 @@ Adding EC2 Credentials
 4. Add your secret key
 5. Click Save
 
-Phantom will now fetch your ssh keys from EC2. When this is done:
+Phantom will now fetch your ssh keys from EC2. If you haven't uploaded a key to
+the clouds you want to use, please follow the instructions for `EC2
+<http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/generating-a-keypair.html#how-to-generate-your-own-key-and-import-it-to-aws>`_
+and `FutureGrid OpenStack
+<https://portal.futuregrid.org/manual/using-openstack-futuregrid#key_management>`_.
+For Nimbus you can use `this script
+<https://gist.github.com/oldpatricka/3752775>`_ (requires Python and Boto).
+When this is done:
 
 6. Choose an ssh keyname for your VMs
 7. Click Save again
