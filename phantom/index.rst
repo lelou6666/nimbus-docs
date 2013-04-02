@@ -21,7 +21,9 @@ VMs that are running on the many clouds of FutureGrid as well as EC2.
     Phantom Quickstart <webapp>
     Phantom Advanced Documentation <advanced>
     Phantom FAQ <faq>
-    
+ 
+If you have any questions about Phantom, please join the `nimbus-phantom
+mailing list <https://lists.mcs.anl.gov/mailman/listinfo/nimbus-phantom/>`_.
 
 For additional details about Phantom please see our 
 `Infrastructure Outsourcing in Multi-Cloud Environment publication 
