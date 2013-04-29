@@ -385,7 +385,7 @@ Domain Resources
         {
           "id": "myfirstdomain",
           "de_name": "multicloud",
-          "lc_name": "myfirstlc",
+          "launchconfiguration": "/api/v0.1/launchconfigurations/myfirstlc",
           "vm_count": 1,
           "uri": "/api/v0.1/domains/myfirstdomain"
         }
@@ -431,7 +431,7 @@ Domain Resources
       {
         "id": "myseconddomain",
         "de_name": "sensor",
-        "lc_name": "mysecondlc",
+        "launchconfiguration": "/api/v0.1/launchconfigurations/mysecondlc",
         "monitor_sensors": "proc.loadavg.1min,df.inodes.free",
         "sensor_minimum_vms": 1,
         "sensor_maximum_vms": 10,
@@ -484,7 +484,7 @@ Domain Resources
       {
         "id": "myseconddomain",
         "de_name": "sensor",
-        "lc_name": "mysecondlc",
+        "launchconfiguration": "/api/v0.1/launchconfigurations/mysecondlc",
         "monitor_sensors": "proc.loadavg.1min,df.inodes.free",
         "sensor_minimum_vms": 1,
         "sensor_maximum_vms": 5,
