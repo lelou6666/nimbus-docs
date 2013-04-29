@@ -519,3 +519,64 @@ Domain Resources
       Content-Type: application/json
 
    :statuscode 204: domain terminated
+
+
+Instances Resources
+===================
+
+Each domain can have a number of instances attached to it.
+
+.. http:get:: /api/v0.1/domains/(domain_id)/instances
+
+   List all instances attached to the domain `domain_id`
+
+   **Example request**:
+
+   .. sourcecode:: http
+
+      GET /api/v0.1/domains/myfirstdomain/instances HTTP/1.1
+      Host: phantom.nimbusproject.org
+      Accept: application/json
+
+   **Example response**:
+
+   .. sourcecode:: http
+
+      HTTP/1.1 200 OK
+      Content-Type: application/json
+
+      [
+        {
+          "instance_id": "i-75c0b81b",
+          "lifecycle_state": "400-PENDING",
+          "hostname": "vm-25.sdsc.futuregrid.org",
+          "cloud": "/api/v0.1/sites/sierra",
+          "image_id": "hello-phantom.gz",
+          "instance_type": "m1.small",
+          "keyname": "phantomkey",
+          "uri": "/api/v0.1/domains/myfirstdomain/instances/i-75c0b81b"
+        }
+      ]
+
+   :statuscode 200: no error
+
+.. http:delete:: /api/v0.1/domains/(domain_id)/instances/(instance_id)
+
+   Terminate the instance `instance_id` within the domain `domain_id`
+
+   **Example request**:
+
+   .. sourcecode:: http
+
+      DELETE /api/v0.1/domains/myfirstdomain/instances/i-75c0b81b HTTP/1.1
+      Host: phantom.nimbusproject.org
+      Accept: application/json
+
+   **Example response**:
+
+   .. sourcecode:: http
+
+      HTTP/1.1 204 No Content
+      Content-Type: application/json
+
+   :statuscode 204: instance terminated
