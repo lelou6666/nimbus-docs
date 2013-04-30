@@ -11,7 +11,7 @@ Site Resources
 
 .. http:get:: /api/v0.1/sites
 
-   List all clouds known to the authenticated user
+   List all clouds known to the authenticated user, and their details
 
    **Example request**:
 
@@ -47,6 +47,34 @@ Site Resources
       ]
 
    :statuscode 200: no error
+
+.. http:get:: /api/v0.1/sites/(cloud_id)
+
+   Get details for the cloud `cloud_id`
+
+   **Example request**:
+
+   .. sourcecode:: http
+
+      GET /api/v0.1/sites/hotel HTTP/1.1
+      Host: phantom.nimbusproject.org
+      Accept: application/json
+
+   **Example response**:
+
+   .. sourcecode:: http
+
+      HTTP/1.1 200 OK
+      Content-Type: application/json
+
+      {
+        "id": "hotel",
+        "credentials": "/api/v0.1/credentials/hotel",
+        "uri": "/api/v0.1/sites/hotel"
+      }
+
+   :statuscode 200: no error
+   :statuscode 404: cloud is unknown
 
 
 Credentials Resources
@@ -89,6 +117,36 @@ Credentials Resources
       ]
 
    :statuscode 200: no error
+
+.. http:get:: /api/v0.1/credentials/(cloud_id)
+
+   Get cloud credentials for the cloud `cloud_id`
+
+   **Example request**:
+
+   .. sourcecode:: http
+
+      GET /api/v0.1/credentials/hotel HTTP/1.1
+      Host: phantom.nimbusproject.org
+      Accept: application/json
+
+   **Example response**:
+
+   .. sourcecode:: http
+
+      HTTP/1.1 200 OK
+      Content-Type: application/json
+
+      {
+        "id": "hotel",
+        "access_key": "hotel_access_key_id",
+        "secret_key": "hotel_secret_access_key",
+        "key_name": "phantom_ssh_key",
+        "uri": "/api/v0.1/credentials/hotel"
+      }
+
+   :statuscode 200: no error
+   :statuscode 404: cloud is unknown
 
 .. http:post:: /api/v0.1/credentials
 
@@ -234,6 +292,51 @@ Launch Configuration Resources
       ]
 
    :statuscode 200: no error
+
+.. http:get:: /api/v0.1/launchconfigurations/(launchconfiguration_id)
+
+   Get details for the launch configuration `launch_configuration_id`
+
+   **Example request**:
+
+   .. sourcecode:: http
+
+      GET /api/v0.1/launchconfigurations/myfirstlc HTTP/1.1
+      Host: phantom.nimbusproject.org
+      Accept: application/json
+
+   **Example response**:
+
+   .. sourcecode:: http
+
+      HTTP/1.1 200 OK
+      Content-Type: application/json
+
+      {
+        "id": "myfirstlc",
+        "cloud_params": {
+          "hotel": {
+            "image_id": "hello-phantom.gz",
+            "instance_type": "m1.small",
+            "max_vms": 16,
+            "common": true,
+            "rank": 1,
+            "user_data": null
+          },
+          "ec2": {
+            "image_id": "ami-deadbeef",
+            "instance_type": "m1.small",
+            "max_vms": -1,
+            "common": false,
+            "rank": 2,
+            "user_data": null
+          }
+        },
+        "uri": "/api/v0.1/launchconfigurations/myfirstlc"
+      }
+
+   :statuscode 200: no error
+   :statuscode 404: launch configuration is unknown
 
 .. http:post:: /api/v0.1/launchconfigurations
 
@@ -392,6 +495,36 @@ Domain Resources
       ]
 
    :statuscode 200: no error
+
+.. http:get:: /api/v0.1/domains/(domain_id)
+
+   Get details for the domain `domain_id`
+
+   **Example request**:
+
+   .. sourcecode:: http
+
+      GET /api/v0.1/domains/myfirstdomain HTTP/1.1
+      Host: phantom.nimbusproject.org
+      Accept: application/json
+
+   **Example response**:
+
+   .. sourcecode:: http
+
+      HTTP/1.1 200 OK
+      Content-Type: application/json
+
+      {
+        "id": "myfirstdomain",
+        "de_name": "multicloud",
+        "launchconfiguration": "/api/v0.1/launchconfigurations/myfirstlc",
+        "vm_count": 1,
+        "uri": "/api/v0.1/domains/myfirstdomain"
+      }
+
+   :statuscode 200: no error
+   :statuscode 404: domain is unknown
 
 .. http:post:: /api/v0.1/domains
 
@@ -559,6 +692,39 @@ Each domain can have a number of instances attached to it.
       ]
 
    :statuscode 200: no error
+
+.. http:get:: /api/v0.1/domains/(domain_id)/instances/(instance_id)
+
+   Get details for the instance `instance_id` attached to the domain `domain_id`
+
+   **Example request**:
+
+   .. sourcecode:: http
+
+      GET /api/v0.1/domains/myfirstdomain/instances/i-75c0b81b HTTP/1.1
+      Host: phantom.nimbusproject.org
+      Accept: application/json
+
+   **Example response**:
+
+   .. sourcecode:: http
+
+      HTTP/1.1 200 OK
+      Content-Type: application/json
+
+      {
+        "instance_id": "i-75c0b81b",
+        "lifecycle_state": "400-PENDING",
+        "hostname": "vm-25.sdsc.futuregrid.org",
+        "cloud": "/api/v0.1/sites/sierra",
+        "image_id": "hello-phantom.gz",
+        "instance_type": "m1.small",
+        "keyname": "phantomkey",
+        "uri": "/api/v0.1/domains/myfirstdomain/instances/i-75c0b81b"
+      }
+
+   :statuscode 200: no error
+   :statuscode 404: instance is unknown
 
 .. http:delete:: /api/v0.1/domains/(domain_id)/instances/(instance_id)
 
