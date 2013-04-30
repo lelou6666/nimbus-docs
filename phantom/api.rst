@@ -185,7 +185,7 @@ Credentials Resources
         "uri": "/api/v1.0/credentials/sierra"
       }
 
-.. http:put:: /api/v1.0/credentials/(site_id)
+.. http:put:: /api/v1.0/credentials/(cloud_id)
 
    Update cloud credentials
 
@@ -222,9 +222,9 @@ Credentials Resources
         "uri": "/api/v1.0/credentials/ec2"
       }
 
-.. http:delete:: /api/v1.0/credentials/(site_id)
+.. http:delete:: /api/v1.0/credentials/(cloud_id)
 
-   Delete cloud credentials
+   Delete cloud credentials for the cloud `cloud_id`
 
    :statuscode 204: credentials deleted
 
