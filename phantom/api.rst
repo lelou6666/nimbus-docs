@@ -152,6 +152,10 @@ Credentials Resources
 
    Save new cloud credentials
 
+   :jsonparameter id: ID of the cloud
+   :jsonparameter access_key: the access key ID for this cloud
+   :jsonparameter secret_key: the secret access key for this cloud
+   :jsonparameter key_name: the SSH key pair that will be used on this cloud
    :statuscode 201: credentials saved
 
    **Example request**:
