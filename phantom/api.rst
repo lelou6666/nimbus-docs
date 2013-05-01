@@ -253,7 +253,7 @@ Launch Configuration Resources
 
 .. http:get:: /api/v1.0/launchconfigurations
 
-   List all launch configurations for the authenticated user
+   List all launch configurations known to the authenticated user
 
    :statuscode 200: no error
 
@@ -274,7 +274,8 @@ Launch Configuration Resources
 
       [
         {
-          "id": "myfirstlc",
+          "id": "fcfe9272-d03f-48e4-bd5f-4eb50ec396c7",
+          "name": "myfirstlc",
           "cloud_params": {
             "hotel": {
               "image_id": "hello-phantom.gz",
@@ -291,9 +292,10 @@ Launch Configuration Resources
               "common": false,
               "rank": 2,
               "user_data": null
-            }
+            },
           },
-          "uri": "/api/v1.0/launchconfigurations/myfirstlc"
+          "owner": "johndoe",
+          "uri": "/api/v1.0/launchconfigurations/fcfe9272-d03f-48e4-bd5f-4eb50ec396c7"
         }
       ]
 
@@ -308,7 +310,7 @@ Launch Configuration Resources
 
    .. sourcecode:: http
 
-      GET /api/v1.0/launchconfigurations/myfirstlc HTTP/1.1
+      GET /api/v1.0/launchconfigurations/fcfe9272-d03f-48e4-bd5f-4eb50ec396c7 HTTP/1.1
       Host: phantom.nimbusproject.org
       Accept: application/json
 
@@ -320,7 +322,8 @@ Launch Configuration Resources
       Content-Type: application/json
 
       {
-        "id": "myfirstlc",
+        "id": "fcfe9272-d03f-48e4-bd5f-4eb50ec396c7",
+        "name": "myfirstlc",
         "cloud_params": {
           "hotel": {
             "image_id": "hello-phantom.gz",
@@ -339,7 +342,8 @@ Launch Configuration Resources
             "user_data": null
           }
         },
-        "uri": "/api/v1.0/launchconfigurations/myfirstlc"
+        "owner": "johndoe",
+        "uri": "/api/v1.0/launchconfigurations/fcfe9272-d03f-48e4-bd5f-4eb50ec396c7"
       }
 
 .. http:post:: /api/v1.0/launchconfigurations
@@ -357,7 +361,7 @@ Launch Configuration Resources
       Accept: application/json
 
       {
-        "id": "mysecondlc",
+        "name": "mysecondlc",
         "cloud_params": {
           "hotel": {
             "image_id": "hello-cloud",
@@ -376,10 +380,11 @@ Launch Configuration Resources
 
       HTTP/1.1 201 Created
       Content-Type: application/json
-      Location: /api/v1.0/launchconfigurations/mysecondlc
+      Location: /api/v1.0/launchconfigurations/e99be9d3-8f09-4a6c-bb17-b00efd0d06df
 
       {
-        "id": "mysecondlc",
+        "id": "e99be9d3-8f09-4a6c-bb17-b00efd0d06df",
+        "name": "mysecondlc",
         "cloud_params": {
           "hotel": {
             "image_id": "hello-cloud",
@@ -390,7 +395,8 @@ Launch Configuration Resources
             "user_data": "Hello World"
           }
         },
-        "uri": "/api/v1.0/launchconfigurations/mysecondlc"
+        "owner": "johndoe",
+        "uri": "/api/v1.0/launchconfigurations/e99be9d3-8f09-4a6c-bb17-b00efd0d06df"
       }
 
 .. http:put:: /api/v1.0/launchconfigurations/(launch_configuration_id)
@@ -403,12 +409,12 @@ Launch Configuration Resources
 
    .. sourcecode:: http
 
-      PUT /api/v1.0/launchconfigurations/mysecondlc HTTP/1.1
+      PUT /api/v1.0/launchconfigurations/e99be9d3-8f09-4a6c-bb17-b00efd0d06df HTTP/1.1
       Host: phantom.nimbusproject.org
       Accept: application/json
 
       {
-        "id": "mysecondlc",
+        "name": "mysecondlc",
         "cloud_params": {
           "hotel": {
             "image_id": "hello-cloud",
@@ -427,10 +433,11 @@ Launch Configuration Resources
 
       HTTP/1.1 200 OK
       Content-Type: application/json
-      Location: /api/v1.0/launchconfigurations/mysecondlc
+      Location: /api/v1.0/launchconfigurations/e99be9d3-8f09-4a6c-bb17-b00efd0d06df
 
       {
-        "id": "mysecondlc",
+        "id": "e99be9d3-8f09-4a6c-bb17-b00efd0d06df",
+        "name": "mysecondlc",
         "cloud_params": {
           "hotel": {
             "image_id": "hello-cloud",
@@ -441,7 +448,8 @@ Launch Configuration Resources
             "user_data": "Hello World"
           }
         },
-        "uri": "/api/v1.0/launchconfigurations/mysecondlc"
+        "owner": "johndoe",
+        "uri": "/api/v1.0/launchconfigurations/e99be9d3-8f09-4a6c-bb17-b00efd0d06df"
       }
 
 .. http:delete:: /api/v1.0/launchconfigurations/(launch_configuration_id)
@@ -454,7 +462,7 @@ Launch Configuration Resources
 
    .. sourcecode:: http
 
-      DELETE /api/v1.0/launchconfigurations/myfirstlc HTTP/1.1
+      DELETE /api/v1.0/launchconfigurations/fcfe9272-d03f-48e4-bd5f-4eb50ec396c7 HTTP/1.1
       Host: phantom.nimbusproject.org
       Accept: application/json
 
@@ -492,11 +500,13 @@ Domain Resources
 
       [
         {
-          "id": "myfirstdomain",
+          "id": "1f8112a3-4abd-4629-a1b5-33f78cff504a",
+          "name": "myfirstdomain",
           "de_name": "multicloud",
-          "launchconfiguration": "/api/v1.0/launchconfigurations/myfirstlc",
+          "launchconfiguration": "/api/v1.0/launchconfigurations/fcfe9272-d03f-48e4-bd5f-4eb50ec396c7",
           "vm_count": 1,
-          "uri": "/api/v1.0/domains/myfirstdomain"
+          "owner": "johndoe",
+          "uri": "/api/v1.0/domains/1f8112a3-4abd-4629-a1b5-33f78cff504a"
         }
       ]
 
@@ -511,7 +521,7 @@ Domain Resources
 
    .. sourcecode:: http
 
-      GET /api/v1.0/domains/myfirstdomain HTTP/1.1
+      GET /api/v1.0/domains/1f8112a3-4abd-4629-a1b5-33f78cff504a HTTP/1.1
       Host: phantom.nimbusproject.org
       Accept: application/json
 
@@ -523,11 +533,13 @@ Domain Resources
       Content-Type: application/json
 
       {
-        "id": "myfirstdomain",
+        "id": "1f8112a3-4abd-4629-a1b5-33f78cff504a",
+        "name": "myfirstdomain",
         "de_name": "multicloud",
-        "launchconfiguration": "/api/v1.0/launchconfigurations/myfirstlc",
+        "launchconfiguration": "/api/v1.0/launchconfigurations/fcfe9272-d03f-48e4-bd5f-4eb50ec396c7",
         "vm_count": 1,
-        "uri": "/api/v1.0/domains/myfirstdomain"
+        "owner": "johndoe",
+        "uri": "/api/v1.0/domains/1f8112a3-4abd-4629-a1b5-33f78cff504a"
       }
 
 .. http:post:: /api/v1.0/domains
@@ -545,7 +557,7 @@ Domain Resources
       Accept: application/json
 
       {
-        "id": "myseconddomain",
+        "name": "myseconddomain",
         "de_name": "sensor",
         "lc_name": "mysecondlc",
         "monitor_sensors": "proc.loadavg.1min,df.inodes.free",
@@ -565,12 +577,13 @@ Domain Resources
 
       HTTP/1.1 201 Created
       Content-Type: application/json
-      Location: /api/v1.0/domains/myseconddomain
+      Location: /api/v1.0/domains/bb03986c-ff70-4bc2-baec-10016e5db740
 
       {
-        "id": "myseconddomain",
+        "id": "bb03986c-ff70-4bc2-baec-10016e5db740",
+        "name": "myseconddomain",
         "de_name": "sensor",
-        "launchconfiguration": "/api/v1.0/launchconfigurations/mysecondlc",
+        "launchconfiguration": "/api/v1.0/launchconfigurations/e99be9d3-8f09-4a6c-bb17-b00efd0d06df",
         "monitor_sensors": "proc.loadavg.1min,df.inodes.free",
         "sensor_minimum_vms": 1,
         "sensor_maximum_vms": 10,
@@ -580,7 +593,8 @@ Domain Resources
         "sensor_scale_up_threshold": 1,
         "sensor_scale_up_vms": 1,
         "sensor_cooldown": 60
-        "uri": "/api/v1.0/domains/myseconddomain"
+        "owner": "johndoe",
+        "uri": "/api/v1.0/domains/bb03986c-ff70-4bc2-baec-10016e5db740"
       }
 
 .. http:put:: /api/v1.0/domains/(domain_id)
@@ -593,12 +607,12 @@ Domain Resources
 
    .. sourcecode:: http
 
-      PUT /api/v1.0/domains/mysecondomain HTTP/1.1
+      PUT /api/v1.0/domains/bb03986c-ff70-4bc2-baec-10016e5db740 HTTP/1.1
       Host: phantom.nimbusproject.org
       Accept: application/json
 
       {
-        "id": "myseconddomain",
+        "name": "myseconddomain",
         "de_name": "sensor",
         "lc_name": "mysecondlc",
         "monitor_sensors": "proc.loadavg.1min,df.inodes.free",
@@ -618,12 +632,13 @@ Domain Resources
 
       HTTP/1.1 200 OK
       Content-Type: application/json
-      Location: /api/v1.0/domains/myseconddomain
+      Location: /api/v1.0/domains/bb03986c-ff70-4bc2-baec-10016e5db740
 
       {
-        "id": "myseconddomain",
+        "id": "bb03986c-ff70-4bc2-baec-10016e5db740",
+        "name": "myseconddomain",
         "de_name": "sensor",
-        "launchconfiguration": "/api/v1.0/launchconfigurations/mysecondlc",
+        "launchconfiguration": "/api/v1.0/launchconfigurations/e99be9d3-8f09-4a6c-bb17-b00efd0d06df",
         "monitor_sensors": "proc.loadavg.1min,df.inodes.free",
         "sensor_minimum_vms": 1,
         "sensor_maximum_vms": 5,
@@ -633,7 +648,8 @@ Domain Resources
         "sensor_scale_up_threshold": 1,
         "sensor_scale_up_vms": 1,
         "sensor_cooldown": 60,
-        "uri": "/api/v1.0/domains/myseconddomain"
+        "owner": "johndoe",
+        "uri": "/api/v1.0/domains/bb03986c-ff70-4bc2-baec-10016e5db740"
       }
 
 .. http:delete:: /api/v1.0/domains/(domain_id)
@@ -646,7 +662,7 @@ Domain Resources
 
    .. sourcecode:: http
 
-      DELETE /api/v1.0/domains/myfirstdomain HTTP/1.1
+      DELETE /api/v1.0/domains/1f8112a3-4abd-4629-a1b5-33f78cff504a HTTP/1.1
       Host: phantom.nimbusproject.org
       Accept: application/json
 
@@ -673,7 +689,7 @@ Each domain can have a number of instances attached to it.
 
    .. sourcecode:: http
 
-      GET /api/v1.0/domains/myfirstdomain/instances HTTP/1.1
+      GET /api/v1.0/domains/1f8112a3-4abd-4629-a1b5-33f78cff504a/instances HTTP/1.1
       Host: phantom.nimbusproject.org
       Accept: application/json
 
@@ -686,14 +702,15 @@ Each domain can have a number of instances attached to it.
 
       [
         {
-          "instance_id": "i-75c0b81b",
+          "id": "87554432-f140-4722-86bf-1e3cdb04dcdd",
+          "iaas_instance_id": "i-75c0b81b",
           "lifecycle_state": "400-PENDING",
           "hostname": "vm-25.sdsc.futuregrid.org",
           "cloud": "/api/v1.0/sites/sierra",
           "image_id": "hello-phantom.gz",
           "instance_type": "m1.small",
           "keyname": "phantomkey",
-          "uri": "/api/v1.0/domains/myfirstdomain/instances/i-75c0b81b"
+          "uri": "/api/v1.0/domains/1f8112a3-4abd-4629-a1b5-33f78cff504a/instances/87554432-f140-4722-86bf-1e3cdb04dcdd"
         }
       ]
 
@@ -708,7 +725,7 @@ Each domain can have a number of instances attached to it.
 
    .. sourcecode:: http
 
-      GET /api/v1.0/domains/myfirstdomain/instances/i-75c0b81b HTTP/1.1
+      GET /api/v1.0/domains/1f8112a3-4abd-4629-a1b5-33f78cff504a/instances/87554432-f140-4722-86bf-1e3cdb04dcdd HTTP/1.1
       Host: phantom.nimbusproject.org
       Accept: application/json
 
@@ -720,14 +737,15 @@ Each domain can have a number of instances attached to it.
       Content-Type: application/json
 
       {
-        "instance_id": "i-75c0b81b",
+        "id": "87554432-f140-4722-86bf-1e3cdb04dcdd",
+        "iaas_instance_id": "i-75c0b81b",
         "lifecycle_state": "400-PENDING",
         "hostname": "vm-25.sdsc.futuregrid.org",
         "cloud": "/api/v1.0/sites/sierra",
         "image_id": "hello-phantom.gz",
         "instance_type": "m1.small",
         "keyname": "phantomkey",
-        "uri": "/api/v1.0/domains/myfirstdomain/instances/i-75c0b81b"
+        "uri": "/api/v1.0/domains/1f8112a3-4abd-4629-a1b5-33f78cff504a/instances/87554432-f140-4722-86bf-1e3cdb04dcdd"
       }
 
 .. http:delete:: /api/v1.0/domains/(domain_id)/instances/(instance_id)
@@ -740,7 +758,7 @@ Each domain can have a number of instances attached to it.
 
    .. sourcecode:: http
 
-      DELETE /api/v1.0/domains/myfirstdomain/instances/i-75c0b81b HTTP/1.1
+      DELETE /api/v1.0/domains/1f8112a3-4abd-4629-a1b5-33f78cff504a/instances/87554432-f140-4722-86bf-1e3cdb04dcdd HTTP/1.1
       Host: phantom.nimbusproject.org
       Accept: application/json
 
