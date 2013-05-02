@@ -768,3 +768,72 @@ Each domain can have a number of instances attached to it.
 
       HTTP/1.1 204 No Content
       Content-Type: application/json
+
+
+Sensors Resources
+=================
+
+Phantom provides a number of sensors that can be used for auto scaling.
+
+.. http:get:: /api/v1.0/sensors
+
+   List all sensors
+
+   :statuscode 200: no error
+
+   **Example request**:
+
+   .. sourcecode:: http
+
+      GET /api/v1.0/sensors HTTP/1.1
+      Host: phantom.nimbusproject.org
+      Accept: application/json
+
+   **Example response**:
+
+   .. sourcecode:: http
+
+      HTTP/1.1 200 OK
+      Content-Type: application/json
+
+      [
+        {
+          "id": "df.1kblocks.free",
+          "uri": "/api/v1.0/sensors/df.1kblocks.free"
+        },
+        {
+          "id": "df.1kblocks.total",
+          "uri": "/api/v1.0/sensors/df.1kblocks.total"
+        },
+        {
+          "id": "df.1kblocks.used",
+          "uri": "/api/v1.0/sensors/df.1kblocks.used"
+        }
+      ]
+
+.. http:get:: /api/v1.0/sensors/(sensor_id)
+
+   Get the sensor resource identified by `sensor_id`
+
+   :statuscode 200: no error
+   :statuscode 404: sensor is unknown
+
+   **Example request**:
+
+   .. sourcecode:: http
+
+      GET /api/v1.0/sensors/df.1kblocks.free HTTP/1.1
+      Host: phantom.nimbusproject.org
+      Accept: application/json
+
+   **Example response**:
+
+   .. sourcecode:: http
+
+      HTTP/1.1 200 OK
+      Content-Type: application/json
+
+      {
+        "id": "df.1kblocks.free",
+        "uri": "/api/v1.0/sensors/df.1kblocks.free"
+      }
