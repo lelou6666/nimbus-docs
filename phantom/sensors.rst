@@ -49,6 +49,17 @@ verifying that the output is the same::
     # grep 'TSD_HOST=' /etc/init.d/tcollector
     TSD_HOST=nimbus-opentsdb.no-ip.org
 
+You will now want to set this init script to start on boot. To do this on
+Debian or Ubuntu based distros, you will want to use `update-rc.d
+<http://manpages.ubuntu.com/manpages/precise/man8/update-rc.d.8.html>`_::
+
+    # update-rc.d tcollector defaults
+
+On Redhat based distros like CentOS and Scientific Linux, you will want to
+use `chkconfig <http://www.centos.org/docs/5/html/Deployment_Guide-en-US/s1-services-chkconfig.html>`_::
+
+    # /sbin/chkconfig --add tcollector
+
 Now save your image, and you're finished.
 
 Custom Sensors
@@ -119,6 +130,27 @@ verifying that the output is the same::
 
     # grep 'TSD_HOST=' /etc/init.d/tcollector
     TSD_HOST=nimbus-opentsdb.no-ip.org
+
+You will now want to set this init script to start on boot. To do this on
+Debian or Ubuntu based distros, you will want to use update-rc.d::
+
+    # update-rc.d tcollector defaults
+     Adding system startup for /etc/init.d/tcollector ...
+       /etc/rc0.d/K20tcollector -> ../init.d/tcollector
+       /etc/rc1.d/K20tcollector -> ../init.d/tcollector
+       /etc/rc6.d/K20tcollector -> ../init.d/tcollector
+       /etc/rc2.d/S20tcollector -> ../init.d/tcollector
+       /etc/rc3.d/S20tcollector -> ../init.d/tcollector
+       /etc/rc4.d/S20tcollector -> ../init.d/tcollector
+       /etc/rc5.d/S20tcollector -> ../init.d/tcollector
+
+On Redhat based distros like CentOS and Scientific Linux, you will want
+to use chkconfig::
+
+    # /sbin/chkconfig --add tcollector
+
+Now save your image, and you're finished.
+
 
 Configuring tcollector for your Domain
 --------------------------------------
