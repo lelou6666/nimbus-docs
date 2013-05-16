@@ -34,7 +34,8 @@ Installing boto
 We recommend using boto to interact with Phantom Autoscale API.
 
 .. warning:: 
-   You *must* use boto 2.7.0 or greater.
+   You *must* use boto 2.7.0 or greater, but not boto 2.9.3 which is
+   incompatible with the Phantom Autoscale API.
 
 To get started, create a new
 `virtual environment <http://pypi.python.org/pypi/virtualenv>`_ and install
@@ -47,10 +48,10 @@ boto into it.  The following commands should do this for you::
 
     $ source phantom/bin/activate
 
-    $ pip install boto
-    Downloading/unpacking boto
-      Downloading boto-2.8.0.tar.gz (743Kb): 743Kb downloaded
-        Running setup.py egg_info for package boto
+    $ pip install 'boto >= 2.7.0, < 2.9.3'
+    Downloading/unpacking boto>=2.7.0,<2.9.3
+      Downloading boto-2.9.2.tar.gz (875Kb): 875Kb downloaded
+      Running setup.py egg_info for package boto
 
     .......
 
