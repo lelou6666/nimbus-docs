@@ -505,6 +505,12 @@ Domain Resources
           "de_name": "multicloud",
           "launchconfiguration": "/api/v1.0/launchconfigurations/fcfe9272-d03f-48e4-bd5f-4eb50ec396c7",
           "vm_count": 1,
+          "sensor_data": {
+            "my.domain.sensor": {
+              "series": [0.0],
+              "average": 0.0
+            }
+          },
           "owner": "johndoe",
           "uri": "/api/v1.0/domains/1f8112a3-4abd-4629-a1b5-33f78cff504a"
         }
@@ -538,6 +544,12 @@ Domain Resources
         "de_name": "multicloud",
         "launchconfiguration": "/api/v1.0/launchconfigurations/fcfe9272-d03f-48e4-bd5f-4eb50ec396c7",
         "vm_count": 1,
+        "sensor_data": {
+          "my.domain.sensor": {
+            "series": [0.0],
+            "average": 0.0
+          }
+        },
         "owner": "johndoe",
         "uri": "/api/v1.0/domains/1f8112a3-4abd-4629-a1b5-33f78cff504a"
       }
@@ -709,6 +721,12 @@ Each domain can have a number of instances attached to it.
           "cloud": "/api/v1.0/sites/sierra",
           "image_id": "hello-phantom.gz",
           "instance_type": "m1.small",
+          "sensor_data": {
+            "proc.loadavg.1min": {
+              "series": [0.0],
+              "average": 0.0
+            }
+          },
           "keyname": "phantomkey",
           "uri": "/api/v1.0/domains/1f8112a3-4abd-4629-a1b5-33f78cff504a/instances/87554432-f140-4722-86bf-1e3cdb04dcdd"
         }
@@ -744,6 +762,12 @@ Each domain can have a number of instances attached to it.
         "cloud": "/api/v1.0/sites/sierra",
         "image_id": "hello-phantom.gz",
         "instance_type": "m1.small",
+        "sensor_data": {
+          "proc.loadavg.1min": {
+            "series": [0.0],
+            "average": 0.0
+          }
+        },
         "keyname": "phantomkey",
         "uri": "/api/v1.0/domains/1f8112a3-4abd-4629-a1b5-33f78cff504a/instances/87554432-f140-4722-86bf-1e3cdb04dcdd"
       }
