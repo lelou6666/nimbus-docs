@@ -2,7 +2,7 @@
 Building a Decision Engine with the Phantom Scripting API
 =========================================================
 
-Once you have gotten familliar with Phantom, you may want behaviors that
+Once you have gotten familiar with Phantom, you may want behaviors that
 Phantom does not already provide. For example, you may want to scale your
 domain with behaviour that you cannot define in the GUI. This page will
 guide you in creating a "Decision Engine" for Phantom that will automate
@@ -19,12 +19,12 @@ Basics
 
 Ensure that your have set up a suitable scripting environment. The
 :doc:`/scripting` page will guide you in setting up your environment. This
-guide assumes that you are familliar with Python.
+guide assumes that you are familiar with Python.
 
 Initializing your Decision engine
 =================================
 
-To start, we will import the neccessary libraries, and set up the basics of our
+To start, we will import the necessary libraries, and set up the basics of our
 decision engine::
 
     import os
@@ -68,7 +68,7 @@ decision engine::
 
             self.connection.host = host
 
-If you are comfortable with Python, this should be fairly familliar to you. We
+If you are comfortable with Python, this should be fairly familiar to you. We
 import a few modules that we will use in creating our decision engine. Next, we
 create a class called "MyPhantomDecisionEngine", and initialize a few variables
 that we will use later. You must set EC2_ACCESS_KEY, EC2_SECRET_KEY, and
@@ -76,7 +76,7 @@ PHANTOM_URL in your env before running this script.
 
 Our decision engine will use the hello-phantom.gz image, will use the
 "phantomkey" SSH key, will use an "m1.small" image,  will start a maximum of
-4 vms per cloud, and will launch VMs on both hotel and sierra.
+4 VMs per cloud, and will launch VMs on both hotel and sierra.
 
 Next, we create our connection to Phantom. We pull out the hostname and port
 from our phantom URL, then construct our connection to Phantom.
@@ -173,7 +173,7 @@ Next, we want to set up our domain::
 
 First, we must set up the parameters that we will feed to Phantom. We select a
 policy for Phantom to use, 'error_overflow_n_preserving'. This is generally the
-policy you will want to use when createing a decision engine.
+policy you will want to use when creating a decision engine.
 
 Next, you will create an ordering of clouds for Phantom to start VMs on. In our
 case, we don't particularly care where Phantom sets up its VMs.
@@ -186,8 +186,8 @@ will validate these parameters.
 Next, we set how many VMs we would like to be started when we start our domain.
 We will start with 0, but this can be whatever you like.
 
-Next, we marshall the Phantom parameters into tags, which we will feed into the
-AutoScalingGroup constrctor.
+Next, we marshal the Phantom parameters into tags, which we will feed into the
+AutoScalingGroup constructor.
 
 Next, we remove any existing domains with the same name as ours (perhaps from
 an earlier run of the decision engine.
@@ -238,7 +238,7 @@ ten seconds, then we will let them run for a minute, then shut them down::
 Use your Decision Engine
 ========================
 
-Finally, go back to your __init__ function, and call the three funtions you
+Finally, go back to your __init__ function, and call the three functions you
 created::
 
             self.create_launch_configuration()
