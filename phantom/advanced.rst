@@ -13,3 +13,4 @@ you through these more advanced topics.
     protocol
     scripting
     buildingadecisionengine
+    buildingaphantomappliance
