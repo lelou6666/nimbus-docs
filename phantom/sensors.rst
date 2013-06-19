@@ -22,7 +22,7 @@ tcollector requires that you have (at least) Python 2.6 installed on your VM ima
 
 Once you have Python installed, you can install it like so::
 
-    # wget http://build.nimbusproject.org:8000/tcollector/master/tcollector-HEAD.tar.gz
+    # wget http://build.nimbusproject.org:8001/tcollector/master/tcollector-HEAD.tar.gz
     # tar xzvf tcollector-HEAD.tar.gz
     # mv tcollector /usr/local/tcollector
 
@@ -104,7 +104,7 @@ tcollector requires that you have (at least) Python 2.6 installed on your VM ima
 
 Once you have Python installed, you can install it like so::
 
-    # wget http://build.nimbusproject.org:8000/tcollector/master/tcollector-HEAD.tar.gz
+    # wget http://build.nimbusproject.org:8001/tcollector/master/tcollector-HEAD.tar.gz
     # tar xzvf tcollector-HEAD.tar.gz
     # mv tcollector /usr/local/tcollector
 
