@@ -71,10 +71,8 @@ What clients can I use with Phantom?
 ====================================
 
 Phantom currently provides a :doc:`Web Application </webapp>` as well as a
-scripting client.  Since Phantom implements the `AWS Autoscaling API
-<http://docs.aws.amazon.com/AutoScaling/latest/APIReference/Welcome.html>`_ you
-can simply use the `boto Autoscale client
-<http://boto.cloudhackers.com/en/latest/autoscale_tut.html>`_ for scripting.
+REST API. We recommend Python and 
+`requests <http://docs.python-requests.org/en/latest/>` for scripting.
 Documentation on how to use the web application is available in our
 :doc:`Quickstart Guide </webapp>` and the documentation on how to use scripting
 in our :doc:`Advanced Documentation </advanced>`.
