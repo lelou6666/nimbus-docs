@@ -12,7 +12,7 @@ As an example, we will build a decision engine that starts a new VM every
 10 seconds, then lets them run for a minute, then shuts them down.
 
 You can get the source to the tutorial decision engine
-`on github <https://github.com/nimbusproject/Phantom/blob/master/sandbox/de_tutorial.py>`_.
+`on github <https://github.com/nimbusproject/PhantomWebApp/blob/master/example_scripts/de_tutorial.py>`_.
 
 Basics
 ======
@@ -28,58 +28,41 @@ To start, we will import the necessary libraries, and set up the basics of our
 decision engine::
 
     import os
-    import urlparse
-    import boto
-    import boto.ec2.autoscale
-
-    from boto.regioninfo import RegionInfo
-    from boto.ec2.autoscale import Tag
-    from boto.ec2.autoscale.launchconfig import LaunchConfiguration
-    from boto.ec2.autoscale.group import AutoScalingGroup
+    import sys
+    import time
+    import json
+    import requests
 
 
     class MyPhantomDecisionEngine(object):
 
         def __init__(self):
 
-            self.username = os.environ['EC2_ACCESS_KEY']
-            self.password = os.environ['EC2_SECRET_KEY']
-            self.iaas_url = os.environ['PHANTOM_URL']
+            self.user_id = os.environ['USER_ID']
+            self.token = os.environ['TOKEN']
+            self.api_url = os.environ.get('PHANTOM_URL', "https://phantom.nimbusproject.org/api/dev")
 
             self.domain_name = "my_domain"
             self.launch_config_name = "my_launch_config"
-
             self.vm_image = "hello-phantom.gz"
+            self.max_vms = 4
             self.key_name = "phantomkey"
             self.image_type = "m1.small"
-            self.max_vms = 4
             self.clouds = ["hotel", "sierra"]
 
-            # Create our Phantom connection
-            parsed_url = urlparse.urlparse(iaas_url)
-            ssl = parsed_url.scheme == "https"
-            host = parsed_url.hostname
-            port = parsed_url.port
-
-            region = RegionInfo(name="nimbus", endpoint=host)
-            self.connection = boto.ec2.autoscale.AutoScaleConnection(
-                aws_access_key_id=username, aws_secret_access_key=password,
-                is_secure=ssl, port=port, region=region, validate_certs=False)
-
-            self.connection.host = host
+            self.create_launch_configuration()
+            self.create_domain()
+            self.run_policy()
 
 If you are comfortable with Python, this should be fairly familiar to you. We
 import a few modules that we will use in creating our decision engine. Next, we
 create a class called "MyPhantomDecisionEngine", and initialize a few variables
-that we will use later. You must set EC2_ACCESS_KEY, EC2_SECRET_KEY, and
+that we will use later. You must set USER_ID, TOKEN, and
 PHANTOM_URL in your env before running this script.
 
 Our decision engine will use the hello-phantom.gz image, will use the
 "phantomkey" SSH key, will use an "m1.small" image,  will start a maximum of
 4 VMs per cloud, and will launch VMs on both hotel and sierra.
-
-Next, we create our connection to Phantom. We pull out the hostname and port
-from our phantom URL, then construct our connection to Phantom.
 
 Initializing our Launch Configuration
 =====================================
@@ -89,32 +72,46 @@ Configuration::
 
         def create_launch_configuration(self):
 
-            existing_launch_configurations = connection.get_all_launch_configurations()
-            existing_lc_names = [lc.name for lc in existing_launch_configurations]
+            # Get a list of existing launch configurations
+            r = requests.get("%s/launchconfigurations" % self.api_url, auth=(self.user_id, self.token))
+            existing_launch_configurations = r.json()
+            existing_lc_names = [lc.get('name') for lc in existing_launch_configurations]
 
-            for cloud in self.clouds:
-                full_lc_name = "%s@%s" % (self.launch_config_name, cloud)
+            # Create launch configuration if it doesn't exist
+            if self.launch_config_name not in existing_lc_names:
 
-                if not full_lc_name in existing_lc_names:
-                    print "Creating launch config '%s'" % full_lc_name
+                print "Creating launch config '%s'" % self.launch_config_name
+                new_lc = {
+                    'name': self.launch_config_name,
+                    'cloud_params': {}
+                }
 
-                    launch_config = LaunchConfiguration(
-                        self.connection, name=full_lc_name, image_id=self.image,
-                        key_name=self.key_name, security_groups=['default'],
-                        instance_type=self.image_type)
+                rank = 0
+                for cloud in self.clouds:
+                    rank = rank + 1
+                    cloud_param = {
+                        'image_id': self.vm_image,
+                        'instance_type': self.image_type,
+                        'max_vms': self.max_vms,
+                        'common': True,
+                        'rank': rank,
+                    }
+                    new_lc['cloud_params'][cloud] = cloud_param
 
-                    self.connection.create_launch_configuration(launch_config)
-                else:
-                    print "Launch config '%s' has already been added, skipping..." % (full_lc_name,)
+                r = requests.post("%s/launchconfigurations" % self.api_url,
+                    data=json.dumps(new_lc), auth=(self.user_id, self.token))
+
+            else:
+                print "Launch config '%s' has already been added, skipping..." % (
+                    self.launch_config_name,)
 
 First, we get a list of all of the existing launch configurations that we might
-have previously created. Then we create any LCs that do not exist. Note that we
-create an LC for each cloud that we want to use, named with the lc_name@cloud
-convention. So if we wanted an LC named "my_great_lc" on a cloud named hotel,
-we would create an LC named my_great_lc@hotel.
+have previously created. Then we create our LC if it does not yet exist.
 
 Note that we are feeding in the parameters we set in our init function into the
-LC. We set the name of the LC, the image_id, the key_name, and the instance_type.
+LC. We set the name of the LC, the image_id, the instance_type, the
+maximum_number of vms, and the rank. The rank is the ordering of clouds in
+which phantom will attempt to start VMs.
 
 Initializing our Domain
 =======================
@@ -123,74 +120,49 @@ Next, we want to set up our domain::
 
         def create_domain(self):
 
-            # Set our policy name
-            policy_name_key = 'PHANTOM_DEFINITION'
-            policy_name = 'error_overflow_n_preserving'
+            # Check if domain already exists
+            r = requests.get("%s/domains" % self.api_url, auth=(self.user_id, self.token))
+            existing_domains = r.json()
 
-            # Set the order of clouds in which VMs are started
-            ordered_clouds_key = 'clouds'
-            ordered_clouds = ""
-            cloud_size_pairs = ["%s:%s" % (cloud, self.max_vms) for cloud in self.clouds]
-            ordered_clouds = ",".join(cloud_size_pairs)
-
-            # Get a Cloud and Launch Config to feed to the domain constructor
-            a_cloud = self.clouds[0]
-            a_lc_name = "%s@%s" % (self.launch_config_name, a_cloud)
-            a_lc_list = self.connection.get_all_launch_configurations(names=[a_lc_name, ])
-
-            if len(a_lc_list) != 1:
-                print "Couldn't get launch config %s" % self.launch_config_name
-                raise SystemExit("Couldn't get launch config %s" % self.launch_config_name)
-            a_lc = a_lc_list[0]
-
-            # Set how many domains we would like to start our domain with
-            n_preserve_key = 'minimum_vms'
-            n_preserve = 0
-
-            # Marshall Phantom Parameters
-            policy_tag = Tag(connection=self.connection, key=policy_name_key,
-                             value=policy_name, resource_id=self.domain_name)
-            clouds_tag = Tag(connection=self.connection, key=ordered_clouds_key,
-                             value=ordered_clouds, resource_id=self.domain_name)
-            npreserve_tag = Tag(connection=self.connection, key=n_preserve_key,
-                                value=n_preserve, resource_id=self.domain_name)
-
-            tags = [policy_tag, clouds_tag, npreserve_tag]
-
-            # Remove any existing domain name with the same name
-            existing_domains = self.connection.get_all_groups(names=[self.domain_name, ])
+            domain_exists = False
+            domain_id = None
             for domain in existing_domains:
-                print "Removing existing instance of domain '%s'" % domain.name
-                domain.delete()
+                if domain.get('name') == self.domain_name:
+                    domain_exists = True
+                    domain_id = domain.get('id')
+                    break
 
             # Create our domain
             print "Creating domain %s" % self.domain_name
-            domain = AutoScalingGroup(
-                availability_zones=["us-east-1"],
-                connection=self.connection, group_name=self.domain_name,
-                min_size=n_preserve, max_size=n_preserve, launch_config=a_lc, tags=tags)
-            self.connection.create_auto_scaling_group(domain)
+            new_domain = {
+                'name': self.domain_name,
+                'de_name': 'multicloud',
+                'lc_name': self.launch_config_name,
+                'vm_count': 0
+            }
 
-First, we must set up the parameters that we will feed to Phantom. We select a
-policy for Phantom to use, 'error_overflow_n_preserving'. This is generally the
-policy you will want to use when creating a decision engine.
+            if domain_exists:
+                r = requests.put("%s/domains/%s" % (self.api_url, domain_id),
+                    data=json.dumps(new_domain), auth=(self.user_id, self.token))
+                if r.status_code != 200:
+                    sys.exit("Error: %s" % r.text)
+            else:
+                r = requests.post("%s/domains" % self.api_url,
+                    data=json.dumps(new_domain), auth=(self.user_id, self.token))
+                if r.status_code != 201:
+                    sys.exit("Error: %s" % r.text)
 
-Next, you will create an ordering of clouds for Phantom to start VMs on. In our
-case, we don't particularly care where Phantom sets up its VMs.
+First, we must check whether there is already a domain with the name we like. If
+so, we will need to overwrite it, rather than create it.
 
-Next, we get a name of a cloud, and a name of a launch config. These are set up
-in the previous step. The parameters here don't matter so much, but are required
-as the AWS Autoscale API requires them. Phantom does not really use them, but boto
-will validate these parameters.
+Next, we pick the decision engine name to use. We will use the standard
+'multicloud' de.
+
+Then, we pick the launch configuration this domain should use. We want to use
+the one we set up earlier.
 
 Next, we set how many VMs we would like to be started when we start our domain.
-We will start with 0, but this can be whatever you like.
-
-Next, we marshal the Phantom parameters into tags, which we will feed into the
-AutoScalingGroup constructor.
-
-Next, we remove any existing domains with the same name as ours (perhaps from
-an earlier run of the decision engine.
+We will start with 0, but this can be whatever you like. This is the vm_count.
 
 Finally, we create our domain. We feed in the parameters we've prepared, and
 start the domain.
@@ -204,36 +176,52 @@ ten seconds, then we will let them run for a minute, then shut them down::
 
         def run_policy(self):
 
-            domains = self.connection.get_all_groups(names=[self.domain_name, ])
-            if len(domains) != 1:
+            r = requests.get("%s/domains" % self.api_url, auth=(self.user_id, self.token))
+            existing_domains = r.json()
+            domain = None
+            for _domain in existing_domains:
+                if _domain.get('name') == self.domain_name:
+                    domain = _domain
+                    break
+            else:
                 raise SystemExit("Couldn't get domain %s" % self.domain_name)
-            domain = domains[0]
 
-            capacity = 1
-            print "set %s capacity to %s" % (self.domain_name, capacity)
-            domain.set_capacity(capacity)
+            vm_count = 1
+            print "set %s vm_count to %s" % (self.domain_name, vm_count)
+            domain['vm_count'] = vm_count
+            r = requests.put("%s/domains/%s" % (self.api_url, domain.get('id')),
+                    data=json.dumps(domain), auth=(self.user_id, self.token))
             time.sleep(10)
 
-            capacity += 1
-            print "set %s capacity to %s" % (self.domain_name, capacity)
-            domain.set_capacity(capacity)
+            vm_count += 1
+            print "set %s vm_count to %s" % (self.domain_name, vm_count)
+            domain['vm_count'] = vm_count
+            r = requests.put("%s/domains/%s" % (self.api_url, domain.get('id')),
+                    data=json.dumps(domain), auth=(self.user_id, self.token))
             time.sleep(10)
 
-            capacity += 1
-            print "set %s capacity to %s" % (self.domain_name, capacity)
-            domain.set_capacity(capacity)
+            vm_count += 1
+            print "set %s vm_count to %s" % (self.domain_name, vm_count)
+            domain['vm_count'] = vm_count
+            r = requests.put("%s/domains/%s" % (self.api_url, domain.get('id')),
+                    data=json.dumps(domain), auth=(self.user_id, self.token))
             time.sleep(10)
 
-            capacity += 1
-            print "set %s capacity to %s" % (self.domain_name, capacity)
-            domain.set_capacity(capacity)
+            vm_count += 1
+            print "set %s vm_count to %s" % (self.domain_name, vm_count)
+            domain['vm_count'] = vm_count
+            r = requests.put("%s/domains/%s" % (self.api_url, domain.get('id')),
+                    data=json.dumps(domain), auth=(self.user_id, self.token))
+            time.sleep(10)
 
             print "let domain settle for 60s"
             time.sleep(60)
 
-            capacity = 0
-            print "set %s capacity back to %s" % (self.domain_name, capacity)
-            domain.set_capacity(capacity)
+            vm_count = 0
+            domain['vm_count'] = vm_count
+            r = requests.put("%s/domains/%s" % (self.api_url, domain.get('id')),
+                    data=json.dumps(domain), auth=(self.user_id, self.token))
+            print "set %s vm_count back to %s" % (self.domain_name, vm_count)
 
 Use your Decision Engine
 ========================
@@ -245,6 +233,11 @@ created::
             self.create_domain()
             self.run_policy()
 
+At the end of your file, initialize your DE::
+
+    MyPhantomDecisionEngine()
+   
+
 Then save your file, and try out your Decision Engine::
 
     $ python de.py
@@ -252,9 +245,9 @@ Then save your file, and try out your Decision Engine::
     Launch config 'my_launch_config@sierra' has already been added, skipping...
     Removing existing instance of domain 'my_domain'
     Creating domain my_domain
-    set my_domain capacity to 1
-    set my_domain capacity to 2
-    set my_domain capacity to 3
-    set my_domain capacity to 4
+    set my_domain vm_count to 1
+    set my_domain vm_count to 2
+    set my_domain vm_count to 3
+    set my_domain vm_count to 4
     let domain settle for 60s
-    set my_domain capacity back to 0
+    set my_domain vm_count back to 0
