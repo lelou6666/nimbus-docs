@@ -95,7 +95,7 @@ Site Resources
       [
         {
           "id": "ec2",
-          "credentials": "/api/v1.0/credentials/ec2",
+          "credentials": "/api/v1.0/credentials/sites/ec2",
           "instance_types": [
             "m1.small",
             "m1.large",
@@ -105,7 +105,7 @@ Site Resources
         },
         {
           "id": "hotel",
-          "credentials": "/api/v1.0/credentials/hotel",
+          "credentials": "/api/v1.0/credentials/sites/hotel",
           "instance_types": [
             "m1.small",
             "m1.large",
@@ -115,7 +115,7 @@ Site Resources
         },
         {
           "id": "sierra",
-          "credentials": "/api/v1.0/credentials/sierra",
+          "credentials": "/api/v1.0/credentials/sites/sierra",
           "instance_types": [
             "m1.small",
             "m1.large",
@@ -143,7 +143,7 @@ Site Resources
       [
         {
           "id": "ec2",
-          "credentials": "/api/v1.0/credentials/ec2",
+          "credentials": "/api/v1.0/credentials/sites/ec2",
           "instance_types": [
             "m1.small",
             "m1.large",
@@ -160,7 +160,7 @@ Site Resources
         },
         {
           "id": "hotel",
-          "credentials": "/api/v1.0/credentials/hotel",
+          "credentials": "/api/v1.0/credentials/sites/hotel",
           "instance_types": [
             "m1.small",
             "m1.large",
@@ -177,7 +177,7 @@ Site Resources
         },
         {
           "id": "sierra",
-          "credentials": "/api/v1.0/credentials/sierra",
+          "credentials": "/api/v1.0/credentials/sites/sierra",
           "instance_types": [
             "m1.small",
             "m1.large",
@@ -224,7 +224,7 @@ Site Resources
           "m1.large",
           "m1.xlarge"
         ],
-        "credentials": "/api/v1.0/credentials/hotel",
+        "credentials": "/api/v1.0/credentials/sites/hotel",
         "uri": "/api/v1.0/sites/hotel"
       }
 
@@ -257,15 +257,15 @@ Site Resources
         "user_images": [
           "myimage",
         ],
-        "credentials": "/api/v1.0/credentials/hotel",
+        "credentials": "/api/v1.0/credentials/sites/hotel",
         "uri": "/api/v1.0/sites/hotel"
       }
 
 
-Credentials Resources
+Site Credentials Resources
 =====================
 
-.. http:get:: /api/v1.0/credentials
+.. http:get:: /api/v1.0/credentials/sites
 
    List all cloud credentials for the authenticated user
 
@@ -276,7 +276,7 @@ Credentials Resources
 
    .. sourcecode:: http
 
-      GET /api/v1.0/credentials HTTP/1.1
+      GET /api/v1.0/credentials/sites HTTP/1.1
       Host: phantom.nimbusproject.org
       Accept: application/json
 
@@ -293,14 +293,14 @@ Credentials Resources
           "access_key": "aws_access_key_id",
           "secret_key": "aws_secret_access_key",
           "key_name": "phantom_ssh_key",
-          "uri": "/api/v1.0/credentials/ec2"
+          "uri": "/api/v1.0/credentials/sites/ec2"
         },
         {
           "id": "hotel",
           "access_key": "hotel_access_key_id",
           "secret_key": "hotel_secret_access_key",
           "key_name": "phantom_ssh_key",
-          "uri": "/api/v1.0/credentials/hotel"
+          "uri": "/api/v1.0/credentials/sites/hotel"
         }
       ]
 
@@ -308,7 +308,7 @@ Credentials Resources
 
    .. sourcecode:: http
 
-      GET /api/v1.0/credentials?details=true HTTP/1.1
+      GET /api/v1.0/credentials/sites?details=true HTTP/1.1
       Host: phantom.nimbusproject.org
       Accept: application/json
 
@@ -329,7 +329,7 @@ Credentials Resources
             "default"
           ],
           "key_name": "phantom_ssh_key",
-          "uri": "/api/v1.0/credentials/ec2"
+          "uri": "/api/v1.0/credentials/sites/ec2"
         },
         {
           "id": "hotel",
@@ -340,11 +340,11 @@ Credentials Resources
             "default"
           ],
           "key_name": "phantom_ssh_key",
-          "uri": "/api/v1.0/credentials/hotel"
+          "uri": "/api/v1.0/credentials/sites/hotel"
         }
       ]
 
-.. http:get:: /api/v1.0/credentials/(cloud_id)
+.. http:get:: /api/v1.0/credentials/sites/(cloud_id)
 
    Get cloud credentials for the cloud `cloud_id`
 
@@ -356,7 +356,7 @@ Credentials Resources
 
    .. sourcecode:: http
 
-      GET /api/v1.0/credentials/hotel HTTP/1.1
+      GET /api/v1.0/credentials/sites/hotel HTTP/1.1
       Host: phantom.nimbusproject.org
       Accept: application/json
 
@@ -372,14 +372,14 @@ Credentials Resources
         "access_key": "hotel_access_key_id",
         "secret_key": "hotel_secret_access_key",
         "key_name": "phantom_ssh_key",
-        "uri": "/api/v1.0/credentials/hotel"
+        "uri": "/api/v1.0/credentials/sites/hotel"
       }
 
    **Example request**:
 
    .. sourcecode:: http
 
-      GET /api/v1.0/credentials/hotel?details=true HTTP/1.1
+      GET /api/v1.0/credentials/sites/hotel?details=true HTTP/1.1
       Host: phantom.nimbusproject.org
       Accept: application/json
 
@@ -399,10 +399,10 @@ Credentials Resources
           "default",
           "phantom_ssh_key"
         ],
-        "uri": "/api/v1.0/credentials/hotel"
+        "uri": "/api/v1.0/credentials/sites/hotel"
       }
 
-.. http:post:: /api/v1.0/credentials
+.. http:post:: /api/v1.0/credentials/sites
 
    Save new cloud credentials
 
@@ -416,7 +416,7 @@ Credentials Resources
 
    .. sourcecode:: http
 
-      POST /api/v1.0/credentials HTTP/1.1
+      POST /api/v1.0/credentials/sites HTTP/1.1
       Host: phantom.nimbusproject.org
       Accept: application/json
 
@@ -433,17 +433,17 @@ Credentials Resources
 
       HTTP/1.1 201 Created
       Content-Type: application/json
-      Location: /api/v1.0/credentials/sierra
+      Location: /api/v1.0/credentials/sites/sierra
 
       {
         "id": "sierra",
         "access_key": "sierra_access_key_id",
         "secret_key": "sierra_secret_access_key",
         "key_name": "phantom_ssh_key",
-        "uri": "/api/v1.0/credentials/sierra"
+        "uri": "/api/v1.0/credentials/sites/sierra"
       }
 
-.. http:put:: /api/v1.0/credentials/(cloud_id)
+.. http:put:: /api/v1.0/credentials/sites/(cloud_id)
 
    Update cloud credentials
 
@@ -453,7 +453,7 @@ Credentials Resources
 
    .. sourcecode:: http
 
-      PUT /api/v1.0/credentials/ec2 HTTP/1.1
+      PUT /api/v1.0/credentials/sites/ec2 HTTP/1.1
       Host: phantom.nimbusproject.org
       Accept: application/json
 
@@ -470,17 +470,17 @@ Credentials Resources
 
       HTTP/1.1 200 OK
       Content-Type: application/json
-      Location: /api/v1.0/credentials/ec2
+      Location: /api/v1.0/credentials/sites/ec2
 
       {
         "id": "ec2",
         "access_key": "updated_aws_access_key_id",
         "secret_key": "updated_aws_secret_access_key",
         "key_name": "phantom_ssh_key",
-        "uri": "/api/v1.0/credentials/ec2"
+        "uri": "/api/v1.0/credentials/sites/ec2"
       }
 
-.. http:delete:: /api/v1.0/credentials/(cloud_id)
+.. http:delete:: /api/v1.0/credentials/sites/(cloud_id)
 
    Delete cloud credentials for the cloud `cloud_id`
 
@@ -490,7 +490,7 @@ Credentials Resources
 
    .. sourcecode:: http
 
-      DELETE /api/v1.0/credentials/ec2 HTTP/1.1
+      DELETE /api/v1.0/credentials/sites/ec2 HTTP/1.1
       Host: phantom.nimbusproject.org
       Accept: application/json
 
@@ -502,8 +502,198 @@ Credentials Resources
       Content-Type: application/json
 
 
+Chef Credentials Resources
+=====================
+
+.. http:get:: /api/v1.0/credentials/chef
+
+   List all chef credentials for the authenticated user
+
+   :statuscode 200: no error
+
+   **Example request**:
+
+   .. sourcecode:: http
+
+      GET /api/v1.0/credentials/chef HTTP/1.1
+      Host: phantom.nimbusproject.org
+      Accept: application/json
+
+   **Example response**:
+
+   .. sourcecode:: http
+
+      HTTP/1.1 200 OK
+      Content-Type: application/json
+
+      [
+        {
+          "id": "hostedchef",
+          "server_url": "https://api.opscode.com/organizations/chefuser",
+          "client_name": "chefuser",
+          "validation_client_name": "chefuser-validator",
+          "client_key": "-----BEGIN RSA PRIVATE KEY-----...",
+          "validator_key": "-----BEGIN RSA PRIVATE KEY-----...",
+          "uri": "/api/v1.0/credentials/chef/hostedchef"
+        },
+        {
+          "id": "open_source_chef",
+          "server_url": "https://ec2-host.aws.amazon.com",
+          "client_name": "admin",
+          "validation_client_name": "chef-validator",
+          "client_key": "-----BEGIN RSA PRIVATE KEY-----...",
+          "validator_key": "-----BEGIN RSA PRIVATE KEY-----...",
+          "uri": "/api/v1.0/credentials/chef/open_source_chef"
+        }
+      ]
+
+.. http:get:: /api/v1.0/credentials/chef/(chef_id)
+
+   Get cloud credentials for the chef server `chef_id`
+
+   :statuscode 200: no error
+   :statuscode 404: chef server is unknown
+
+   **Example request**:
+
+   .. sourcecode:: http
+
+      GET /api/v1.0/credentials/chef/hostedchef HTTP/1.1
+      Host: phantom.nimbusproject.org
+      Accept: application/json
+
+   **Example response**:
+
+   .. sourcecode:: http
+
+      HTTP/1.1 200 OK
+      Content-Type: application/json
+
+      {
+        "id": "hostedchef",
+        "server_url": "https://api.opscode.com/organizations/chefuser",
+        "client_name": "chefuser",
+        "validation_client_name": "chefuser-validator",
+        "client_key": "-----BEGIN RSA PRIVATE KEY-----...",
+        "validator_key": "-----BEGIN RSA PRIVATE KEY-----...",
+        "uri": "/api/v1.0/credentials/chef/hostedchef"
+      }
+
+.. http:post:: /api/v1.0/credentials/chef
+
+   Save new chef credentials
+
+   :jsonparameter id: ID of the chef server
+   :jsonparameter server_url: URL of the chef server
+   :jsonparameter client_name: The client name of the chef user
+   :jsonparameter validation_client_name: The validation client name. Often chef-validator
+   :jsonparameter client_key: The RSA Private client key
+   :jsonparameter validator_key: The RSA Private validator key
+   :statuscode 201: credentials saved
+
+   **Example request**:
+
+   .. sourcecode:: http
+
+      POST /api/v1.0/credentials/sites HTTP/1.1
+      Host: phantom.nimbusproject.org
+      Accept: application/json
+
+      {
+        "id": "hostedchef",
+        "server_url": "https://api.opscode.com/organizations/chefuser",
+        "client_name": "chefuser",
+        "validation_client_name": "chefuser-validator",
+        "client_key": "-----BEGIN RSA PRIVATE KEY-----...",
+        "validator_key": "-----BEGIN RSA PRIVATE KEY-----...",
+      }
+
+   **Example response**:
+
+   .. sourcecode:: http
+
+      HTTP/1.1 201 Created
+      Content-Type: application/json
+      Location: /api/v1.0/credentials/sites/sierra
+
+      {
+        "id": "hostedchef",
+        "server_url": "https://api.opscode.com/organizations/chefuser",
+        "client_name": "chefuser",
+        "validation_client_name": "chefuser-validator",
+        "client_key": "-----BEGIN RSA PRIVATE KEY-----...",
+        "validator_key": "-----BEGIN RSA PRIVATE KEY-----...",
+        "uri": "/api/v1.0/credentials/chef/hostedchef"
+      }
+
+.. http:put:: /api/v1.0/credentials/chef/(chef_id)
+
+   Update chef credentials
+
+   :statuscode 200: credentials updated
+
+   **Example request**:
+
+   .. sourcecode:: http
+
+      PUT /api/v1.0/credentials/chef/hostedchef HTTP/1.1
+      Host: phantom.nimbusproject.org
+      Accept: application/json
+
+      {
+        "id": "hostedchef",
+        "server_url": "https://api.opscode.com/organizations/chefuser",
+        "client_name": "chefuser",
+        "validation_client_name": "chefuser-validator",
+        "client_key": "-----BEGIN RSA PRIVATE KEY-----...",
+        "validator_key": "-----BEGIN RSA PRIVATE KEY-----...",
+      }
+
+   **Example response**:
+
+   .. sourcecode:: http
+
+      HTTP/1.1 200 OK
+      Content-Type: application/json
+      Location: /api/v1.0/credentials/chef/hostedchef
+
+      {
+        "id": "hostedchef",
+        "server_url": "https://api.opscode.com/organizations/chefuser",
+        "client_name": "chefuser",
+        "validation_client_name": "chefuser-validator",
+        "client_key": "-----BEGIN RSA PRIVATE KEY-----...",
+        "validator_key": "-----BEGIN RSA PRIVATE KEY-----...",
+        "uri": "/api/v1.0/credentials/chef/hostedchef"
+      }
+
+.. http:delete:: /api/v1.0/credentials/chef/(cloud_id)
+
+   Delete chef credentials for the chef server `chef_id`
+
+   :statuscode 204: credentials deleted
+
+   **Example request**:
+
+   .. sourcecode:: http
+
+      DELETE /api/v1.0/credentials/chef/hostedchef HTTP/1.1
+      Host: phantom.nimbusproject.org
+      Accept: application/json
+
+   **Example response**:
+
+   .. sourcecode:: http
+
+      HTTP/1.1 204 No Content
+      Content-Type: application/json
+
 Launch Configuration Resources
 ==============================
+
+   Launch Configuration resources are a list of sites in order, and 
+   a contextualization method. Phantom currently supports "none", "user_data",
+   and "chef".
 
 .. http:get:: /api/v1.0/launchconfigurations
 
@@ -537,7 +727,6 @@ Launch Configuration Resources
               "max_vms": 16,
               "common": true,
               "rank": 1,
-              "user_data": null
             },
             "ec2": {
               "image_id": "ami-deadbeef",
@@ -545,9 +734,10 @@ Launch Configuration Resources
               "max_vms": -1,
               "common": false,
               "rank": 2,
-              "user_data": null
             },
           },
+          "contextualization_method": "user_data",
+          "user_data": "my user data",
           "owner": "johndoe",
           "uri": "/api/v1.0/launchconfigurations/fcfe9272-d03f-48e4-bd5f-4eb50ec396c7"
         }
@@ -585,7 +775,6 @@ Launch Configuration Resources
             "max_vms": 16,
             "common": true,
             "rank": 1,
-            "user_data": null
           },
           "ec2": {
             "image_id": "ami-deadbeef",
@@ -593,9 +782,9 @@ Launch Configuration Resources
             "max_vms": -1,
             "common": false,
             "rank": 2,
-            "user_data": null
           }
         },
+        "contextualization_method": "none",
         "owner": "johndoe",
         "uri": "/api/v1.0/launchconfigurations/fcfe9272-d03f-48e4-bd5f-4eb50ec396c7"
       }
@@ -604,6 +793,14 @@ Launch Configuration Resources
 
    Create a new launch configuration
 
+   :jsonparameter name: the name of the launch configuration
+   :jsonparameter contextualization_method: the contextualization method, 
+        currently phantom supports 'none', 'user_data', and 'chef'
+   :jsonparameter user_data: data used by the user_data contextualization method
+   :jsonparameter run_list: json-encoded list of recipes to be installed on a VM using chef
+        for the 'chef' contextualization method
+   :jsonparameter attributes: json-encoded dictionary of attributes to be used by chef on a
+        VM using chef for the 'chef' contextualization method
    :statuscode 201: launch configuration created
 
    **Example request**:
@@ -616,6 +813,9 @@ Launch Configuration Resources
 
       {
         "name": "mysecondlc",
+        "contextualization_method": "chef"
+        "run_list": "["recipe1", "recipe2"]"
+        "attributes": "{"my": "attribute"}",
         "cloud_params": {
           "hotel": {
             "image_id": "hello-cloud",
@@ -623,7 +823,6 @@ Launch Configuration Resources
             "max_vms": -1,
             "common": true,
             "rank": 1,
-            "user_data": "Hello World"
           }
         }
       }
@@ -639,6 +838,9 @@ Launch Configuration Resources
       {
         "id": "e99be9d3-8f09-4a6c-bb17-b00efd0d06df",
         "name": "mysecondlc",
+        "contextualization_method": "chef"
+        "run_list": "["recipe1", "recipe2"]"
+        "attributes": "{"my": "attribute"}",
         "cloud_params": {
           "hotel": {
             "image_id": "hello-cloud",
@@ -646,7 +848,6 @@ Launch Configuration Resources
             "max_vms": -1,
             "common": true,
             "rank": 1,
-            "user_data": "Hello World"
           }
         },
         "owner": "johndoe",
@@ -669,6 +870,8 @@ Launch Configuration Resources
 
       {
         "name": "mysecondlc",
+        "contextualization_method": "user_data",
+        "user_data": "Hello World"
         "cloud_params": {
           "hotel": {
             "image_id": "hello-cloud",
@@ -676,7 +879,6 @@ Launch Configuration Resources
             "max_vms": 5,
             "common": true,
             "rank": 1,
-            "user_data": "Hello World"
           }
         }
       }
@@ -692,6 +894,7 @@ Launch Configuration Resources
       {
         "id": "e99be9d3-8f09-4a6c-bb17-b00efd0d06df",
         "name": "mysecondlc",
+        "contextualization_method": "none"
         "cloud_params": {
           "hotel": {
             "image_id": "hello-cloud",
@@ -699,7 +902,6 @@ Launch Configuration Resources
             "max_vms": 5,
             "common": true,
             "rank": 1,
-            "user_data": "Hello World"
           }
         },
         "owner": "johndoe",
