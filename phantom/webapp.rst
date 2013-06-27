@@ -100,8 +100,8 @@ Adding Chef Credentials
 
 Open your knife.rb configuration file. Normally this is in ``~/.chef/`` on Mac and
 Linux, and ``c:\Users\<username>\.chef\`` on Windows. If you are using `Hosted
-Chef<http://www.opscode.com/hosted-chef/>`_, you can download this file from the
-`Organizations<https://manage.opscode.com/organizations>`_ page.
+Chef <http://www.opscode.com/hosted-chef/>`_, you can download this file from the
+`Organizations <https://manage.opscode.com/organizations>`_ page.
 
 From this file you can read your Chef Server URL (``chef_server_url``), Chef
 Client Name (``node_name``) and Chef Validation Client Name
@@ -110,8 +110,8 @@ Client Name (``node_name``) and Chef Validation Client Name
 You will also need your client key and validator key. From Hosted Chef, you
 should have downloaded them when you set up your account and placed them in
 your .chef directory. If you haven't, you can generate a new client key on the
-`Change Password<https://www.opscode.com/account/password>`_ page, and a new
-validator key on the `Organizations<https://manage.opscode.com/organizations`_
+`Change Password <https://www.opscode.com/account/password>`_ page, and a new
+validator key on the `Organizations <https://manage.opscode.com/organizations>`_
 page.
 
 Now that we have these values, we can put them in our profile:
@@ -184,7 +184,7 @@ If you would like to contextualize your virtual machines, you can do so using
 either the plain user-data field, which will put the information on the cloud's
 metadata server for access from the VM, or you can specify a Chef runlist and
 dictionary of attributes. If you would like to know more about Chef, you can
-visit `#LearnChef<https://learnchef.opscode.com/>`_.
+visit `#LearnChef <https://learnchef.opscode.com/>`_.
 
 To set up plain user-data:
 
