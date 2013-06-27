@@ -1,5 +1,5 @@
 =======================
-Nimbus Phantom HTTP API
+The Phantom HTTP API
 =======================
 
 .. contents::
@@ -43,8 +43,9 @@ must request a token to access most endpoints in the API.
         "success": true
       }
 
-All other requests must be authenticated using this token. To use this token with curl, 
-for example:
+All other requests must be authenticated using this token.
+
+To get this token with curl, do:
 
    .. sourcecode:: none
 
