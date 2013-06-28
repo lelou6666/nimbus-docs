@@ -49,7 +49,7 @@ To get this token with curl, do:
 
    .. sourcecode:: none
 
-      $ curl -d "username=alice&password=restaurant" http://phantom.nimbusproject.org/api/dev/token
+      $ curl -d "username=alice&password=restaurant" https://phantom.nimbusproject.org/api/dev/token
       {"token": "xgy-4h324h2i4h32oi4h23", "user": 1, "success": true}
 
 Then, to use other endpoints, use this user id and token when querying. You can either include the 
@@ -64,7 +64,7 @@ Curl (and most http libraries) do this automatically for you:
 
    .. sourcecode:: none
 
-      $ curl -u 1:xgy-4h324h2i4h32oi4h23 http://phantom.nimbusproject.org/api/dev/sites
+      $ curl -u 1:xgy-4h324h2i4h32oi4h23 https://phantom.nimbusproject.org/api/dev/sites
       []
 
 
