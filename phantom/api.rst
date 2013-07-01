@@ -67,6 +67,18 @@ Curl (and most http libraries) do this automatically for you:
       $ curl -u 1:xgy-4h324h2i4h32oi4h23 https://phantom.nimbusproject.org/api/dev/sites
       []
 
+You can also store your token in ``~/.netrc`` which will be read by some HTTP clients, including Curl:
+
+   .. sourcecode:: none
+
+      machine phantom.nimbusproject.org login 1 password xgy-4h324h2i4h32oi4h23
+
+You can then use the ``-n`` or ``--netrc`` options of Curl:
+
+   .. sourcecode:: none
+
+      $ curl -n https://phantom.nimbusproject.org/api/dev/sites
+      []
 
 Site Resources
 ==============
