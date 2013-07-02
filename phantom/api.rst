@@ -77,6 +77,29 @@ You can then use the ``-n`` or ``--netrc`` options of Curl:
       $ curl -n https://phantom.nimbusproject.org/api/dev/sites
       []
 
+You can also append `?pretty=true` to any API call, and get pretty printed results.
+You should probably only do this when debugging however, as it could decrease your
+response time:
+
+   .. sourcecode:: none
+
+      $ curl -n https://phantom.nimbusproject.org/api/dev/sites
+      [{"instance_types":["m1.small","m1.large","m1.xlarge"],"uri":"/api/dev/sites/ec2","credentials":"/api/dev/credentials/sites/ec2","id":"ec2"}]
+      $ curl -n https://phantom.nimbusproject.org/api/dev/sites?pretty=true
+      [
+          {
+          "instance_types": [
+              "m1.small",
+              "m1.large",
+              "m1.xlarge"
+          ],
+          "uri": "/api/dev/sites/ec2",
+          "credentials": "/api/dev/credentials/sites/ec2",
+          "id": "ec2"
+          }
+      ]
+
+
 Site Resources
 ==============
 
