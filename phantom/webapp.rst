@@ -116,14 +116,13 @@ page.
 
 Now that we have these values, we can put them in our profile:
 
-1. Visit your `profile <https://phantom.nimbusproject.org/phantom/profile#cloud-credentials>`_
-2. Select Chef Credentials
-3. Click "Add Chef Server"
-4. Choose a name for your server, and click "Add Chef Server"
-5. Add your Chef Server URL, Chef Client Name, and Chef Validation Client Name
-6. Paste your Chef Client Key (usually in a .pem file in your .chef directory)
-7. Paste your Chef Validator Key (usually in a .pem file in your .chef directory)
-8. Click Save Credentials
+1. Visit your `Chef Credentials <https://phantom.nimbusproject.org/phantom/profile#chef-credentials>`_
+2. Click "Add Chef Server"
+3. Choose a name for your server, and click "Add Chef Server"
+4. Add your Chef Server URL, Chef Client Name, and Chef Validation Client Name
+5. Paste your Chef Client Key (usually in a .pem file in your .chef directory)
+6. Paste your Chef Validator Key (usually in a .pem file in your .chef directory)
+7. Click Save Credentials
 
 
 Creating a Launch Configuration
