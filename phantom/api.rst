@@ -538,7 +538,7 @@ Site Credentials Resources
 Chef Credentials Resources
 =====================
 
-.. http:get:: /api/v1.0/credentials/chef
+.. http:get:: /api/dev/credentials/chef
 
    List all chef credentials for the authenticated user
 
@@ -548,7 +548,7 @@ Chef Credentials Resources
 
    .. sourcecode:: http
 
-      GET /api/v1.0/credentials/chef HTTP/1.1
+      GET /api/dev/credentials/chef HTTP/1.1
       Host: phantom.nimbusproject.org
       Accept: application/json
 
@@ -567,7 +567,7 @@ Chef Credentials Resources
           "validation_client_name": "chefuser-validator",
           "client_key": "-----BEGIN RSA PRIVATE KEY-----...",
           "validator_key": "-----BEGIN RSA PRIVATE KEY-----...",
-          "uri": "/api/v1.0/credentials/chef/hostedchef"
+          "uri": "/api/dev/credentials/chef/hostedchef"
         },
         {
           "id": "open_source_chef",
@@ -576,11 +576,11 @@ Chef Credentials Resources
           "validation_client_name": "chef-validator",
           "client_key": "-----BEGIN RSA PRIVATE KEY-----...",
           "validator_key": "-----BEGIN RSA PRIVATE KEY-----...",
-          "uri": "/api/v1.0/credentials/chef/open_source_chef"
+          "uri": "/api/dev/credentials/chef/open_source_chef"
         }
       ]
 
-.. http:get:: /api/v1.0/credentials/chef/(chef_id)
+.. http:get:: /api/dev/credentials/chef/(chef_id)
 
    Get cloud credentials for the chef server `chef_id`
 
@@ -591,7 +591,7 @@ Chef Credentials Resources
 
    .. sourcecode:: http
 
-      GET /api/v1.0/credentials/chef/hostedchef HTTP/1.1
+      GET /api/dev/credentials/chef/hostedchef HTTP/1.1
       Host: phantom.nimbusproject.org
       Accept: application/json
 
@@ -609,10 +609,10 @@ Chef Credentials Resources
         "validation_client_name": "chefuser-validator",
         "client_key": "-----BEGIN RSA PRIVATE KEY-----...",
         "validator_key": "-----BEGIN RSA PRIVATE KEY-----...",
-        "uri": "/api/v1.0/credentials/chef/hostedchef"
+        "uri": "/api/dev/credentials/chef/hostedchef"
       }
 
-.. http:post:: /api/v1.0/credentials/chef
+.. http:post:: /api/dev/credentials/chef
 
    Save new chef credentials
 
@@ -628,7 +628,7 @@ Chef Credentials Resources
 
    .. sourcecode:: http
 
-      POST /api/v1.0/credentials/sites HTTP/1.1
+      POST /api/dev/credentials/sites HTTP/1.1
       Host: phantom.nimbusproject.org
       Accept: application/json
 
@@ -647,7 +647,7 @@ Chef Credentials Resources
 
       HTTP/1.1 201 Created
       Content-Type: application/json
-      Location: /api/v1.0/credentials/sites/sierra
+      Location: /api/dev/credentials/sites/sierra
 
       {
         "id": "hostedchef",
@@ -656,10 +656,10 @@ Chef Credentials Resources
         "validation_client_name": "chefuser-validator",
         "client_key": "-----BEGIN RSA PRIVATE KEY-----...",
         "validator_key": "-----BEGIN RSA PRIVATE KEY-----...",
-        "uri": "/api/v1.0/credentials/chef/hostedchef"
+        "uri": "/api/dev/credentials/chef/hostedchef"
       }
 
-.. http:put:: /api/v1.0/credentials/chef/(chef_id)
+.. http:put:: /api/dev/credentials/chef/(chef_id)
 
    Update chef credentials
 
@@ -669,7 +669,7 @@ Chef Credentials Resources
 
    .. sourcecode:: http
 
-      PUT /api/v1.0/credentials/chef/hostedchef HTTP/1.1
+      PUT /api/dev/credentials/chef/hostedchef HTTP/1.1
       Host: phantom.nimbusproject.org
       Accept: application/json
 
@@ -688,7 +688,7 @@ Chef Credentials Resources
 
       HTTP/1.1 200 OK
       Content-Type: application/json
-      Location: /api/v1.0/credentials/chef/hostedchef
+      Location: /api/dev/credentials/chef/hostedchef
 
       {
         "id": "hostedchef",
@@ -697,10 +697,10 @@ Chef Credentials Resources
         "validation_client_name": "chefuser-validator",
         "client_key": "-----BEGIN RSA PRIVATE KEY-----...",
         "validator_key": "-----BEGIN RSA PRIVATE KEY-----...",
-        "uri": "/api/v1.0/credentials/chef/hostedchef"
+        "uri": "/api/dev/credentials/chef/hostedchef"
       }
 
-.. http:delete:: /api/v1.0/credentials/chef/(cloud_id)
+.. http:delete:: /api/dev/credentials/chef/(cloud_id)
 
    Delete chef credentials for the chef server `chef_id`
 
@@ -710,7 +710,7 @@ Chef Credentials Resources
 
    .. sourcecode:: http
 
-      DELETE /api/v1.0/credentials/chef/hostedchef HTTP/1.1
+      DELETE /api/dev/credentials/chef/hostedchef HTTP/1.1
       Host: phantom.nimbusproject.org
       Accept: application/json
 
