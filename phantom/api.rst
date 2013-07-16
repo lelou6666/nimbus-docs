@@ -830,9 +830,9 @@ Launch Configuration Resources
    :jsonparameter contextualization_method: the contextualization method, 
         currently phantom supports 'none', 'user_data', and 'chef'
    :jsonparameter user_data: data used by the user_data contextualization method
-   :jsonparameter run_list: json-encoded list of recipes to be installed on a VM using chef
+   :jsonparameter chef_runlist: json-encoded list of recipes to be installed on a VM using chef
         for the 'chef' contextualization method
-   :jsonparameter attributes: json-encoded dictionary of attributes to be used by chef on a
+   :jsonparameter chef_attributes: json-encoded dictionary of attributes to be used by chef on a
         VM using chef for the 'chef' contextualization method
    :statuscode 201: launch configuration created
 
@@ -846,9 +846,9 @@ Launch Configuration Resources
 
       {
         "name": "mysecondlc",
-        "contextualization_method": "chef"
-        "run_list": "["recipe1", "recipe2"]"
-        "attributes": "{"my": "attribute"}",
+        "contextualization_method": "chef",
+        "chef_runlist": "["recipe1", "recipe2"]",
+        "chef_attributes": "{"my": "attribute"}",
         "cloud_params": {
           "hotel": {
             "image_id": "hello-cloud",
@@ -871,8 +871,8 @@ Launch Configuration Resources
       {
         "id": "e99be9d3-8f09-4a6c-bb17-b00efd0d06df",
         "name": "mysecondlc",
-        "contextualization_method": "chef"
-        "run_list": "["recipe1", "recipe2"]"
+        "contextualization_method": "chef",
+        "run_list": "["recipe1", "recipe2"]",
         "attributes": "{"my": "attribute"}",
         "cloud_params": {
           "hotel": {
