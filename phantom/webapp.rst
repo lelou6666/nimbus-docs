@@ -124,6 +124,27 @@ Now that we have these values, we can put them in our profile:
 6. Paste your Chef Validator Key (usually in a .pem file in your .chef directory)
 7. Click Save Credentials
 
+Adding an SSH Key
+-----------------
+
+Phantom requires a copy of your public SSH key to allow you to log in to VMs that
+it starts for you. Often, you will have already uploaded an SSH key to the clouds
+you want to use with Phantom, but if you haven't, Phantom provides a tool to do this.
+
+If you haven't yet created an SSH key at all, the FutureGrid site has `good instructions
+for creating an SSH key <https://portal.futuregrid.org/generating-ssh-keys-futuregrid-access>`_ .
+Once you have your key, you can upload it by:
+
+1. Set up one or more set of cloud credentials on the `Cloud Credentials <https://phantom.nimbusproject.org/phantom/profile#cloud-credentials>`_ page on your profile.
+2. Go to the `Add SSH Key <http://localhost:8080/phantom/profile#add-ssh-key>`_ page in your profile.
+3. Select the clouds you would like to upload to on the left
+4. Enter a name for your key into the Name field 
+5. Paste your key into the Key field. (Hint: on the Mac, you can type "pbcopy < ~/.ssh/id_rsa.pub" into your terminal to copy your key)
+6. Click the "Upload SSH Key" button to upload your key
+
+Once you have done this, you can enable the key by following the steps outlined above under
+"Adding EC2 Credentials".
+
 
 Creating a Launch Configuration
 ===============================
