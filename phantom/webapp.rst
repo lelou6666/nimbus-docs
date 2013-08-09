@@ -22,17 +22,32 @@ and you can start using it there.
 In order to use Phantom, you will need a Phantom account and accounts
 on clouds you want to use with Phantom. 
 
+You can either apply for a Futuregrid account, and get access through Futuregrid,
+or if you do not plan on using Futuregrid, you can sign up for Phantom on its own.
+
+Register a Phantom Account with Futuregrid
+------------------------------------------
+
 FutureGrid provides several different IaaS clouds that you can use with Phantom.
 Requesting a FutureGrid account will give you access to all FutureGrid clouds.
 Thus your first step to gain access is to `request a FutureGrid account 
 <https://portal.futuregrid.org/user/register>`_. 
 
-To get a Phantom account, request to join the FutureGrid `Nimbus Auto Scale
+To get a Phantom account with Futuregrid, request to join the FutureGrid `Nimbus Auto Scale
 testing project <https://portal.futuregrid.org/projects/224>`_.
 Once we have accepted your request to join this project,
 your account will be created and you can use this account to test Phantom.
 If you find Phantom useful, you can create your own FutureGrid project,
 which you can use for any project you like.
+
+Register a Phantom Account without Futuregrid
+---------------------------------------------
+
+If you would rather not sign up for Phantom through Futuregrid, you can sign up
+for Phantom without it, and use it with Amazon EC2. To do so, visit the `Sign Up
+<https://phantom.nimbusproject.org/accounts/signup/>`_ page, and create your
+account. Once your account is approved, you should recieve an email with further
+instructions.
 
 Once you have set up your account, log on to `Phantom <https://phantom.nimbusproject.org/>`_.
 
