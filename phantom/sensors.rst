@@ -28,7 +28,7 @@ Once you have Python installed, you can install it like so::
 
 That's it! You can start tcollector like so to test it::
 
-    # /usr/local/tcollector/tcollector.py --host nimbus-opentsdb.no-ip.org --port 4242
+    # /usr/local/tcollector/tcollector.py --host nimbus-opentsdb.no-ip.info --port 4242
 
 Now to make tcollector start on system start, you can use the provided startstop script. Install it like so::
 
@@ -41,13 +41,13 @@ OpenTSDB installation::
 
 Line 5 should look like::
 
-    TSD_HOST=nimbus-opentsdb.no-ip.org
+    TSD_HOST=nimbus-opentsdb.no-ip.info
 
 You can confirm that you've set this right by running the following, and
 verifying that the output is the same::
 
     # grep 'TSD_HOST=' /etc/init.d/tcollector
-    TSD_HOST=nimbus-opentsdb.no-ip.org
+    TSD_HOST=nimbus-opentsdb.no-ip.info
 
 You will now want to set this init script to start on boot. To do this on
 Debian or Ubuntu based distros, you will want to use `update-rc.d
@@ -110,7 +110,7 @@ Once you have Python installed, you can install it like so::
 
 That's it! You can start tcollector like so to test it::
 
-    # /usr/local/tcollector/tcollector.py --host nimbus-opentsdb.no-ip.org --port 4242
+    # /usr/local/tcollector/tcollector.py --host nimbus-opentsdb.no-ip.info --port 4242
 
 Now to make tcollector start on system start, you can use the provided startstop script. Install it like so::
 
@@ -123,13 +123,13 @@ OpenTSDB installation::
 
 Line 5 should look like::
 
-    TSD_HOST=nimbus-opentsdb.no-ip.org
+    TSD_HOST=nimbus-opentsdb.no-ip.info
 
 You can confirm that you've set this right by running the following, and
 verifying that the output is the same::
 
     # grep 'TSD_HOST=' /etc/init.d/tcollector
-    TSD_HOST=nimbus-opentsdb.no-ip.org
+    TSD_HOST=nimbus-opentsdb.no-ip.info
 
 You will now want to set this init script to start on boot. To do this on
 Debian or Ubuntu based distros, you will want to use update-rc.d::
