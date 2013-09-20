@@ -57,8 +57,9 @@ Getting a Token
 
 The Phantom API uses tokens and Basic Authentication for authentication. Users
 must request a token to access most endpoints in the API.  All other requests
-must be authenticated using this token. To use this token with curl, 
-for example::
+must be authenticated using this token. To get this token with curl, 
+for example, a user 'alice' with the password 'restaurant' would do the following.
+Please substitute your username and password for 'alice' and 'restaurant':: 
 
     $ curl -d "username=alice&password=restaurant" http://phantom.nimbusproject.org/api/dev/token
     {"token": "xgy-4h324h2i4h32oi4h23", "user": 1, "success": true}

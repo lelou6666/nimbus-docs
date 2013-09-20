@@ -42,7 +42,8 @@ must request a token to access most endpoints in the API.
 
 All other requests must be authenticated using this token.
 
-To get this token with curl, do:
+As an example, if the user 'alice' with the password 'restaurant' wants to get her token,
+she could do the following with curl:
 
    .. sourcecode:: none
 
