@@ -34,6 +34,18 @@ Now to make tcollector start on system start, you can use the provided startstop
 
     # cp /usr/local/tcollector/startstop /etc/init.d/tcollector
 
+.. note::
+    
+    If you are running your VM on OpenStack clouds running OpenStack prior to Havana,
+    there is `a bug <https://bugs.launchpad.net/nova/+bug/1096468>`_ in the EC2 interface
+    which affects this script. We have an `alternative script available 
+    <https://github.com/nimbusproject/tcollector/blob/master/startstop.india-openstack>`_,
+    which works around the problem.
+
+    Instead of the above command, use:
+
+        # cp /usr/local/tcollector/startstop.india-openstack /etc/init.d/tcollector
+
 Open up the script and set the TSD_HOST variable to point to the Phantom
 OpenTSDB installation::
 
