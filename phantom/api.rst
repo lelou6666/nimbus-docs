@@ -1275,6 +1275,7 @@ Each domain can have a number of instances attached to it.
    Terminate the instance `instance_id` within the domain `domain_id`
 
    :statuscode 204: instance terminated
+   :query adjust_policy: either ``true`` or ``false``. If ``true``, the domain's policy will be adjusted to prevent a replacement VM from starting. In the Multicloud policy, the ``vm_count`` parameter will be decremented, in the sensor policy, the ``sensor_minimum_vms`` parameter will be decremented, and the ``sensor_maximum_vms`` parameter will be adjusted to match it.
 
    **Example request**:
 
