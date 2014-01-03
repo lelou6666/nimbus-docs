@@ -40,7 +40,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'phantom'
+project = u'Stream Management Framework'
 copyright = u'2011, Nimbus Team'
 
 # The version info for the project you're documenting, acts as replacement for
