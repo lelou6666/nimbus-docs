@@ -20,7 +20,7 @@ Getting Access
 Phantom has been deployed as a service on `FutureGrid <https://futuregrid.org/>`_
 and you can start using it there.
 In order to use Phantom, you will need a Phantom account and accounts
-on clouds you want to use with Phantom. 
+on clouds you want to use with Phantom.
 
 You can either apply for a Futuregrid account, and get access through Futuregrid,
 or if you do not plan on using Futuregrid, you can sign up for Phantom on its own.
@@ -28,17 +28,16 @@ or if you do not plan on using Futuregrid, you can sign up for Phantom on its ow
 Register a Phantom Account with Futuregrid
 ------------------------------------------
 
-FutureGrid provides several different IaaS clouds that you can use with Phantom.
-Requesting a FutureGrid account will give you access to all FutureGrid clouds.
-Thus your first step to gain access is to `request a FutureGrid account 
-<https://portal.futuregrid.org/user/register>`_. 
+FutureGrid provides several different IaaS clouds that you can use with
+Phantom.  Requesting a FutureGrid account will give you access to all
+FutureGrid clouds.  Thus your first step to gain access is to `request a
+FutureGrid account <https://portal.futuregrid.org/user/register>`_. Once you
+have a FutureGrid account, you will need to join an existing FutureGrid project
+or to `create your own <https://portal.futuregrid.org/node/add/fg-projects>`_.
 
-To get a Phantom account with Futuregrid, request to join the FutureGrid `Nimbus Auto Scale
-testing project <https://portal.futuregrid.org/projects/224>`_.
-Once we have accepted your request to join this project,
-your account will be created and you can use this account to test Phantom.
-If you find Phantom useful, you can create your own FutureGrid project,
-which you can use for any project you like.
+Once you are in an active FutureGrid project, you can get a Phantom account by
+emailing `nimbus@mcs.anl.gov <mailto:nimbus@mcs.anl.gov>`_.  We will create
+your Phantom account and send you instructions on how to use Phantom.
 
 Register a Phantom Account without Futuregrid
 ---------------------------------------------
