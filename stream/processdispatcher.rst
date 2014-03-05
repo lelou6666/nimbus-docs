@@ -126,7 +126,7 @@ Process Dispatcher Dashi API
 
     upid: (preferably) a uuid string that provides a unique ID for the definition
     configuration: a dictionary of values that provides configuration for the process
-    subscribers: (deprecated) a list of subscribers to recieve notifications about this process
+    subscribers: (deprecated) a list of subscribers to receive notifications about this process
     constraints: a dictionary of constraints restricting which eeagent a process can be scheduled to
     queueing_mode: when a process can be queued
     restart_mode: when and if failed/terminated procs should be restarted

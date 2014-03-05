@@ -45,7 +45,7 @@ Register a Phantom Account without Futuregrid
 If you would rather not sign up for Phantom through Futuregrid, you can sign up
 for Phantom without it, and use it with Amazon EC2. To do so, visit the `Sign Up
 <https://phantom.nimbusproject.org/accounts/signup/>`_ page, and create your
-account. Once your account is approved, you should recieve an email with further
+account. Once your account is approved, you should receive an email with further
 instructions.
 
 Once you have set up your account, log on to `Phantom <https://phantom.nimbusproject.org/>`_.
