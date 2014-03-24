@@ -47,7 +47,7 @@ she could do the following with curl:
 
    .. sourcecode:: none
 
-      $ curl -d "username=alice&password=restaurant" https://phantom.nimbusproject.org/api/dev/token
+      $ curl -d 'username=alice&password=restaurant' https://phantom.nimbusproject.org/api/dev/token
       {"token": "xgy-4h324h2i4h32oi4h23", "user": 1, "success": true}
 
 Then, to use other endpoints, use this user id and token when querying. You can either include the 

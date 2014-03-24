@@ -61,7 +61,7 @@ must be authenticated using this token. To get this token with curl,
 for example, a user 'alice' with the password 'restaurant' would do the following.
 Please substitute your username and password for 'alice' and 'restaurant':: 
 
-    $ curl -d "username=alice&password=restaurant" https://phantom.nimbusproject.org/api/dev/token
+    $ curl -d 'username=alice&password=restaurant' https://phantom.nimbusproject.org/api/dev/token
     {"token": "xgy-4h324h2i4h32oi4h23", "user": 1, "success": true}
 
 For convenience store those values in the following environment variables::

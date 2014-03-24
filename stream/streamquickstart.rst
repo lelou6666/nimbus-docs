@@ -126,7 +126,7 @@ Now you can create a process definition for this operation. To do so, you can ei
         "name": "My Operation"
     }
     }
-    $ curl -u username:password -H "Content-Type: application/json" -X POST --data @definition.json http://$PROCESS_REGISTRY_HOST:8081/api/process_definition/
+    $ curl -u 'username:password' -H "Content-Type: application/json" -X POST --data @definition.json http://$PROCESS_REGISTRY_HOST:8081/api/process_definition/
 
 Now you have created a Stream Operation Appliance!
 
