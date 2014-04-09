@@ -125,9 +125,9 @@ Client Name (``node_name``) and Chef Validation Client Name
 You will also need your client key and validator key. From Hosted Enterprise Chef, you
 should have downloaded them when you set up your account and placed them in
 your .chef directory. If you haven't, you can generate a new client key on the
-`Change Password <https://www.opscode.com/account/password>`_ page, and a new
-validator key on the `Organizations <https://manage.opscode.com/organizations>`_
-page.
+Change Password page found under the Users menu on the `Organizations
+<https://manage.opscode.com/organizations>`_ page, and a new validator key on
+the `Organizations <https://manage.opscode.com/organizations>`_ page.
 
 Now that we have these values, we can put them in our profile:
 
