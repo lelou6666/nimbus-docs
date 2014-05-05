@@ -45,6 +45,7 @@ Now to make tcollector start on system start, you can use the provided startstop
     Instead of the above command, use:
 
         # wget https://raw.githubusercontent.com/nimbusproject/tcollector/master/startstop.india-openstack
+
         # cp startstop.india-openstack /etc/init.d/tcollector
 
 Open up the script and set the TSD_HOST variable to point to the Phantom
