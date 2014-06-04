@@ -14,6 +14,7 @@ you through these more advanced topics.
     api
     buildingadecisionengine
     buildingaphantomappliance
+    imagegeneration
 
 We also support a subset of the Amazon AutoScale API.
 
