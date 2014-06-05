@@ -33,6 +33,7 @@ It currently supports the following clouds:
 * Nimbus Hotel/Xen
 * Nimbus Hotel/KVM
 * OpenStack Hotel
+* OpenStack India (Havana)
 * OpenStack Sierra
 * EC2
 
