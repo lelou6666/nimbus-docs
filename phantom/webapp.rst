@@ -241,7 +241,7 @@ To set up Chef contextualization:
 4. Fill in your Chef attributes (in json format)
 5. Click Save
 
-To set up *Phantomize*"
+To set up *Phantomize*:
 
 1. Select the Launch Configuration you would like to use, or make a new one
 2. Under Contextualization Type, choose "Phantomize"
