@@ -216,10 +216,15 @@ Setting up Contextualization
 ----------------------------
 
 If you would like to contextualize your virtual machines, you can do so using
-either the plain user-data field, which will put the information on the cloud's
-metadata server for access from the VM, or you can specify a Chef runlist and
-dictionary of attributes. If you would like to know more about Chef, you can
-visit `#LearnChef <https://learnchef.opscode.com/>`_.
+several mechanisms:
+
+* The plain user-data field will put the information on the cloud's metadata
+  server for access from the VM
+* You can specify a Chef runlist and dictionary of attributes. If you would
+  like to know more about Chef, you can visit `#LearnChef
+  <https://learnchef.opscode.com/>`_.
+* You can *Phantomize* a VM which installs and runs tcollector for use with
+  sensor autoscaling domains (see :doc:`sensors`)
 
 To set up plain user-data:
 
@@ -235,6 +240,19 @@ To set up Chef contextualization:
 3. Fill in your Chef runlist (in json format)
 4. Fill in your Chef attributes (in json format)
 5. Click Save
+
+To set up *Phantomize*"
+
+1. Select the Launch Configuration you would like to use, or make a new one
+2. Under Contextualization Type, choose "Phantomize"
+3. Click Save
+
+.. note::
+
+    Your virtual machine image must be configured to download and execute
+    user-data on boot. This is done automatically if you have `cloud-init
+    <http://cloudinit.readthedocs.org>`_ installed. OpenStack images are
+    generally already configured to run cloud-init on boot.
 
 Launching a Domain
 ==================
@@ -272,10 +290,9 @@ Creating a sensor autoscaling domain
 ------------------------------------
 
 If you would like to create a sensor autoscaling domain, ensure that you have
-tcollector installed and configured on your VM image. You can also use the
-hello-phantom.gz public image on FutureGrid, as described on the
-:doc:`sensors`
-page.
+tcollector installed and configured on your VM image, or that you have used the
+*Phantomize* contextualization. You can also use the hello-phantom.gz public
+image on FutureGrid, as described on the :doc:`sensors` page.
 
 Then:
 
