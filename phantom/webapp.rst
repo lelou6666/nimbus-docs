@@ -212,6 +212,15 @@ When you are happy with the order you have selected, click the *Save* button
 Once saved,  you can now launch a domain using this launch
 configuration.
 
+Appliances
+----------
+
+Appliances are ready-made launch configuration to help you start domains
+without having to manually enter all the settings.  If you select an appliance,
+the image and contextualization settings will alreay be configured for you. You
+will only have to select the clouds you want to use, the maximum number of VMs
+on each cloud, and the instance types.
+
 Setting up Contextualization
 ----------------------------
 
