@@ -227,8 +227,9 @@ Setting up Contextualization
 Contextualization allows you to configure your virtual machines so that they
 provide fully configured applications and services.
 
-If you would like to contextualize your virtual machines, you can do so using
-several mechanisms:
+Contextualization is optional: you can leave the User Data field empty, or
+select *None* as contextualization type.  If you would like to contextualize
+your virtual machines, you can do so using several mechanisms:
 
 * The plain user-data field will put the information on the cloud's metadata
   server for access from the VM
