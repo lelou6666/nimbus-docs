@@ -206,7 +206,7 @@ You can now add aditional clouds if you like by repeating the above steps.
 Once you have enabled the clouds you would like to use, you can drag and drop
 the clouds change the launch priority of these clouds. Phantom will try
 to start as many VMs as it can (up to the maximum you specified) on the first
-cloud in the list before starting VMs on the second.
+cloud in the list before starting VMs on the second cloud.
 
 When you are happy with the order you have selected, click the *Save* button
 Once saved,  you can now launch a domain using this launch
