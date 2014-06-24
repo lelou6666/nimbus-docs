@@ -151,7 +151,7 @@ for creating an SSH key <https://portal.futuregrid.org/generating-ssh-keys-futur
 Once you have your key, you can upload it by:
 
 1. Set up one or more set of cloud credentials on the `Cloud Credentials <https://phantom.nimbusproject.org/phantom/profile#cloud-credentials>`_ page on your profile.
-2. Go to the `Add SSH Key <http://localhost:8080/phantom/profile#add-ssh-key>`_ page in your profile.
+2. Go to the `Add SSH Key <https://phantom.nimbusproject.org/phantom/profile#add-ssh-key>`_ page in your profile.
 3. Select the clouds you would like to upload to on the left
 4. Enter a name for your key into the Name field 
 5. Paste your key into the Key field. (Hint: on the Mac, you can type "pbcopy < ~/.ssh/id_rsa.pub" into your terminal to copy your key)
