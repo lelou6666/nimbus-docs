@@ -215,6 +215,9 @@ configuration.
 Setting up Contextualization
 ----------------------------
 
+Contextualization allows you to configure your virtual machines so that they
+provide fully configured applications and services.
+
 If you would like to contextualize your virtual machines, you can do so using
 several mechanisms:
 
