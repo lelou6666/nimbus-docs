@@ -201,7 +201,7 @@ Adding a Cloud
    EC2 or Nimbus metadata server.
 6. Click *Enable* to add the cloud configuration to the list of clouds on the right.
 
-You can now add aditional clouds if you like by repeating the above steps.
+You can now add additional clouds if you like by repeating the above steps.
 
 Once you have enabled the clouds you would like to use, you can drag and drop
 the clouds change the launch priority of these clouds. Phantom will try
@@ -217,7 +217,7 @@ Appliances
 
 Appliances are ready-made launch configuration to help you start domains
 without having to manually enter all the settings.  If you select an appliance,
-the image and contextualization settings will alreay be configured for you. You
+the image and contextualization settings will already be configured for you. You
 will only have to select the clouds you want to use, the maximum number of VMs
 on each cloud, and the instance types.
 
