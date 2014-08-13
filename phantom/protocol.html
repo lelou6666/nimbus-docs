@@ -1,0 +1,287 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+
+
+
+<!-- BEGIN HEAD -->
+
+    <title>Phantom Autoscale API protocol &mdash; phantom 0.2 documentation</title>
+
+    
+    <link rel="stylesheet" href="_static/doc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="phantom 0.2 documentation" href="index.html" />
+    <link rel="up" title="Phantom Advanced Documentation" href="advanced.html" />
+    <link rel="next" title="Scripting with the Phantom Autoscale API" href="scripting.html" />
+    <link rel="prev" title="Multi-cloud VM image generation" href="imagegeneration.html" />
+<!-- END HEAD -->
+
+
+<link rel="stylesheet" href="_static/standalone.css" type="text/css" />
+
+  </head>
+  <body>
+    <div class="docheader-wrapper">
+      <div class="docheader">
+        <h1><a href="index.html">phantom 0.2 documentation</a></h1>
+        <div class="rel">
+          <a href="imagegeneration.html" title="Multi-cloud VM image generation"
+             accesskey="P">previous</a> |
+          <a href="scripting.html" title="Scripting with the Phantom Autoscale API"
+             accesskey="N">next</a> |
+          <a href="http-routingtable.html" title="HTTP Routing Table"
+             >routing table</a> |
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a>
+        </div>
+       </div>
+   </div>
+
+<!-- BEGIN BODY -->
+    <div class="content-wrapper">
+      <div class="doccontent">
+        <div class="document">
+            
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="phantom-autoscale-api-protocol">
+<h1>Phantom Autoscale API protocol<a class="headerlink" href="#phantom-autoscale-api-protocol" title="Permalink to this headline">¶</a></h1>
+<p>Phantom implements a subset of the
+<a class="reference external" href="http://aws.amazon.com/autoscaling/">AWS Auto Scaling service</a>.
+It is an API that allows users to interact with a service which
+will monitor the health of VMs and preserve N VMs, or autoscale based on
+sensor attributes on various clouds.</p>
+<div class="section" id="phantom-autoscale-api">
+<h2>Phantom Autoscale API<a class="headerlink" href="#phantom-autoscale-api" title="Permalink to this headline">¶</a></h2>
+<p>The AWS protocol on which the Phantom Autoscale API is based is
+well documented
+<a class="reference external" href="http://docs.amazonwebservices.com/AutoScaling/latest/APIReference/">here</a>.
+Understanding how the AWS service works is not necessary to understand
+the Phantom API; however, since the two services are wire protocol
+compatible, it is helpful to understand the subset of commands
+which have been implemented by the Phantom service:</p>
+<ul>
+<li><p class="first"><tt class="docutils literal"><span class="pre">CreateLaunchConfiguration</span></tt>. This API call allows a user to
+associate a VM image with an instance type (the number of CPUs,
+amount of memory, and network configuration) and a security
+key.  It describes the details of every VM instance
+that will be launched in a group.  An important difference between
+Phantom and the AWS protocol is the name given to a launch
+configuration.</p>
+<p>With Phantom you must use the following naming convention:
+&lt;launch configuration name&gt;&#64;&lt;target cloud name&gt;.  The
+launch configuration name can be anything the user wishes, but it must be
+unique.  The cloud name must be one of the site names which you have
+configured.  The current options are:
+1) hotel, 2) sierra, 3) foxtrot, 4) alamo, 5) ec2 (if you have set it up).</p>
+<p>When setting up a Launch configuration you can add many sites to a
+single launch configuration name.  By doing this you can take advantage
+of the multi-cloud overflow capabilities which are unique to Phantom.</p>
+<p>For example, if you wish to have a launch configuration named <em>mylaunch</em>
+that will later
+allow you to launch 10 VMs such that 8 are on FutureGrid&#8217;s hotel and
+2 are on EC2, you would need to call CreateLaunchConfiguration twice,
+first with <a class="reference external" href="mailto:mylaunch&#37;&#52;&#48;hotel">mylaunch<span>&#64;</span>hotel</a> and next with <a class="reference external" href="mailto:mylaunch&#37;&#52;&#48;ec2">mylaunch<span>&#64;</span>ec2</a>.</p>
+<p>The Autoscale protocol details
+can be found <a class="reference external" href="http://docs.amazonwebservices.com/AutoScaling/latest/APIReference/API_CreateLaunchConfiguration.html">here</a>.</p>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">DeleteLaunchConfiguration</span></tt>.  This simply deletes a launch
+configuration that the user previously created with a call to
+CreateLaunchConfiguration.  You must use the
+&lt;launch configuration name&gt;&#64;&lt;target cloud name&gt; name here.
+The Autoscale protocol details
+can be found <a class="reference external" href="http://docs.amazonwebservices.com/AutoScaling/latest/APIReference/API_DeleteLaunchConfiguration.html">here</a>.</p>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">DescribeLaunchConfigurations</span></tt>.  List all of the launch configurations
+that the user previously created with calls to CreateLaunchConfiguration.
+You must use the
+&lt;launch configuration name&gt;&#64;&lt;target cloud name&gt; name here.
+The Autoscale protocol details
+can be found <a class="reference external" href="http://docs.amazonwebservices.com/AutoScaling/latest/APIReference/API_DescribeLaunchConfigurations.html">here</a>.</p>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">CreateAutoScalingGroup</span></tt>.  This API function will start running a group
+of VMs described by the provided &#8216;Launch Configuration&#8217;.</p>
+<p>A major difference between Phantom and EC2 is that in this call you must
+specify some Tags that control how your autoscale group will interact
+between clouds.  The following 3 tags are needed:</p>
+<blockquote>
+<div><blockquote>
+<div><ul>
+<li><p class="first">key: PHANTOM_DEFINITION, value: error_overflow_n_preserving
+In this version of Phantom that is the only accepted value</p>
+</li>
+<li><p class="first">key: clouds, value: a comma separated ordered list of
+the following format:</p>
+<p>&lt;cloud name&gt;:&lt;max VMs for that cloud&gt;</p>
+<p>each cloud name must be in the LaunchConfiguration also given to
+this API call.  The max VM value tells phantom to not run more
+VMs than that number of the cloud.  A value of -1 means infinity.</p>
+</li>
+</ul>
+</div></blockquote>
+<ul class="simple">
+<li>key: n_preserve, value: an integer specifying the maximum number of
+VMs to schedule across all the clouds.</li>
+</ul>
+</div></blockquote>
+<p>The Autoscale protocol details
+can be found <a class="reference external" href="http://docs.amazonwebservices.com/AutoScaling/latest/APIReference/API_CreateAutoScalingGroup.html">here</a>.</p>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">DeleteAutoScalingGroup</span></tt>.   This API call will stop a running auto scale
+group.
+The Autoscale protocol details
+can be found <a class="reference external" href="http://docs.amazonwebservices.com/AutoScaling/latest/APIReference/API_DeleteAutoScalingGroup.html">here</a>.</p>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">DescribeAutoScalingGroups</span></tt>  This API call lists all of the calling
+users currently running autoscaling groups.
+The Autoscale protocol details
+can be found <a class="reference external" href="http://docs.amazonwebservices.com/AutoScaling/latest/APIReference/API_DescribeAutoScalingGroups.html">here</a>.</p>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">SetDesiredCapacity</span></tt>.  This API call sets the number of VMs currently
+running in a given Auto Scaling Group.  The user is free to adjust this.
+The Autoscale protocol details
+can be found <a class="reference external" href="http://docs.amazonwebservices.com/AutoScaling/latest/APIReference/API_SetDesiredCapacity.html">here</a>.</p>
+</li>
+</ul>
+</div>
+<div class="section" id="typical-flow">
+<h2>Typical Flow<a class="headerlink" href="#typical-flow" title="Permalink to this headline">¶</a></h2>
+<p>Here we will describe a typical user execution flow.  The first thing
+a user will do is create a VM image.  This task is outside of the scope
+of this document and we assume that the reader is familiar with this.
+Once the user has selected the VM image they wish to use, they will
+pick an <a class="reference external" href="http://aws.amazon.com/ec2/instance-types/">instance type</a>.
+The instance type describes the hardware in which the VM image
+will run.  The last thing the user must pick is a ssh key to use.
+The ssh key should already be associated with the cloud (or clouds)
+on which the user will run their Auto Scale Group.  The process of
+associating a ssh public key with a cloud is described <a class="reference external" href="http://docs.amazonwebservices.com/AWSEC2/latest/UserGuide/generating-a-keypair.html">here</a>.</p>
+<p>When these three items are selected the user can create a Launch
+Configuration (a single reference to the tuple of the above described
+values.  The AWS concept of <a class="reference external" href="http://docs.amazonwebservices.com/AutoScaling/latest/GettingStartedGuide/CreateASGroup.html#create-launch-config">Launch
+Configuration</a> is similar and may
+be helpful to understand.  Launch Configurations can be stored for
+many runs and reused.</p>
+<p>For every cloud on which you want your domain to run you must call
+<a class="reference external" href="http://docs.amazonwebservices.com/AutoScaling/latest/GettingStartedGuide/CreateASGroup.html#create-launch-config">Create Launch Configuration</a>
+Pick a launch configuration name and append &#8220;&#64;&lt;sitename&gt;&#8221; to it.
+Then that name will be used to manage what each site will run via
+the Create Launch Configuration Autoscale API call.</p>
+<p>Once a launch configuration is created, the user will launch an
+&#8220;Auto Scale Group&#8221;.  To do this the user must pick three things:</p>
+<ul class="simple">
+<li>The total number of VMs that will be in this autoscale group (this
+number can be adjusted later).  The set of VMs may be across many
+clouds.  This value is called the <em>desired size</em>.</li>
+<li>The launch configuration to be used with this domain.</li>
+<li>The set of clouds on which the VMs will be run.  Each cloud must be in
+the associated launch configuration.  The list of clouds needs to be
+ordered.  A maximum number of VMs can be associated with each cloud, a
+value of negative one means infinity.</li>
+</ul>
+<p>When scheduling scheduling VMs phantom will try to achieve the <em>desired size</em>.
+It will start with the first cloud and launch VMs until it hits the limit
+for that cloud or until it starts running into errors (typically due
+to capacity limits on that cloud).  At that point it will move to the
+next cloud.</p>
+<p>During the life-cycle of the user&#8217;s application, they may decide to change the
+number of VMs they have.  They can do this with a call to &#8216;SetDesiredCapacity&#8217;.</p>
+<p>When the user&#8217;s application is complete, a call to &#8216;DeleteAutoScalingGroup&#8217;
+will terminate all the associated running VMs.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+        </div>
+        <div class="sidebar">
+          <h3>Page contents</h3>
+          <ul>
+<li><a class="reference internal" href="#">Phantom Autoscale API protocol</a><ul>
+<li><a class="reference internal" href="#phantom-autoscale-api">Phantom Autoscale API</a></li>
+<li><a class="reference internal" href="#typical-flow">Typical Flow</a></li>
+</ul>
+</li>
+</ul>
+
+          <h3>Browse</h3>
+          <ul>
+          
+          <li>Prev: <a href="imagegeneration.html">Multi-cloud VM image generation</a></li>
+          
+          
+          <li>Next: <a href="scripting.html">Scripting with the Phantom Autoscale API</a></li>
+          
+          </ul>
+          <h3>You are here:</h3>
+          <ul>
+            <li>
+              <a href="/doc/nimbus">Nimbus Documentation</a>
+            </li>
+            <li>
+              <ul><li>
+                <a href="index.html">phantom 0.2 documentation</a>
+                
+                  <ul><li><a href="advanced.html">Phantom Advanced Documentation</a>
+                
+                <ul><li>Phantom Autoscale API protocol</li></ul>
+                </li></ul>
+              </li></ul>
+            </li>
+          </ul>
+        </div>
+        <div class="clearer"></div>
+      </div>
+  </div>
+<!-- END BODY -->
+
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          <a href="imagegeneration.html" title="Multi-cloud VM image generation"
+             >previous</a> |
+          <a href="scripting.html" title="Scripting with the Phantom Autoscale API"
+             >next</a> |
+          <a href="http-routingtable.html" title="HTTP Routing Table"
+             >routing table</a> |
+          <a href="genindex.html" title="General Index"
+             >index</a>
+        </div>
+
+        <div class="right">
+          
+    <div class="footer">
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+  </div>
+
+  </body>
+</html>

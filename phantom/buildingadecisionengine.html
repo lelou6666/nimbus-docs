@@ -1,0 +1,384 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+
+
+
+<!-- BEGIN HEAD -->
+
+    <title>Building a Decision Engine with the Phantom Scripting API &mdash; phantom 0.2 documentation</title>
+
+    
+    <link rel="stylesheet" href="_static/doc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="phantom 0.2 documentation" href="index.html" />
+    <link rel="up" title="Phantom Advanced Documentation" href="advanced.html" />
+    <link rel="next" title="Building a Phantom Appliance" href="buildingaphantomappliance.html" />
+    <link rel="prev" title="The Phantom HTTP API" href="api.html" />
+<!-- END HEAD -->
+
+
+<link rel="stylesheet" href="_static/standalone.css" type="text/css" />
+
+  </head>
+  <body>
+    <div class="docheader-wrapper">
+      <div class="docheader">
+        <h1><a href="index.html">phantom 0.2 documentation</a></h1>
+        <div class="rel">
+          <a href="api.html" title="The Phantom HTTP API"
+             accesskey="P">previous</a> |
+          <a href="buildingaphantomappliance.html" title="Building a Phantom Appliance"
+             accesskey="N">next</a> |
+          <a href="http-routingtable.html" title="HTTP Routing Table"
+             >routing table</a> |
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a>
+        </div>
+       </div>
+   </div>
+
+<!-- BEGIN BODY -->
+    <div class="content-wrapper">
+      <div class="doccontent">
+        <div class="document">
+            
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="building-a-decision-engine-with-the-phantom-scripting-api">
+<h1>Building a Decision Engine with the Phantom Scripting API<a class="headerlink" href="#building-a-decision-engine-with-the-phantom-scripting-api" title="Permalink to this headline">¶</a></h1>
+<p>Once you have gotten familiar with Phantom, you may want behaviors that
+Phantom does not already provide. For example, you may want to scale your
+domain with behaviour that you cannot define in the GUI. This page will
+guide you in creating a &#8220;Decision Engine&#8221; for Phantom that will automate
+scaling your VMs in a domain.</p>
+<p>As an example, we will build a decision engine that starts a new VM every
+10 seconds, then lets them run for a minute, then shuts them down.</p>
+<p>You can get the source to the tutorial decision engine
+<a class="reference external" href="https://github.com/nimbusproject/PhantomWebApp/blob/master/example_scripts/de_tutorial.py">on github</a>.</p>
+<div class="section" id="basics">
+<h2>Basics<a class="headerlink" href="#basics" title="Permalink to this headline">¶</a></h2>
+<p>Ensure that your have set up a suitable scripting environment. The
+<a class="reference internal" href="scripting.html"><em>Scripting with the Phantom Autoscale API</em></a> page will guide you in setting up your environment. This
+guide assumes that you are familiar with Python.</p>
+</div>
+<div class="section" id="initializing-your-decision-engine">
+<h2>Initializing your Decision engine<a class="headerlink" href="#initializing-your-decision-engine" title="Permalink to this headline">¶</a></h2>
+<p>To start, we will import the necessary libraries, and set up the basics of our
+decision engine:</p>
+<div class="highlight-bash"><div class="highlight"><pre>import os
+import sys
+import <span class="nb">time</span>
+import json
+import requests
+
+
+class MyPhantomDecisionEngine<span class="o">(</span>object<span class="o">)</span>:
+
+    def __init__<span class="o">(</span>self<span class="o">)</span>:
+
+        self.user_id <span class="o">=</span> os.environ<span class="o">[</span><span class="s1">&#39;USER_ID&#39;</span><span class="o">]</span>
+        self.token <span class="o">=</span> os.environ<span class="o">[</span><span class="s1">&#39;TOKEN&#39;</span><span class="o">]</span>
+        self.api_url <span class="o">=</span> os.environ.get<span class="o">(</span><span class="s1">&#39;PHANTOM_URL&#39;</span>, <span class="s2">&quot;https://phantom.nimbusproject.org/api/dev&quot;</span><span class="o">)</span>
+
+        self.domain_name <span class="o">=</span> <span class="s2">&quot;my_domain&quot;</span>
+        self.launch_config_name <span class="o">=</span> <span class="s2">&quot;my_launch_config&quot;</span>
+        self.vm_image <span class="o">=</span> <span class="s2">&quot;hello-phantom.gz&quot;</span>
+        self.max_vms <span class="o">=</span> 4
+        self.key_name <span class="o">=</span> <span class="s2">&quot;phantomkey&quot;</span>
+        self.image_type <span class="o">=</span> <span class="s2">&quot;m1.small&quot;</span>
+        self.clouds <span class="o">=</span> <span class="o">[</span><span class="s2">&quot;hotel&quot;</span>, <span class="s2">&quot;sierra&quot;</span><span class="o">]</span>
+
+        self.create_launch_configuration<span class="o">()</span>
+        self.create_domain<span class="o">()</span>
+        self.run_policy<span class="o">()</span>
+</pre></div>
+</div>
+<p>If you are comfortable with Python, this should be fairly familiar to you. We
+import a few modules that we will use in creating our decision engine. Next, we
+create a class called &#8220;MyPhantomDecisionEngine&#8221;, and initialize a few variables
+that we will use later. You must set USER_ID, TOKEN, and
+PHANTOM_URL in your env before running this script.</p>
+<p>Our decision engine will use the hello-phantom.gz image, will use the
+&#8220;phantomkey&#8221; SSH key, will use an &#8220;m1.small&#8221; image,  will start a maximum of
+4 VMs per cloud, and will launch VMs on both hotel and sierra.</p>
+</div>
+<div class="section" id="initializing-our-launch-configuration">
+<h2>Initializing our Launch Configuration<a class="headerlink" href="#initializing-our-launch-configuration" title="Permalink to this headline">¶</a></h2>
+<p>Now we will create a utility function which will initialize our Launch
+Configuration:</p>
+<div class="highlight-bash"><div class="highlight"><pre>def create_launch_configuration<span class="o">(</span>self<span class="o">)</span>:
+
+    <span class="c"># Get a list of existing launch configurations</span>
+    <span class="nv">r</span> <span class="o">=</span> requests.get<span class="o">(</span><span class="s2">&quot;%s/launchconfigurations&quot;</span> % self.api_url, <span class="nv">auth</span><span class="o">=(</span>self.user_id, self.token<span class="o">))</span>
+    <span class="nv">existing_launch_configurations</span> <span class="o">=</span> r.json<span class="o">()</span>
+    <span class="nv">existing_lc_names</span> <span class="o">=</span> <span class="o">[</span>lc.get<span class="o">(</span><span class="s1">&#39;name&#39;</span><span class="o">)</span> <span class="k">for </span>lc in existing_launch_configurations<span class="o">]</span>
+
+    <span class="c"># Create launch configuration if it doesn&#39;t exist</span>
+    <span class="k">if </span>self.launch_config_name not in existing_lc_names:
+
+        print <span class="s2">&quot;Creating launch config &#39;%s&#39;&quot;</span> % self.launch_config_name
+        <span class="nv">new_lc</span> <span class="o">=</span> <span class="o">{</span>
+            <span class="s1">&#39;name&#39;</span>: self.launch_config_name,
+            <span class="s1">&#39;cloud_params&#39;</span>: <span class="o">{}</span>
+        <span class="o">}</span>
+
+        <span class="nv">rank</span> <span class="o">=</span> 0
+        <span class="k">for </span>cloud in self.clouds:
+            <span class="nv">rank</span> <span class="o">=</span> rank + 1
+            <span class="nv">cloud_param</span> <span class="o">=</span> <span class="o">{</span>
+                <span class="s1">&#39;image_id&#39;</span>: self.vm_image,
+                <span class="s1">&#39;instance_type&#39;</span>: self.image_type,
+                <span class="s1">&#39;max_vms&#39;</span>: self.max_vms,
+                <span class="s1">&#39;common&#39;</span>: True,
+                <span class="s1">&#39;rank&#39;</span>: rank,
+            <span class="o">}</span>
+            new_lc<span class="o">[</span><span class="s1">&#39;cloud_params&#39;</span><span class="o">][</span>cloud<span class="o">]</span> <span class="o">=</span> cloud_param
+
+        <span class="nv">r</span> <span class="o">=</span> requests.post<span class="o">(</span><span class="s2">&quot;%s/launchconfigurations&quot;</span> % self.api_url,
+            <span class="nv">data</span><span class="o">=</span>json.dumps<span class="o">(</span>new_lc<span class="o">)</span>, <span class="nv">auth</span><span class="o">=(</span>self.user_id, self.token<span class="o">))</span>
+
+    <span class="k">else</span>:
+        print <span class="s2">&quot;Launch config &#39;%s&#39; has already been added, skipping...&quot;</span> % <span class="o">(</span>
+            self.launch_config_name,<span class="o">)</span>
+</pre></div>
+</div>
+<p>First, we get a list of all of the existing launch configurations that we might
+have previously created. Then we create our LC if it does not yet exist.</p>
+<p>Note that we are feeding in the parameters we set in our init function into the
+LC. We set the name of the LC, the image_id, the instance_type, the
+maximum_number of vms, and the rank. The rank is the ordering of clouds in
+which phantom will attempt to start VMs.</p>
+</div>
+<div class="section" id="initializing-our-domain">
+<h2>Initializing our Domain<a class="headerlink" href="#initializing-our-domain" title="Permalink to this headline">¶</a></h2>
+<p>Next, we want to set up our domain:</p>
+<div class="highlight-bash"><div class="highlight"><pre>def create_domain<span class="o">(</span>self<span class="o">)</span>:
+
+    <span class="c"># Check if domain already exists</span>
+    <span class="nv">r</span> <span class="o">=</span> requests.get<span class="o">(</span><span class="s2">&quot;%s/domains&quot;</span> % self.api_url, <span class="nv">auth</span><span class="o">=(</span>self.user_id, self.token<span class="o">))</span>
+    <span class="nv">existing_domains</span> <span class="o">=</span> r.json<span class="o">()</span>
+
+    <span class="nv">domain_exists</span> <span class="o">=</span> False
+    <span class="nv">domain_id</span> <span class="o">=</span> None
+    <span class="k">for </span>domain in existing_domains:
+        <span class="k">if </span>domain.get<span class="o">(</span><span class="s1">&#39;name&#39;</span><span class="o">)</span> <span class="o">==</span> self.domain_name:
+            <span class="nv">domain_exists</span> <span class="o">=</span> True
+            <span class="nv">domain_id</span> <span class="o">=</span> domain.get<span class="o">(</span><span class="s1">&#39;id&#39;</span><span class="o">)</span>
+            <span class="nb">break</span>
+
+    <span class="c"># Create our domain</span>
+    print <span class="s2">&quot;Creating domain %s&quot;</span> % self.domain_name
+    <span class="nv">new_domain</span> <span class="o">=</span> <span class="o">{</span>
+        <span class="s1">&#39;name&#39;</span>: self.domain_name,
+        <span class="s1">&#39;de_name&#39;</span>: <span class="s1">&#39;multicloud&#39;</span>,
+        <span class="s1">&#39;lc_name&#39;</span>: self.launch_config_name,
+        <span class="s1">&#39;vm_count&#39;</span>: 0
+    <span class="o">}</span>
+
+    <span class="k">if </span>domain_exists:
+        <span class="nv">r</span> <span class="o">=</span> requests.put<span class="o">(</span><span class="s2">&quot;%s/domains/%s&quot;</span> % <span class="o">(</span>self.api_url, domain_id<span class="o">)</span>,
+            <span class="nv">data</span><span class="o">=</span>json.dumps<span class="o">(</span>new_domain<span class="o">)</span>, <span class="nv">auth</span><span class="o">=(</span>self.user_id, self.token<span class="o">))</span>
+        <span class="k">if </span>r.status_code !<span class="o">=</span> 200:
+            sys.exit<span class="o">(</span><span class="s2">&quot;Error: %s&quot;</span> % r.text<span class="o">)</span>
+    <span class="k">else</span>:
+        <span class="nv">r</span> <span class="o">=</span> requests.post<span class="o">(</span><span class="s2">&quot;%s/domains&quot;</span> % self.api_url,
+            <span class="nv">data</span><span class="o">=</span>json.dumps<span class="o">(</span>new_domain<span class="o">)</span>, <span class="nv">auth</span><span class="o">=(</span>self.user_id, self.token<span class="o">))</span>
+        <span class="k">if </span>r.status_code !<span class="o">=</span> 201:
+            sys.exit<span class="o">(</span><span class="s2">&quot;Error: %s&quot;</span> % r.text<span class="o">)</span>
+</pre></div>
+</div>
+<p>First, we must check whether there is already a domain with the name we like. If
+so, we will need to overwrite it, rather than create it.</p>
+<p>Next, we pick the decision engine name to use. We will use the standard
+&#8216;multicloud&#8217; de.</p>
+<p>Then, we pick the launch configuration this domain should use. We want to use
+the one we set up earlier.</p>
+<p>Next, we set how many VMs we would like to be started when we start our domain.
+We will start with 0, but this can be whatever you like. This is the vm_count.</p>
+<p>Finally, we create our domain. We feed in the parameters we&#8217;ve prepared, and
+start the domain.</p>
+</div>
+<div class="section" id="defining-our-decision-engine-policy">
+<h2>Defining our Decision Engine Policy<a class="headerlink" href="#defining-our-decision-engine-policy" title="Permalink to this headline">¶</a></h2>
+<p>Now that we have setup up our Launch Config and Domain, we can define the policy
+for our domain. As stated in the intro, we will increase our VM capacity every
+ten seconds, then we will let them run for a minute, then shut them down:</p>
+<div class="highlight-bash"><div class="highlight"><pre>def run_policy<span class="o">(</span>self<span class="o">)</span>:
+
+    <span class="nv">r</span> <span class="o">=</span> requests.get<span class="o">(</span><span class="s2">&quot;%s/domains&quot;</span> % self.api_url, <span class="nv">auth</span><span class="o">=(</span>self.user_id, self.token<span class="o">))</span>
+    <span class="nv">existing_domains</span> <span class="o">=</span> r.json<span class="o">()</span>
+    <span class="nv">domain</span> <span class="o">=</span> None
+    <span class="k">for </span>_domain in existing_domains:
+        <span class="k">if </span>_domain.get<span class="o">(</span><span class="s1">&#39;name&#39;</span><span class="o">)</span> <span class="o">==</span> self.domain_name:
+            <span class="nv">domain</span> <span class="o">=</span> _domain
+            <span class="nb">break</span>
+<span class="nb">    </span><span class="k">else</span>:
+        raise SystemExit<span class="o">(</span><span class="s2">&quot;Couldn&#39;t get domain %s&quot;</span> % self.domain_name<span class="o">)</span>
+
+    <span class="nv">vm_count</span> <span class="o">=</span> 1
+    print <span class="s2">&quot;set %s vm_count to %s&quot;</span> % <span class="o">(</span>self.domain_name, vm_count<span class="o">)</span>
+    domain<span class="o">[</span><span class="s1">&#39;vm_count&#39;</span><span class="o">]</span> <span class="o">=</span> vm_count
+    <span class="nv">r</span> <span class="o">=</span> requests.put<span class="o">(</span><span class="s2">&quot;%s/domains/%s&quot;</span> % <span class="o">(</span>self.api_url, domain.get<span class="o">(</span><span class="s1">&#39;id&#39;</span><span class="o">))</span>,
+            <span class="nv">data</span><span class="o">=</span>json.dumps<span class="o">(</span>domain<span class="o">)</span>, <span class="nv">auth</span><span class="o">=(</span>self.user_id, self.token<span class="o">))</span>
+    time.sleep<span class="o">(</span>10<span class="o">)</span>
+
+    vm_count +<span class="o">=</span> 1
+    print <span class="s2">&quot;set %s vm_count to %s&quot;</span> % <span class="o">(</span>self.domain_name, vm_count<span class="o">)</span>
+    domain<span class="o">[</span><span class="s1">&#39;vm_count&#39;</span><span class="o">]</span> <span class="o">=</span> vm_count
+    <span class="nv">r</span> <span class="o">=</span> requests.put<span class="o">(</span><span class="s2">&quot;%s/domains/%s&quot;</span> % <span class="o">(</span>self.api_url, domain.get<span class="o">(</span><span class="s1">&#39;id&#39;</span><span class="o">))</span>,
+            <span class="nv">data</span><span class="o">=</span>json.dumps<span class="o">(</span>domain<span class="o">)</span>, <span class="nv">auth</span><span class="o">=(</span>self.user_id, self.token<span class="o">))</span>
+    time.sleep<span class="o">(</span>10<span class="o">)</span>
+
+    vm_count +<span class="o">=</span> 1
+    print <span class="s2">&quot;set %s vm_count to %s&quot;</span> % <span class="o">(</span>self.domain_name, vm_count<span class="o">)</span>
+    domain<span class="o">[</span><span class="s1">&#39;vm_count&#39;</span><span class="o">]</span> <span class="o">=</span> vm_count
+    <span class="nv">r</span> <span class="o">=</span> requests.put<span class="o">(</span><span class="s2">&quot;%s/domains/%s&quot;</span> % <span class="o">(</span>self.api_url, domain.get<span class="o">(</span><span class="s1">&#39;id&#39;</span><span class="o">))</span>,
+            <span class="nv">data</span><span class="o">=</span>json.dumps<span class="o">(</span>domain<span class="o">)</span>, <span class="nv">auth</span><span class="o">=(</span>self.user_id, self.token<span class="o">))</span>
+    time.sleep<span class="o">(</span>10<span class="o">)</span>
+
+    vm_count +<span class="o">=</span> 1
+    print <span class="s2">&quot;set %s vm_count to %s&quot;</span> % <span class="o">(</span>self.domain_name, vm_count<span class="o">)</span>
+    domain<span class="o">[</span><span class="s1">&#39;vm_count&#39;</span><span class="o">]</span> <span class="o">=</span> vm_count
+    <span class="nv">r</span> <span class="o">=</span> requests.put<span class="o">(</span><span class="s2">&quot;%s/domains/%s&quot;</span> % <span class="o">(</span>self.api_url, domain.get<span class="o">(</span><span class="s1">&#39;id&#39;</span><span class="o">))</span>,
+            <span class="nv">data</span><span class="o">=</span>json.dumps<span class="o">(</span>domain<span class="o">)</span>, <span class="nv">auth</span><span class="o">=(</span>self.user_id, self.token<span class="o">))</span>
+    time.sleep<span class="o">(</span>10<span class="o">)</span>
+
+    print <span class="s2">&quot;let domain settle for 60s&quot;</span>
+    time.sleep<span class="o">(</span>60<span class="o">)</span>
+
+    <span class="nv">vm_count</span> <span class="o">=</span> 0
+    domain<span class="o">[</span><span class="s1">&#39;vm_count&#39;</span><span class="o">]</span> <span class="o">=</span> vm_count
+    <span class="nv">r</span> <span class="o">=</span> requests.put<span class="o">(</span><span class="s2">&quot;%s/domains/%s&quot;</span> % <span class="o">(</span>self.api_url, domain.get<span class="o">(</span><span class="s1">&#39;id&#39;</span><span class="o">))</span>,
+            <span class="nv">data</span><span class="o">=</span>json.dumps<span class="o">(</span>domain<span class="o">)</span>, <span class="nv">auth</span><span class="o">=(</span>self.user_id, self.token<span class="o">))</span>
+    print <span class="s2">&quot;set %s vm_count back to %s&quot;</span> % <span class="o">(</span>self.domain_name, vm_count<span class="o">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="use-your-decision-engine">
+<h2>Use your Decision Engine<a class="headerlink" href="#use-your-decision-engine" title="Permalink to this headline">¶</a></h2>
+<p>Finally, go back to your __init__ function, and call the three functions you
+created:</p>
+<div class="highlight-bash"><div class="highlight"><pre>self.create_launch_configuration<span class="o">()</span>
+self.create_domain<span class="o">()</span>
+self.run_policy<span class="o">()</span>
+</pre></div>
+</div>
+<p>At the end of your file, initialize your DE:</p>
+<div class="highlight-bash"><div class="highlight"><pre>MyPhantomDecisionEngine<span class="o">()</span>
+</pre></div>
+</div>
+<p>Then save your file, and try out your Decision Engine:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>python de.py
+Launch config <span class="s1">&#39;my_launch_config@hotel&#39;</span> has already been added, skipping...
+Launch config <span class="s1">&#39;my_launch_config@sierra&#39;</span> has already been added, skipping...
+Removing existing instance of domain <span class="s1">&#39;my_domain&#39;</span>
+Creating domain my_domain
+<span class="nb">set </span>my_domain vm_count to 1
+<span class="nb">set </span>my_domain vm_count to 2
+<span class="nb">set </span>my_domain vm_count to 3
+<span class="nb">set </span>my_domain vm_count to 4
+<span class="nb">let </span>domain settle <span class="k">for </span>60s
+<span class="nb">set </span>my_domain vm_count back to 0
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+        </div>
+        <div class="sidebar">
+          <h3>Page contents</h3>
+          <ul>
+<li><a class="reference internal" href="#">Building a Decision Engine with the Phantom Scripting API</a><ul>
+<li><a class="reference internal" href="#basics">Basics</a></li>
+<li><a class="reference internal" href="#initializing-your-decision-engine">Initializing your Decision engine</a></li>
+<li><a class="reference internal" href="#initializing-our-launch-configuration">Initializing our Launch Configuration</a></li>
+<li><a class="reference internal" href="#initializing-our-domain">Initializing our Domain</a></li>
+<li><a class="reference internal" href="#defining-our-decision-engine-policy">Defining our Decision Engine Policy</a></li>
+<li><a class="reference internal" href="#use-your-decision-engine">Use your Decision Engine</a></li>
+</ul>
+</li>
+</ul>
+
+          <h3>Browse</h3>
+          <ul>
+          
+          <li>Prev: <a href="api.html">The Phantom HTTP API</a></li>
+          
+          
+          <li>Next: <a href="buildingaphantomappliance.html">Building a Phantom Appliance</a></li>
+          
+          </ul>
+          <h3>You are here:</h3>
+          <ul>
+            <li>
+              <a href="/doc/nimbus">Nimbus Documentation</a>
+            </li>
+            <li>
+              <ul><li>
+                <a href="index.html">phantom 0.2 documentation</a>
+                
+                  <ul><li><a href="advanced.html">Phantom Advanced Documentation</a>
+                
+                <ul><li>Building a Decision Engine with the Phantom Scripting API</li></ul>
+                </li></ul>
+              </li></ul>
+            </li>
+          </ul>
+        </div>
+        <div class="clearer"></div>
+      </div>
+  </div>
+<!-- END BODY -->
+
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          <a href="api.html" title="The Phantom HTTP API"
+             >previous</a> |
+          <a href="buildingaphantomappliance.html" title="Building a Phantom Appliance"
+             >next</a> |
+          <a href="http-routingtable.html" title="HTTP Routing Table"
+             >routing table</a> |
+          <a href="genindex.html" title="General Index"
+             >index</a>
+        </div>
+
+        <div class="right">
+          
+    <div class="footer">
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+  </div>
+
+  </body>
+</html>

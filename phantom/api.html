@@ -1,0 +1,1722 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+
+
+
+<!-- BEGIN HEAD -->
+
+    <title>The Phantom HTTP API &mdash; phantom 0.2 documentation</title>
+
+    
+    <link rel="stylesheet" href="_static/doc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="phantom 0.2 documentation" href="index.html" />
+    <link rel="up" title="Phantom Advanced Documentation" href="advanced.html" />
+    <link rel="next" title="Building a Decision Engine with the Phantom Scripting API" href="buildingadecisionengine.html" />
+    <link rel="prev" title="Scripting with the Phantom HTTP API" href="httpscripting.html" />
+<!-- END HEAD -->
+
+
+<link rel="stylesheet" href="_static/standalone.css" type="text/css" />
+
+  </head>
+  <body>
+    <div class="docheader-wrapper">
+      <div class="docheader">
+        <h1><a href="index.html">phantom 0.2 documentation</a></h1>
+        <div class="rel">
+          <a href="httpscripting.html" title="Scripting with the Phantom HTTP API"
+             accesskey="P">previous</a> |
+          <a href="buildingadecisionengine.html" title="Building a Decision Engine with the Phantom Scripting API"
+             accesskey="N">next</a> |
+          <a href="http-routingtable.html" title="HTTP Routing Table"
+             >routing table</a> |
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a>
+        </div>
+       </div>
+   </div>
+
+<!-- BEGIN BODY -->
+    <div class="content-wrapper">
+      <div class="doccontent">
+        <div class="document">
+            
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="the-phantom-http-api">
+<h1>The Phantom HTTP API<a class="headerlink" href="#the-phantom-http-api" title="Permalink to this headline">¶</a></h1>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><a class="reference internal" href="#authentication-and-tokens" id="id1">Authentication and Tokens</a></li>
+<li><a class="reference internal" href="#site-resources" id="id2">Site Resources</a></li>
+<li><a class="reference internal" href="#site-credentials-resources" id="id3">Site Credentials Resources</a></li>
+<li><a class="reference internal" href="#chef-credentials-resources" id="id4">Chef Credentials Resources</a></li>
+<li><a class="reference internal" href="#launch-configuration-resources" id="id5">Launch Configuration Resources</a></li>
+<li><a class="reference internal" href="#domain-resources" id="id6">Domain Resources</a></li>
+<li><a class="reference internal" href="#instances-resources" id="id7">Instances Resources</a></li>
+<li><a class="reference internal" href="#sensors-resources" id="id8">Sensors Resources</a></li>
+</ul>
+</div>
+<div class="section" id="authentication-and-tokens">
+<h2><a class="toc-backref" href="#id1">Authentication and Tokens</a><a class="headerlink" href="#authentication-and-tokens" title="Permalink to this headline">¶</a></h2>
+<p>The Phantom API uses tokens and Basic Authentication for authentication. Users
+must request a token to access most endpoints in the API.</p>
+<dl class="post">
+<dt id="post--api-dev-token">
+<tt class="descname">POST </tt><tt class="descname">/api/dev/token</tt><a class="headerlink" href="#post--api-dev-token" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the user&#8217;s token.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Status Codes:</th><td class="field-body"><ul class="first last simple">
+<li><strong>200</strong> &#8211; no error</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example request</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span class="nf">POST</span> <span class="nn">/api/dev/token</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">phantom.nimbusproject.org</span>
+<span class="na">Accept</span><span class="o">:</span> <span class="l">application/x-www-form-urlencoded</span>
+
+username=alice&amp;password=restaurant
+</pre></div>
+</div>
+<p><strong>Example response</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+
+<span class="p">{</span>
+  <span class="nt">&quot;token&quot;</span><span class="p">:</span> <span class="s2">&quot;xgy-4h324h2i4h32oi4h23&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;user&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+  <span class="nt">&quot;success&quot;</span><span class="p">:</span> <span class="kc">true</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<p>All other requests must be authenticated using this token.</p>
+<p>As an example, if the user &#8216;alice&#8217; with the password &#8216;restaurant&#8217; wants to get her token,
+she could do the following with curl:</p>
+<blockquote>
+<div><div class="highlight-none"><div class="highlight"><pre>$ curl -d &#39;username=alice&amp;password=restaurant&#39; https://phantom.nimbusproject.org/api/dev/token
+{&quot;token&quot;: &quot;xgy-4h324h2i4h32oi4h23&quot;, &quot;user&quot;: 1, &quot;success&quot;: true}
+</pre></div>
+</div>
+</div></blockquote>
+<p>Then, to use other endpoints, use this user id and token when querying. You can either include the
+user and token as request parameters in any call to phantom, or you can use the basic access authentication
+scheme:</p>
+<ol class="arabic simple">
+<li>Combine user id and token into string &#8220;user:token&#8221;</li>
+<li>Encode resulting string using Base64</li>
+<li>Prepend &#8220;Basic &#8221; (including the trailing space) to the resulting Base64 encoded string</li>
+</ol>
+<p>Curl (and most http libraries) do this automatically for you:</p>
+<blockquote>
+<div><div class="highlight-none"><div class="highlight"><pre>$ curl -u 1:xgy-4h324h2i4h32oi4h23 https://phantom.nimbusproject.org/api/dev/sites
+[]
+</pre></div>
+</div>
+</div></blockquote>
+<p>You can also store your token in <tt class="docutils literal"><span class="pre">~/.netrc</span></tt> which will be read by some HTTP clients, including Curl:</p>
+<blockquote>
+<div><div class="highlight-none"><div class="highlight"><pre>machine phantom.nimbusproject.org login 1 password xgy-4h324h2i4h32oi4h23
+</pre></div>
+</div>
+</div></blockquote>
+<p>You can then use the <tt class="docutils literal"><span class="pre">-n</span></tt> or <tt class="docutils literal"><span class="pre">--netrc</span></tt> options of Curl:</p>
+<blockquote>
+<div><div class="highlight-none"><div class="highlight"><pre>$ curl -n https://phantom.nimbusproject.org/api/dev/sites
+[]
+</pre></div>
+</div>
+</div></blockquote>
+<p>You can also append <cite>?pretty=true</cite> to any API call, and get pretty printed results.
+You should probably only do this when debugging however, as it could decrease your
+response time:</p>
+<blockquote>
+<div><div class="highlight-none"><div class="highlight"><pre>$ curl -n https://phantom.nimbusproject.org/api/dev/sites
+[{&quot;instance_types&quot;:[&quot;m1.small&quot;,&quot;m1.large&quot;,&quot;m1.xlarge&quot;],&quot;uri&quot;:&quot;/api/dev/sites/ec2&quot;,&quot;credentials&quot;:&quot;/api/dev/credentials/sites/ec2&quot;,&quot;id&quot;:&quot;ec2&quot;}]
+$ curl -n https://phantom.nimbusproject.org/api/dev/sites?pretty=true
+[
+    {
+    &quot;instance_types&quot;: [
+        &quot;m1.small&quot;,
+        &quot;m1.large&quot;,
+        &quot;m1.xlarge&quot;
+    ],
+    &quot;uri&quot;: &quot;/api/dev/sites/ec2&quot;,
+    &quot;credentials&quot;: &quot;/api/dev/credentials/sites/ec2&quot;,
+    &quot;id&quot;: &quot;ec2&quot;
+    }
+]
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="site-resources">
+<h2><a class="toc-backref" href="#id2">Site Resources</a><a class="headerlink" href="#site-resources" title="Permalink to this headline">¶</a></h2>
+<dl class="get">
+<dt id="get--api-dev-sites">
+<tt class="descname">GET </tt><tt class="descname">/api/dev/sites</tt><a class="headerlink" href="#get--api-dev-sites" title="Permalink to this definition">¶</a></dt>
+<dd><p>List all clouds known to the authenticated user, and their details</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Status Codes:</th><td class="field-body"><ul class="first simple">
+<li><strong>200</strong> &#8211; no error</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">Query Parameters:</th></tr>
+<tr class="field-even field"><td>&nbsp;</td><td class="field-body"><ul class="first last simple">
+<li><strong>details</strong> &#8211; either <tt class="docutils literal"><span class="pre">true</span></tt> or <tt class="docutils literal"><span class="pre">false</span></tt>. If <tt class="docutils literal"><span class="pre">true</span></tt>, you will get extra details, but responses with details take longer to return.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example request</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span class="nf">GET</span> <span class="nn">/api/dev/sites</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">phantom.nimbusproject.org</span>
+<span class="na">Accept</span><span class="o">:</span> <span class="l">application/json</span>
+</pre></div>
+</div>
+<p><strong>Example response</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+
+<span class="p">[</span>
+  <span class="p">{</span>
+    <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;ec2&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;credentials&quot;</span><span class="p">:</span> <span class="s2">&quot;/api/dev/credentials/sites/ec2&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;instance_types&quot;</span><span class="p">:</span> <span class="p">[</span>
+      <span class="s2">&quot;m1.small&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;m1.large&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;m1.xlarge&quot;</span>
+    <span class="p">],</span>
+    <span class="nt">&quot;uri&quot;</span><span class="p">:</span> <span class="s2">&quot;/api/dev/sites/ec2&quot;</span>
+  <span class="p">},</span>
+  <span class="p">{</span>
+    <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;hotel&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;credentials&quot;</span><span class="p">:</span> <span class="s2">&quot;/api/dev/credentials/sites/hotel&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;instance_types&quot;</span><span class="p">:</span> <span class="p">[</span>
+      <span class="s2">&quot;m1.small&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;m1.large&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;m1.xlarge&quot;</span>
+    <span class="p">],</span>
+    <span class="nt">&quot;uri&quot;</span><span class="p">:</span> <span class="s2">&quot;/api/dev/sites/hotel&quot;</span>
+  <span class="p">},</span>
+  <span class="p">{</span>
+    <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;sierra&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;credentials&quot;</span><span class="p">:</span> <span class="s2">&quot;/api/dev/credentials/sites/sierra&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;instance_types&quot;</span><span class="p">:</span> <span class="p">[</span>
+      <span class="s2">&quot;m1.small&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;m1.large&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;m1.xlarge&quot;</span>
+    <span class="p">],</span>
+    <span class="nt">&quot;uri&quot;</span><span class="p">:</span> <span class="s2">&quot;/api/dev/sites/sierra&quot;</span>
+  <span class="p">}</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p><strong>Example request</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span class="nf">GET</span> <span class="nn">/api/dev/sites?details=true</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">phantom.nimbusproject.org</span>
+<span class="na">Accept</span><span class="o">:</span> <span class="l">application/json</span>
+</pre></div>
+</div>
+<p><strong>Example response</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+
+<span class="p">[</span>
+  <span class="p">{</span>
+    <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;ec2&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;credentials&quot;</span><span class="p">:</span> <span class="s2">&quot;/api/dev/credentials/sites/ec2&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;instance_types&quot;</span><span class="p">:</span> <span class="p">[</span>
+      <span class="s2">&quot;m1.small&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;m1.large&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;m1.xlarge&quot;</span>
+    <span class="p">],</span>
+    <span class="nt">&quot;public_images&quot;</span><span class="p">:</span> <span class="p">[</span>
+      <span class="s2">&quot;centos-5.5-x64-vine.gz&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;hello-cloud&quot;</span><span class="p">,</span>
+    <span class="p">],</span>
+    <span class="nt">&quot;user_images&quot;</span><span class="p">:</span> <span class="p">[</span>
+      <span class="s2">&quot;myimage&quot;</span><span class="p">,</span>
+    <span class="p">],</span>
+    <span class="nt">&quot;uri&quot;</span><span class="p">:</span> <span class="s2">&quot;/api/dev/sites/ec2&quot;</span>
+  <span class="p">},</span>
+  <span class="p">{</span>
+    <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;hotel&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;credentials&quot;</span><span class="p">:</span> <span class="s2">&quot;/api/dev/credentials/sites/hotel&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;instance_types&quot;</span><span class="p">:</span> <span class="p">[</span>
+      <span class="s2">&quot;m1.small&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;m1.large&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;m1.xlarge&quot;</span>
+    <span class="p">],</span>
+    <span class="nt">&quot;public_images&quot;</span><span class="p">:</span> <span class="p">[</span>
+      <span class="s2">&quot;centos-5.5-x64-vine.gz&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;hello-cloud&quot;</span><span class="p">,</span>
+    <span class="p">],</span>
+    <span class="nt">&quot;user_images&quot;</span><span class="p">:</span> <span class="p">[</span>
+      <span class="s2">&quot;myimage&quot;</span><span class="p">,</span>
+    <span class="p">],</span>
+    <span class="nt">&quot;uri&quot;</span><span class="p">:</span> <span class="s2">&quot;/api/dev/sites/hotel&quot;</span>
+  <span class="p">},</span>
+  <span class="p">{</span>
+    <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;sierra&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;credentials&quot;</span><span class="p">:</span> <span class="s2">&quot;/api/dev/credentials/sites/sierra&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;instance_types&quot;</span><span class="p">:</span> <span class="p">[</span>
+      <span class="s2">&quot;m1.small&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;m1.large&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;m1.xlarge&quot;</span>
+    <span class="p">],</span>
+    <span class="nt">&quot;public_images&quot;</span><span class="p">:</span> <span class="p">[</span>
+      <span class="s2">&quot;centos-5.5-x64-vine.gz&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;hello-cloud&quot;</span><span class="p">,</span>
+    <span class="p">],</span>
+    <span class="nt">&quot;user_images&quot;</span><span class="p">:</span> <span class="p">[</span>
+      <span class="s2">&quot;myimage&quot;</span><span class="p">,</span>
+    <span class="p">],</span>
+    <span class="nt">&quot;uri&quot;</span><span class="p">:</span> <span class="s2">&quot;/api/dev/sites/sierra&quot;</span>
+  <span class="p">}</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="get">
+<dt id="get--api-dev-sites-(cloud_id)">
+<tt class="descname">GET </tt><tt class="descname">/api/dev/sites/</tt><big>(</big><em>cloud_id</em><big>)</big><a class="headerlink" href="#get--api-dev-sites-(cloud_id)" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get details for the cloud <cite>cloud_id</cite></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Status Codes:</th><td class="field-body"><ul class="first simple">
+<li><strong>200</strong> &#8211; no error</li>
+<li><strong>404</strong> &#8211; cloud is unknown</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">Query Parameters:</th></tr>
+<tr class="field-even field"><td>&nbsp;</td><td class="field-body"><ul class="first last simple">
+<li><strong>details</strong> &#8211; either <tt class="docutils literal"><span class="pre">true</span></tt> or <tt class="docutils literal"><span class="pre">false</span></tt>. If <tt class="docutils literal"><span class="pre">true</span></tt>, you will get extra details, but responses with details take longer to return.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example request</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span class="nf">GET</span> <span class="nn">/api/dev/sites/hotel</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">phantom.nimbusproject.org</span>
+<span class="na">Accept</span><span class="o">:</span> <span class="l">application/json</span>
+</pre></div>
+</div>
+<p><strong>Example response</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+
+<span class="p">{</span>
+  <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;hotel&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;instance_types&quot;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="s2">&quot;m1.small&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;m1.large&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;m1.xlarge&quot;</span>
+  <span class="p">],</span>
+  <span class="nt">&quot;credentials&quot;</span><span class="p">:</span> <span class="s2">&quot;/api/dev/credentials/sites/hotel&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;uri&quot;</span><span class="p">:</span> <span class="s2">&quot;/api/dev/sites/hotel&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>Example request</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span class="nf">GET</span> <span class="nn">/api/dev/sites/hotel?details=true</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">phantom.nimbusproject.org</span>
+<span class="na">Accept</span><span class="o">:</span> <span class="l">application/json</span>
+</pre></div>
+</div>
+<p><strong>Example response</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+
+<span class="p">{</span>
+  <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;hotel&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;instance_types&quot;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="s2">&quot;m1.small&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;m1.large&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;m1.xlarge&quot;</span>
+  <span class="p">],</span>
+  <span class="nt">&quot;public_images&quot;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="s2">&quot;centos-5.5-x64-vine.gz&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;hello-cloud&quot;</span><span class="p">,</span>
+  <span class="p">],</span>
+  <span class="nt">&quot;user_images&quot;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="s2">&quot;myimage&quot;</span><span class="p">,</span>
+  <span class="p">],</span>
+  <span class="nt">&quot;credentials&quot;</span><span class="p">:</span> <span class="s2">&quot;/api/dev/credentials/sites/hotel&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;uri&quot;</span><span class="p">:</span> <span class="s2">&quot;/api/dev/sites/hotel&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="site-credentials-resources">
+<h2><a class="toc-backref" href="#id3">Site Credentials Resources</a><a class="headerlink" href="#site-credentials-resources" title="Permalink to this headline">¶</a></h2>
+<dl class="get">
+<dt id="get--api-dev-credentials-sites">
+<tt class="descname">GET </tt><tt class="descname">/api/dev/credentials/sites</tt><a class="headerlink" href="#get--api-dev-credentials-sites" title="Permalink to this definition">¶</a></dt>
+<dd><p>List all cloud credentials for the authenticated user</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Status Codes:</th><td class="field-body"><ul class="first simple">
+<li><strong>200</strong> &#8211; no error</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">Query Parameters:</th></tr>
+<tr class="field-even field"><td>&nbsp;</td><td class="field-body"><ul class="first last simple">
+<li><strong>details</strong> &#8211; either <tt class="docutils literal"><span class="pre">true</span></tt> or <tt class="docutils literal"><span class="pre">false</span></tt>. If <tt class="docutils literal"><span class="pre">true</span></tt>, you will get extra details, but responses with details take longer to return.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example request</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span class="nf">GET</span> <span class="nn">/api/dev/credentials/sites</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">phantom.nimbusproject.org</span>
+<span class="na">Accept</span><span class="o">:</span> <span class="l">application/json</span>
+</pre></div>
+</div>
+<p><strong>Example response</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+
+<span class="p">[</span>
+  <span class="p">{</span>
+    <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;ec2&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;access_key&quot;</span><span class="p">:</span> <span class="s2">&quot;aws_access_key_id&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;secret_key&quot;</span><span class="p">:</span> <span class="s2">&quot;aws_secret_access_key&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;key_name&quot;</span><span class="p">:</span> <span class="s2">&quot;phantom_ssh_key&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;uri&quot;</span><span class="p">:</span> <span class="s2">&quot;/api/dev/credentials/sites/ec2&quot;</span>
+  <span class="p">},</span>
+  <span class="p">{</span>
+    <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;hotel&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;access_key&quot;</span><span class="p">:</span> <span class="s2">&quot;hotel_access_key_id&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;secret_key&quot;</span><span class="p">:</span> <span class="s2">&quot;hotel_secret_access_key&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;key_name&quot;</span><span class="p">:</span> <span class="s2">&quot;phantom_ssh_key&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;uri&quot;</span><span class="p">:</span> <span class="s2">&quot;/api/dev/credentials/sites/hotel&quot;</span>
+  <span class="p">}</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p><strong>Example request</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span class="nf">GET</span> <span class="nn">/api/dev/credentials/sites?details=true</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">phantom.nimbusproject.org</span>
+<span class="na">Accept</span><span class="o">:</span> <span class="l">application/json</span>
+</pre></div>
+</div>
+<p><strong>Example response</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+
+<span class="p">[</span>
+  <span class="p">{</span>
+    <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;ec2&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;access_key&quot;</span><span class="p">:</span> <span class="s2">&quot;aws_access_key_id&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;secret_key&quot;</span><span class="p">:</span> <span class="s2">&quot;aws_secret_access_key&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;available_keys&quot;</span><span class="p">:</span> <span class="p">[</span>
+      <span class="s2">&quot;phantom_ssh_key&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;default&quot;</span>
+    <span class="p">],</span>
+    <span class="nt">&quot;key_name&quot;</span><span class="p">:</span> <span class="s2">&quot;phantom_ssh_key&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;uri&quot;</span><span class="p">:</span> <span class="s2">&quot;/api/dev/credentials/sites/ec2&quot;</span>
+  <span class="p">},</span>
+  <span class="p">{</span>
+    <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;hotel&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;access_key&quot;</span><span class="p">:</span> <span class="s2">&quot;hotel_access_key_id&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;secret_key&quot;</span><span class="p">:</span> <span class="s2">&quot;hotel_secret_access_key&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;available_keys&quot;</span><span class="p">:</span> <span class="p">[</span>
+      <span class="s2">&quot;phantom_ssh_key&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;default&quot;</span>
+    <span class="p">],</span>
+    <span class="nt">&quot;key_name&quot;</span><span class="p">:</span> <span class="s2">&quot;phantom_ssh_key&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;uri&quot;</span><span class="p">:</span> <span class="s2">&quot;/api/dev/credentials/sites/hotel&quot;</span>
+  <span class="p">}</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="get">
+<dt id="get--api-dev-credentials-sites-(cloud_id)">
+<tt class="descname">GET </tt><tt class="descname">/api/dev/credentials/sites/</tt><big>(</big><em>cloud_id</em><big>)</big><a class="headerlink" href="#get--api-dev-credentials-sites-(cloud_id)" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get cloud credentials for the cloud <cite>cloud_id</cite></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Status Codes:</th><td class="field-body"><ul class="first simple">
+<li><strong>200</strong> &#8211; no error</li>
+<li><strong>404</strong> &#8211; cloud is unknown</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">Query Parameters:</th></tr>
+<tr class="field-even field"><td>&nbsp;</td><td class="field-body"><ul class="first last simple">
+<li><strong>details</strong> &#8211; either <tt class="docutils literal"><span class="pre">true</span></tt> or <tt class="docutils literal"><span class="pre">false</span></tt>. If <tt class="docutils literal"><span class="pre">true</span></tt>, you will get extra details, but responses with details take longer to return.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example request</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span class="nf">GET</span> <span class="nn">/api/dev/credentials/sites/hotel</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">phantom.nimbusproject.org</span>
+<span class="na">Accept</span><span class="o">:</span> <span class="l">application/json</span>
+</pre></div>
+</div>
+<p><strong>Example response</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+
+<span class="p">{</span>
+  <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;hotel&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;access_key&quot;</span><span class="p">:</span> <span class="s2">&quot;hotel_access_key_id&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;secret_key&quot;</span><span class="p">:</span> <span class="s2">&quot;hotel_secret_access_key&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;key_name&quot;</span><span class="p">:</span> <span class="s2">&quot;phantom_ssh_key&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;uri&quot;</span><span class="p">:</span> <span class="s2">&quot;/api/dev/credentials/sites/hotel&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>Example request</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span class="nf">GET</span> <span class="nn">/api/dev/credentials/sites/hotel?details=true</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">phantom.nimbusproject.org</span>
+<span class="na">Accept</span><span class="o">:</span> <span class="l">application/json</span>
+</pre></div>
+</div>
+<p><strong>Example response</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+
+<span class="p">{</span>
+  <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;hotel&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;access_key&quot;</span><span class="p">:</span> <span class="s2">&quot;hotel_access_key_id&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;secret_key&quot;</span><span class="p">:</span> <span class="s2">&quot;hotel_secret_access_key&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;key_name&quot;</span><span class="p">:</span> <span class="s2">&quot;phantom_ssh_key&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;available_keys&quot;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="s2">&quot;default&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;phantom_ssh_key&quot;</span>
+  <span class="p">],</span>
+  <span class="nt">&quot;uri&quot;</span><span class="p">:</span> <span class="s2">&quot;/api/dev/credentials/sites/hotel&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="post">
+<dt id="post--api-dev-sites-credentials">
+<tt class="descname">POST </tt><tt class="descname">/api/dev/sites/credentials</tt><a class="headerlink" href="#post--api-dev-sites-credentials" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save new cloud credentials</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name" colspan="2">Json Parameters:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body"><ul class="first simple">
+<li><strong>id</strong> &#8211; ID of the cloud</li>
+<li><strong>access_key</strong> &#8211; the access key ID for this cloud</li>
+<li><strong>secret_key</strong> &#8211; the secret access key for this cloud</li>
+<li><strong>key_name</strong> &#8211; the SSH key pair that will be used on this cloud</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Status Codes:</th><td class="field-body"><ul class="first last simple">
+<li><strong>201</strong> &#8211; credentials saved</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example request</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span class="nf">POST</span> <span class="nn">/api/dev/sites/credentials</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">phantom.nimbusproject.org</span>
+<span class="na">Accept</span><span class="o">:</span> <span class="l">application/json</span>
+
+<span class="p">{</span>
+  <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;sierra&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;access_key&quot;</span><span class="p">:</span> <span class="s2">&quot;sierra_access_key_id&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;secret_key&quot;</span><span class="p">:</span> <span class="s2">&quot;sierra_secret_access_key&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;key_name&quot;</span><span class="p">:</span> <span class="s2">&quot;phantom_ssh_key&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>Example response</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">201</span> <span class="ne">Created</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+<span class="na">Location</span><span class="o">:</span> <span class="l">/api/dev/credentials/sites/sierra</span>
+
+<span class="p">{</span>
+  <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;sierra&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;access_key&quot;</span><span class="p">:</span> <span class="s2">&quot;sierra_access_key_id&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;secret_key&quot;</span><span class="p">:</span> <span class="s2">&quot;sierra_secret_access_key&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;key_name&quot;</span><span class="p">:</span> <span class="s2">&quot;phantom_ssh_key&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;uri&quot;</span><span class="p">:</span> <span class="s2">&quot;/api/dev/credentials/sites/sierra&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="put">
+<dt id="put--api-dev-credentials-sites-(cloud_id)">
+<tt class="descname">PUT </tt><tt class="descname">/api/dev/credentials/sites/</tt><big>(</big><em>cloud_id</em><big>)</big><a class="headerlink" href="#put--api-dev-credentials-sites-(cloud_id)" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update cloud credentials</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Status Codes:</th><td class="field-body"><ul class="first last simple">
+<li><strong>200</strong> &#8211; credentials updated</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example request</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span class="nf">PUT</span> <span class="nn">/api/dev/credentials/sites/ec2</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">phantom.nimbusproject.org</span>
+<span class="na">Accept</span><span class="o">:</span> <span class="l">application/json</span>
+
+<span class="p">{</span>
+  <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;ec2&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;access_key&quot;</span><span class="p">:</span> <span class="s2">&quot;updated_aws_access_key_id&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;secret_key&quot;</span><span class="p">:</span> <span class="s2">&quot;updated_aws_secret_access_key&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;key_name&quot;</span><span class="p">:</span> <span class="s2">&quot;phantom_ssh_key&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>Example response</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+<span class="na">Location</span><span class="o">:</span> <span class="l">/api/dev/credentials/sites/ec2</span>
+
+<span class="p">{</span>
+  <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;ec2&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;access_key&quot;</span><span class="p">:</span> <span class="s2">&quot;updated_aws_access_key_id&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;secret_key&quot;</span><span class="p">:</span> <span class="s2">&quot;updated_aws_secret_access_key&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;key_name&quot;</span><span class="p">:</span> <span class="s2">&quot;phantom_ssh_key&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;uri&quot;</span><span class="p">:</span> <span class="s2">&quot;/api/dev/credentials/sites/ec2&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="delete">
+<dt id="delete--api-dev-credentials-sites-(cloud_id)">
+<tt class="descname">DELETE </tt><tt class="descname">/api/dev/credentials/sites/</tt><big>(</big><em>cloud_id</em><big>)</big><a class="headerlink" href="#delete--api-dev-credentials-sites-(cloud_id)" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete cloud credentials for the cloud <cite>cloud_id</cite></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Status Codes:</th><td class="field-body"><ul class="first last simple">
+<li><strong>204</strong> &#8211; credentials deleted</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example request</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span class="nf">DELETE</span> <span class="nn">/api/dev/credentials/sites/ec2</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">phantom.nimbusproject.org</span>
+<span class="na">Accept</span><span class="o">:</span> <span class="l">application/json</span>
+</pre></div>
+</div>
+<p><strong>Example response</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">204</span> <span class="ne">No Content</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="chef-credentials-resources">
+<h2><a class="toc-backref" href="#id4">Chef Credentials Resources</a><a class="headerlink" href="#chef-credentials-resources" title="Permalink to this headline">¶</a></h2>
+<dl class="get">
+<dt id="get--api-dev-credentials-chef">
+<tt class="descname">GET </tt><tt class="descname">/api/dev/credentials/chef</tt><a class="headerlink" href="#get--api-dev-credentials-chef" title="Permalink to this definition">¶</a></dt>
+<dd><p>List all chef credentials for the authenticated user</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Status Codes:</th><td class="field-body"><ul class="first last simple">
+<li><strong>200</strong> &#8211; no error</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example request</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span class="nf">GET</span> <span class="nn">/api/dev/credentials/chef</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">phantom.nimbusproject.org</span>
+<span class="na">Accept</span><span class="o">:</span> <span class="l">application/json</span>
+</pre></div>
+</div>
+<p><strong>Example response</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+
+<span class="p">[</span>
+  <span class="p">{</span>
+    <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;hostedchef&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;server_url&quot;</span><span class="p">:</span> <span class="s2">&quot;https://api.opscode.com/organizations/chefuser&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;client_name&quot;</span><span class="p">:</span> <span class="s2">&quot;chefuser&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;validation_client_name&quot;</span><span class="p">:</span> <span class="s2">&quot;chefuser-validator&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;client_key&quot;</span><span class="p">:</span> <span class="s2">&quot;-----BEGIN RSA PRIVATE KEY-----...&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;validator_key&quot;</span><span class="p">:</span> <span class="s2">&quot;-----BEGIN RSA PRIVATE KEY-----...&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;uri&quot;</span><span class="p">:</span> <span class="s2">&quot;/api/dev/credentials/chef/hostedchef&quot;</span>
+  <span class="p">},</span>
+  <span class="p">{</span>
+    <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;open_source_chef&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;server_url&quot;</span><span class="p">:</span> <span class="s2">&quot;https://ec2-host.aws.amazon.com&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;client_name&quot;</span><span class="p">:</span> <span class="s2">&quot;admin&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;validation_client_name&quot;</span><span class="p">:</span> <span class="s2">&quot;chef-validator&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;client_key&quot;</span><span class="p">:</span> <span class="s2">&quot;-----BEGIN RSA PRIVATE KEY-----...&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;validator_key&quot;</span><span class="p">:</span> <span class="s2">&quot;-----BEGIN RSA PRIVATE KEY-----...&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;uri&quot;</span><span class="p">:</span> <span class="s2">&quot;/api/dev/credentials/chef/open_source_chef&quot;</span>
+  <span class="p">}</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="get">
+<dt id="get--api-dev-credentials-chef-(chef_id)">
+<tt class="descname">GET </tt><tt class="descname">/api/dev/credentials/chef/</tt><big>(</big><em>chef_id</em><big>)</big><a class="headerlink" href="#get--api-dev-credentials-chef-(chef_id)" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get cloud credentials for the chef server <cite>chef_id</cite></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Status Codes:</th><td class="field-body"><ul class="first last simple">
+<li><strong>200</strong> &#8211; no error</li>
+<li><strong>404</strong> &#8211; chef server is unknown</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example request</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span class="nf">GET</span> <span class="nn">/api/dev/credentials/chef/hostedchef</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">phantom.nimbusproject.org</span>
+<span class="na">Accept</span><span class="o">:</span> <span class="l">application/json</span>
+</pre></div>
+</div>
+<p><strong>Example response</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+
+<span class="p">{</span>
+  <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;hostedchef&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;server_url&quot;</span><span class="p">:</span> <span class="s2">&quot;https://api.opscode.com/organizations/chefuser&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;client_name&quot;</span><span class="p">:</span> <span class="s2">&quot;chefuser&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;validation_client_name&quot;</span><span class="p">:</span> <span class="s2">&quot;chefuser-validator&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;client_key&quot;</span><span class="p">:</span> <span class="s2">&quot;-----BEGIN RSA PRIVATE KEY-----...&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;validator_key&quot;</span><span class="p">:</span> <span class="s2">&quot;-----BEGIN RSA PRIVATE KEY-----...&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;uri&quot;</span><span class="p">:</span> <span class="s2">&quot;/api/dev/credentials/chef/hostedchef&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="post">
+<dt id="post--api-dev-credentials-chef">
+<tt class="descname">POST </tt><tt class="descname">/api/dev/credentials/chef</tt><a class="headerlink" href="#post--api-dev-credentials-chef" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save new chef credentials</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name" colspan="2">Json Parameters:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body"><ul class="first simple">
+<li><strong>id</strong> &#8211; ID of the chef server</li>
+<li><strong>server_url</strong> &#8211; URL of the chef server</li>
+<li><strong>client_name</strong> &#8211; The client name of the chef user</li>
+<li><strong>validation_client_name</strong> &#8211; The validation client name. Often chef-validator</li>
+<li><strong>client_key</strong> &#8211; The RSA Private client key</li>
+<li><strong>validator_key</strong> &#8211; The RSA Private validator key</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Status Codes:</th><td class="field-body"><ul class="first last simple">
+<li><strong>201</strong> &#8211; credentials saved</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example request</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span class="nf">POST</span> <span class="nn">/api/dev/credentials/sites</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">phantom.nimbusproject.org</span>
+<span class="na">Accept</span><span class="o">:</span> <span class="l">application/json</span>
+
+<span class="p">{</span>
+  <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;hostedchef&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;server_url&quot;</span><span class="p">:</span> <span class="s2">&quot;https://api.opscode.com/organizations/chefuser&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;client_name&quot;</span><span class="p">:</span> <span class="s2">&quot;chefuser&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;validation_client_name&quot;</span><span class="p">:</span> <span class="s2">&quot;chefuser-validator&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;client_key&quot;</span><span class="p">:</span> <span class="s2">&quot;-----BEGIN RSA PRIVATE KEY-----...&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;validator_key&quot;</span><span class="p">:</span> <span class="s2">&quot;-----BEGIN RSA PRIVATE KEY-----...&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>Example response</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">201</span> <span class="ne">Created</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+<span class="na">Location</span><span class="o">:</span> <span class="l">/api/dev/credentials/sites/sierra</span>
+
+<span class="p">{</span>
+  <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;hostedchef&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;server_url&quot;</span><span class="p">:</span> <span class="s2">&quot;https://api.opscode.com/organizations/chefuser&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;client_name&quot;</span><span class="p">:</span> <span class="s2">&quot;chefuser&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;validation_client_name&quot;</span><span class="p">:</span> <span class="s2">&quot;chefuser-validator&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;client_key&quot;</span><span class="p">:</span> <span class="s2">&quot;-----BEGIN RSA PRIVATE KEY-----...&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;validator_key&quot;</span><span class="p">:</span> <span class="s2">&quot;-----BEGIN RSA PRIVATE KEY-----...&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;uri&quot;</span><span class="p">:</span> <span class="s2">&quot;/api/dev/credentials/chef/hostedchef&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="put">
+<dt id="put--api-dev-credentials-chef-(chef_id)">
+<tt class="descname">PUT </tt><tt class="descname">/api/dev/credentials/chef/</tt><big>(</big><em>chef_id</em><big>)</big><a class="headerlink" href="#put--api-dev-credentials-chef-(chef_id)" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update chef credentials</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Status Codes:</th><td class="field-body"><ul class="first last simple">
+<li><strong>200</strong> &#8211; credentials updated</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example request</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span class="nf">PUT</span> <span class="nn">/api/dev/credentials/chef/hostedchef</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">phantom.nimbusproject.org</span>
+<span class="na">Accept</span><span class="o">:</span> <span class="l">application/json</span>
+
+<span class="p">{</span>
+  <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;hostedchef&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;server_url&quot;</span><span class="p">:</span> <span class="s2">&quot;https://api.opscode.com/organizations/chefuser&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;client_name&quot;</span><span class="p">:</span> <span class="s2">&quot;chefuser&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;validation_client_name&quot;</span><span class="p">:</span> <span class="s2">&quot;chefuser-validator&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;client_key&quot;</span><span class="p">:</span> <span class="s2">&quot;-----BEGIN RSA PRIVATE KEY-----...&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;validator_key&quot;</span><span class="p">:</span> <span class="s2">&quot;-----BEGIN RSA PRIVATE KEY-----...&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>Example response</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+<span class="na">Location</span><span class="o">:</span> <span class="l">/api/dev/credentials/chef/hostedchef</span>
+
+<span class="p">{</span>
+  <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;hostedchef&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;server_url&quot;</span><span class="p">:</span> <span class="s2">&quot;https://api.opscode.com/organizations/chefuser&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;client_name&quot;</span><span class="p">:</span> <span class="s2">&quot;chefuser&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;validation_client_name&quot;</span><span class="p">:</span> <span class="s2">&quot;chefuser-validator&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;client_key&quot;</span><span class="p">:</span> <span class="s2">&quot;-----BEGIN RSA PRIVATE KEY-----...&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;validator_key&quot;</span><span class="p">:</span> <span class="s2">&quot;-----BEGIN RSA PRIVATE KEY-----...&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;uri&quot;</span><span class="p">:</span> <span class="s2">&quot;/api/dev/credentials/chef/hostedchef&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="delete">
+<dt id="delete--api-dev-credentials-chef-(cloud_id)">
+<tt class="descname">DELETE </tt><tt class="descname">/api/dev/credentials/chef/</tt><big>(</big><em>cloud_id</em><big>)</big><a class="headerlink" href="#delete--api-dev-credentials-chef-(cloud_id)" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete chef credentials for the chef server <cite>chef_id</cite></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Status Codes:</th><td class="field-body"><ul class="first last simple">
+<li><strong>204</strong> &#8211; credentials deleted</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example request</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span class="nf">DELETE</span> <span class="nn">/api/dev/credentials/chef/hostedchef</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">phantom.nimbusproject.org</span>
+<span class="na">Accept</span><span class="o">:</span> <span class="l">application/json</span>
+</pre></div>
+</div>
+<p><strong>Example response</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">204</span> <span class="ne">No Content</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="launch-configuration-resources">
+<h2><a class="toc-backref" href="#id5">Launch Configuration Resources</a><a class="headerlink" href="#launch-configuration-resources" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div>Launch Configuration resources are a list of sites in order, and
+a contextualization method. Phantom currently supports &#8220;none&#8221;, &#8220;user_data&#8221;,
+and &#8220;chef&#8221;.</div></blockquote>
+<dl class="get">
+<dt id="get--api-dev-launchconfigurations">
+<tt class="descname">GET </tt><tt class="descname">/api/dev/launchconfigurations</tt><a class="headerlink" href="#get--api-dev-launchconfigurations" title="Permalink to this definition">¶</a></dt>
+<dd><p>List all launch configurations known to the authenticated user</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Status Codes:</th><td class="field-body"><ul class="first last simple">
+<li><strong>200</strong> &#8211; no error</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example request</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span class="nf">GET</span> <span class="nn">/api/dev/launchconfigurations</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">phantom.nimbusproject.org</span>
+<span class="na">Accept</span><span class="o">:</span> <span class="l">application/json</span>
+</pre></div>
+</div>
+<p><strong>Example response</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+
+<span class="p">[</span>
+  <span class="p">{</span>
+    <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;fcfe9272-d03f-48e4-bd5f-4eb50ec396c7&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;myfirstlc&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;cloud_params&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&quot;hotel&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;image_id&quot;</span><span class="p">:</span> <span class="s2">&quot;hello-phantom.gz&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;instance_type&quot;</span><span class="p">:</span> <span class="s2">&quot;m1.small&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;max_vms&quot;</span><span class="p">:</span> <span class="mi">16</span><span class="p">,</span>
+        <span class="nt">&quot;common&quot;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+        <span class="nt">&quot;rank&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+      <span class="p">},</span>
+      <span class="nt">&quot;ec2&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;image_id&quot;</span><span class="p">:</span> <span class="s2">&quot;ami-deadbeef&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;instance_type&quot;</span><span class="p">:</span> <span class="s2">&quot;m1.small&quot;</span><span class="p">,</span>
+        <span class="nt">&quot;max_vms&quot;</span><span class="p">:</span> <span class="mi">-1</span><span class="p">,</span>
+        <span class="nt">&quot;common&quot;</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+        <span class="nt">&quot;rank&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+      <span class="p">},</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;contextualization_method&quot;</span><span class="p">:</span> <span class="s2">&quot;user_data&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;user_data&quot;</span><span class="p">:</span> <span class="s2">&quot;my user data&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;owner&quot;</span><span class="p">:</span> <span class="s2">&quot;johndoe&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;uri&quot;</span><span class="p">:</span> <span class="s2">&quot;/api/dev/launchconfigurations/fcfe9272-d03f-48e4-bd5f-4eb50ec396c7&quot;</span>
+  <span class="p">}</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="get">
+<dt id="get--api-dev-launchconfigurations-(launchconfiguration_id)">
+<tt class="descname">GET </tt><tt class="descname">/api/dev/launchconfigurations/</tt><big>(</big><em>launchconfiguration_id</em><big>)</big><a class="headerlink" href="#get--api-dev-launchconfigurations-(launchconfiguration_id)" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get details for the launch configuration <cite>launch_configuration_id</cite></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Status Codes:</th><td class="field-body"><ul class="first last simple">
+<li><strong>200</strong> &#8211; no error</li>
+<li><strong>404</strong> &#8211; launch configuration is unknown</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example request</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span class="nf">GET</span> <span class="nn">/api/dev/launchconfigurations/fcfe9272-d03f-48e4-bd5f-4eb50ec396c7</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">phantom.nimbusproject.org</span>
+<span class="na">Accept</span><span class="o">:</span> <span class="l">application/json</span>
+</pre></div>
+</div>
+<p><strong>Example response</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+
+<span class="p">{</span>
+  <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;fcfe9272-d03f-48e4-bd5f-4eb50ec396c7&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;myfirstlc&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;cloud_params&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;hotel&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&quot;image_id&quot;</span><span class="p">:</span> <span class="s2">&quot;hello-phantom.gz&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;instance_type&quot;</span><span class="p">:</span> <span class="s2">&quot;m1.small&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;max_vms&quot;</span><span class="p">:</span> <span class="mi">16</span><span class="p">,</span>
+      <span class="nt">&quot;common&quot;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+      <span class="nt">&quot;rank&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;ec2&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&quot;image_id&quot;</span><span class="p">:</span> <span class="s2">&quot;ami-deadbeef&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;instance_type&quot;</span><span class="p">:</span> <span class="s2">&quot;m1.small&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;max_vms&quot;</span><span class="p">:</span> <span class="mi">-1</span><span class="p">,</span>
+      <span class="nt">&quot;common&quot;</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+      <span class="nt">&quot;rank&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="p">}</span>
+  <span class="p">},</span>
+  <span class="nt">&quot;contextualization_method&quot;</span><span class="p">:</span> <span class="s2">&quot;none&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;owner&quot;</span><span class="p">:</span> <span class="s2">&quot;johndoe&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;uri&quot;</span><span class="p">:</span> <span class="s2">&quot;/api/dev/launchconfigurations/fcfe9272-d03f-48e4-bd5f-4eb50ec396c7&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="post">
+<dt id="post--api-dev-launchconfigurations">
+<tt class="descname">POST </tt><tt class="descname">/api/dev/launchconfigurations</tt><a class="headerlink" href="#post--api-dev-launchconfigurations" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a new launch configuration</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name" colspan="2">Json Parameters:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body"><ul class="first simple">
+<li><strong>name</strong> &#8211; the name of the launch configuration</li>
+<li><strong>contextualization_method</strong> &#8211; the contextualization method,
+currently phantom supports &#8216;none&#8217;, &#8216;user_data&#8217;, and &#8216;chef&#8217;</li>
+<li><strong>user_data</strong> &#8211; data used by the user_data contextualization method</li>
+<li><strong>chef_runlist</strong> &#8211; json-encoded list of recipes to be installed on a VM using chef
+for the &#8216;chef&#8217; contextualization method</li>
+<li><strong>chef_attributes</strong> &#8211; json-encoded dictionary of attributes to be used by chef on a
+VM using chef for the &#8216;chef&#8217; contextualization method</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Status Codes:</th><td class="field-body"><ul class="first last simple">
+<li><strong>201</strong> &#8211; launch configuration created</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example request</strong>:</p>
+<div class="highlight-http"><pre>POST /api/dev/launchconfigurations HTTP/1.1
+Host: phantom.nimbusproject.org
+Accept: application/json
+
+{
+  "name": "mysecondlc",
+  "contextualization_method": "chef",
+  "chef_runlist": "["recipe1", "recipe2"]",
+  "chef_attributes": "{"my": "attribute"}",
+  "cloud_params": {
+    "hotel": {
+      "image_id": "hello-cloud",
+      "instance_type": "m1.large",
+      "max_vms": -1,
+      "common": true,
+      "rank": 1,
+    }
+  }
+}</pre>
+</div>
+<p><strong>Example response</strong>:</p>
+<div class="highlight-http"><pre>HTTP/1.1 201 Created
+Content-Type: application/json
+Location: /api/dev/launchconfigurations/e99be9d3-8f09-4a6c-bb17-b00efd0d06df
+
+{
+  "id": "e99be9d3-8f09-4a6c-bb17-b00efd0d06df",
+  "name": "mysecondlc",
+  "contextualization_method": "chef",
+  "run_list": "["recipe1", "recipe2"]",
+  "attributes": "{"my": "attribute"}",
+  "cloud_params": {
+    "hotel": {
+      "image_id": "hello-cloud",
+      "instance_type": "m1.large",
+      "max_vms": -1,
+      "common": true,
+      "rank": 1,
+    }
+  },
+  "owner": "johndoe",
+  "uri": "/api/dev/launchconfigurations/e99be9d3-8f09-4a6c-bb17-b00efd0d06df"
+}</pre>
+</div>
+</dd></dl>
+
+<dl class="put">
+<dt id="put--api-dev-launchconfigurations-(launch_configuration_id)">
+<tt class="descname">PUT </tt><tt class="descname">/api/dev/launchconfigurations/</tt><big>(</big><em>launch_configuration_id</em><big>)</big><a class="headerlink" href="#put--api-dev-launchconfigurations-(launch_configuration_id)" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update a launch configuration</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Status Codes:</th><td class="field-body"><ul class="first last simple">
+<li><strong>200</strong> &#8211; launch configuration updated</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example request</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span class="nf">PUT</span> <span class="nn">/api/dev/launchconfigurations/e99be9d3-8f09-4a6c-bb17-b00efd0d06df</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">phantom.nimbusproject.org</span>
+<span class="na">Accept</span><span class="o">:</span> <span class="l">application/json</span>
+
+<span class="p">{</span>
+  <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;mysecondlc&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;contextualization_method&quot;</span><span class="p">:</span> <span class="s2">&quot;user_data&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;user_data&quot;</span><span class="p">:</span> <span class="s2">&quot;Hello World&quot;</span>
+  <span class="s2">&quot;cloud_params&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;hotel&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&quot;image_id&quot;</span><span class="p">:</span> <span class="s2">&quot;hello-cloud&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;instance_type&quot;</span><span class="p">:</span> <span class="s2">&quot;m1.large&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;max_vms&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+      <span class="nt">&quot;common&quot;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+      <span class="nt">&quot;rank&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>Example response</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+<span class="na">Location</span><span class="o">:</span> <span class="l">/api/dev/launchconfigurations/e99be9d3-8f09-4a6c-bb17-b00efd0d06df</span>
+
+<span class="p">{</span>
+  <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;e99be9d3-8f09-4a6c-bb17-b00efd0d06df&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;mysecondlc&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;contextualization_method&quot;</span><span class="p">:</span> <span class="s2">&quot;none&quot;</span>
+  <span class="s2">&quot;cloud_params&quot;</span><span class="p">:</span> <span class="p">{</span>
+    <span class="nt">&quot;hotel&quot;</span><span class="p">:</span> <span class="p">{</span>
+      <span class="nt">&quot;image_id&quot;</span><span class="p">:</span> <span class="s2">&quot;hello-cloud&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;instance_type&quot;</span><span class="p">:</span> <span class="s2">&quot;m1.large&quot;</span><span class="p">,</span>
+      <span class="nt">&quot;max_vms&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+      <span class="nt">&quot;common&quot;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+      <span class="nt">&quot;rank&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="p">}</span>
+  <span class="p">},</span>
+  <span class="nt">&quot;owner&quot;</span><span class="p">:</span> <span class="s2">&quot;johndoe&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;uri&quot;</span><span class="p">:</span> <span class="s2">&quot;/api/dev/launchconfigurations/e99be9d3-8f09-4a6c-bb17-b00efd0d06df&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="delete">
+<dt id="delete--api-dev-launchconfigurations-(launch_configuration_id)">
+<tt class="descname">DELETE </tt><tt class="descname">/api/dev/launchconfigurations/</tt><big>(</big><em>launch_configuration_id</em><big>)</big><a class="headerlink" href="#delete--api-dev-launchconfigurations-(launch_configuration_id)" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete a launch configuration</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Status Codes:</th><td class="field-body"><ul class="first last simple">
+<li><strong>204</strong> &#8211; launch configuration deleted</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example request</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span class="nf">DELETE</span> <span class="nn">/api/dev/launchconfigurations/fcfe9272-d03f-48e4-bd5f-4eb50ec396c7</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">phantom.nimbusproject.org</span>
+<span class="na">Accept</span><span class="o">:</span> <span class="l">application/json</span>
+</pre></div>
+</div>
+<p><strong>Example response</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">204</span> <span class="ne">No Content</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="domain-resources">
+<h2><a class="toc-backref" href="#id6">Domain Resources</a><a class="headerlink" href="#domain-resources" title="Permalink to this headline">¶</a></h2>
+<dl class="get">
+<dt id="get--api-dev-domains">
+<tt class="descname">GET </tt><tt class="descname">/api/dev/domains</tt><a class="headerlink" href="#get--api-dev-domains" title="Permalink to this definition">¶</a></dt>
+<dd><p>List all domains for the authenticated user</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Status Codes:</th><td class="field-body"><ul class="first last simple">
+<li><strong>200</strong> &#8211; no error</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example request</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span class="nf">GET</span> <span class="nn">/api/dev/domains</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">phantom.nimbusproject.org</span>
+<span class="na">Accept</span><span class="o">:</span> <span class="l">application/json</span>
+</pre></div>
+</div>
+<p><strong>Example response</strong>:</p>
+<div class="highlight-http"><pre>HTTP/1.1 200 OK
+Content-Type: application/json
+
+[
+  {
+    "id": "1f8112a3-4abd-4629-a1b5-33f78cff504a",
+    "name": "myfirstdomain",
+    "de_name": "multicloud",
+    "monitor_sensors": "",
+    "monitor_domain_sensors": "my.domain.sensor",
+    "launchconfiguration": "/api/dev/launchconfigurations/fcfe9272-d03f-48e4-bd5f-4eb50ec396c7",
+    "vm_count": 1,
+    "sensor_data": {
+      "my.domain.sensor": {
+        "series": [0.0],
+        "average": 0.0
+      }
+    },
+    "owner": "johndoe",
+    "uri": "/api/dev/domains/1f8112a3-4abd-4629-a1b5-33f78cff504a"
+  }
+]</pre>
+</div>
+</dd></dl>
+
+<dl class="get">
+<dt id="get--api-dev-domains-(domain_id)">
+<tt class="descname">GET </tt><tt class="descname">/api/dev/domains/</tt><big>(</big><em>domain_id</em><big>)</big><a class="headerlink" href="#get--api-dev-domains-(domain_id)" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get details for the domain <cite>domain_id</cite></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Status Codes:</th><td class="field-body"><ul class="first last simple">
+<li><strong>200</strong> &#8211; no error</li>
+<li><strong>404</strong> &#8211; domain is unknown</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example request</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span class="nf">GET</span> <span class="nn">/api/dev/domains/1f8112a3-4abd-4629-a1b5-33f78cff504a</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">phantom.nimbusproject.org</span>
+<span class="na">Accept</span><span class="o">:</span> <span class="l">application/json</span>
+</pre></div>
+</div>
+<p><strong>Example response</strong>:</p>
+<div class="highlight-http"><pre>HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  "id": "1f8112a3-4abd-4629-a1b5-33f78cff504a",
+  "name": "myfirstdomain",
+  "de_name": "multicloud",
+  "monitor_sensors": "",
+  "monitor_domain_sensors": "my.domain.sensor",
+  "launchconfiguration": "/api/dev/launchconfigurations/fcfe9272-d03f-48e4-bd5f-4eb50ec396c7",
+  "vm_count": 1,
+  "sensor_data": {
+    "my.domain.sensor": {
+      "series": [0.0],
+      "average": 0.0
+    }
+  },
+  "owner": "johndoe",
+  "uri": "/api/dev/domains/1f8112a3-4abd-4629-a1b5-33f78cff504a"
+}</pre>
+</div>
+</dd></dl>
+
+<dl class="post">
+<dt id="post--api-dev-domains">
+<tt class="descname">POST </tt><tt class="descname">/api/dev/domains</tt><a class="headerlink" href="#post--api-dev-domains" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a new domain</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Status Codes:</th><td class="field-body"><ul class="first last simple">
+<li><strong>201</strong> &#8211; domain created</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example request</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span class="nf">POST</span> <span class="nn">/api/dev/domains</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">phantom.nimbusproject.org</span>
+<span class="na">Accept</span><span class="o">:</span> <span class="l">application/json</span>
+
+<span class="p">{</span>
+  <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;myseconddomain&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;de_name&quot;</span><span class="p">:</span> <span class="s2">&quot;sensor&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;lc_name&quot;</span><span class="p">:</span> <span class="s2">&quot;mysecondlc&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;monitor_sensors&quot;</span><span class="p">:</span> <span class="s2">&quot;proc.loadavg.1min,df.inodes.free&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;monitor_domain_sensors&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;sensor_minimum_vms&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+  <span class="nt">&quot;sensor_maximum_vms&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
+  <span class="nt">&quot;sensor_metric&quot;</span><span class="p">:</span> <span class="s2">&quot;proc.loadavg.1min&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;sensor_scale_down_threshold&quot;</span><span class="p">:</span> <span class="s2">&quot;0.5&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;sensor_scale_down_vms&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+  <span class="nt">&quot;sensor_scale_up_threshold&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+  <span class="nt">&quot;sensor_scale_up_vms&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+  <span class="nt">&quot;sensor_cooldown&quot;</span><span class="p">:</span> <span class="mi">60</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>Example response</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">201</span> <span class="ne">Created</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+<span class="na">Location</span><span class="o">:</span> <span class="l">/api/dev/domains/bb03986c-ff70-4bc2-baec-10016e5db740</span>
+
+<span class="p">{</span>
+  <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;bb03986c-ff70-4bc2-baec-10016e5db740&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;myseconddomain&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;de_name&quot;</span><span class="p">:</span> <span class="s2">&quot;sensor&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;launchconfiguration&quot;</span><span class="p">:</span> <span class="s2">&quot;/api/dev/launchconfigurations/e99be9d3-8f09-4a6c-bb17-b00efd0d06df&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;monitor_sensors&quot;</span><span class="p">:</span> <span class="s2">&quot;proc.loadavg.1min,df.inodes.free&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;monitor_domain_sensors&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;sensor_minimum_vms&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+  <span class="nt">&quot;sensor_maximum_vms&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
+  <span class="nt">&quot;sensor_metric&quot;</span><span class="p">:</span> <span class="s2">&quot;proc.loadavg.1min&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;sensor_scale_down_threshold&quot;</span><span class="p">:</span> <span class="s2">&quot;0.5&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;sensor_scale_down_vms&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+  <span class="nt">&quot;sensor_scale_up_threshold&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+  <span class="nt">&quot;sensor_scale_up_vms&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+  <span class="nt">&quot;sensor_cooldown&quot;</span><span class="p">:</span> <span class="mi">60</span>
+  <span class="s2">&quot;owner&quot;</span><span class="p">:</span> <span class="s2">&quot;johndoe&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;uri&quot;</span><span class="p">:</span> <span class="s2">&quot;/api/dev/domains/bb03986c-ff70-4bc2-baec-10016e5db740&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="put">
+<dt id="put--api-dev-domains-(domain_id)">
+<tt class="descname">PUT </tt><tt class="descname">/api/dev/domains/</tt><big>(</big><em>domain_id</em><big>)</big><a class="headerlink" href="#put--api-dev-domains-(domain_id)" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update a domain</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Status Codes:</th><td class="field-body"><ul class="first last simple">
+<li><strong>200</strong> &#8211; domain updated</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example request</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span class="nf">PUT</span> <span class="nn">/api/dev/domains/bb03986c-ff70-4bc2-baec-10016e5db740</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">phantom.nimbusproject.org</span>
+<span class="na">Accept</span><span class="o">:</span> <span class="l">application/json</span>
+
+<span class="p">{</span>
+  <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;myseconddomain&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;de_name&quot;</span><span class="p">:</span> <span class="s2">&quot;sensor&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;lc_name&quot;</span><span class="p">:</span> <span class="s2">&quot;mysecondlc&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;monitor_sensors&quot;</span><span class="p">:</span> <span class="s2">&quot;proc.loadavg.1min,df.inodes.free&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;monitor_domain_sensors&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;sensor_minimum_vms&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+  <span class="nt">&quot;sensor_maximum_vms&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+  <span class="nt">&quot;sensor_metric&quot;</span><span class="p">:</span> <span class="s2">&quot;proc.loadavg.1min&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;sensor_scale_down_threshold&quot;</span><span class="p">:</span> <span class="s2">&quot;0.5&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;sensor_scale_down_vms&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+  <span class="nt">&quot;sensor_scale_up_threshold&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+  <span class="nt">&quot;sensor_scale_up_vms&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+  <span class="nt">&quot;sensor_cooldown&quot;</span><span class="p">:</span> <span class="mi">60</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p><strong>Example response</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+<span class="na">Location</span><span class="o">:</span> <span class="l">/api/dev/domains/bb03986c-ff70-4bc2-baec-10016e5db740</span>
+
+<span class="p">{</span>
+  <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;bb03986c-ff70-4bc2-baec-10016e5db740&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;myseconddomain&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;de_name&quot;</span><span class="p">:</span> <span class="s2">&quot;sensor&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;launchconfiguration&quot;</span><span class="p">:</span> <span class="s2">&quot;/api/dev/launchconfigurations/e99be9d3-8f09-4a6c-bb17-b00efd0d06df&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;monitor_sensors&quot;</span><span class="p">:</span> <span class="s2">&quot;proc.loadavg.1min,df.inodes.free&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;monitor_domain_sensors&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;sensor_minimum_vms&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+  <span class="nt">&quot;sensor_maximum_vms&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+  <span class="nt">&quot;sensor_metric&quot;</span><span class="p">:</span> <span class="s2">&quot;proc.loadavg.1min&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;sensor_scale_down_threshold&quot;</span><span class="p">:</span> <span class="s2">&quot;0.5&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;sensor_scale_down_vms&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+  <span class="nt">&quot;sensor_scale_up_threshold&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+  <span class="nt">&quot;sensor_scale_up_vms&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+  <span class="nt">&quot;sensor_cooldown&quot;</span><span class="p">:</span> <span class="mi">60</span><span class="p">,</span>
+  <span class="nt">&quot;owner&quot;</span><span class="p">:</span> <span class="s2">&quot;johndoe&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;uri&quot;</span><span class="p">:</span> <span class="s2">&quot;/api/dev/domains/bb03986c-ff70-4bc2-baec-10016e5db740&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="delete">
+<dt id="delete--api-dev-domains-(domain_id)">
+<tt class="descname">DELETE </tt><tt class="descname">/api/dev/domains/</tt><big>(</big><em>domain_id</em><big>)</big><a class="headerlink" href="#delete--api-dev-domains-(domain_id)" title="Permalink to this definition">¶</a></dt>
+<dd><p>Terminate a domain</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Status Codes:</th><td class="field-body"><ul class="first last simple">
+<li><strong>204</strong> &#8211; domain terminated</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example request</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span class="nf">DELETE</span> <span class="nn">/api/dev/domains/1f8112a3-4abd-4629-a1b5-33f78cff504a</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">phantom.nimbusproject.org</span>
+<span class="na">Accept</span><span class="o">:</span> <span class="l">application/json</span>
+</pre></div>
+</div>
+<p><strong>Example response</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">204</span> <span class="ne">No Content</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="instances-resources">
+<h2><a class="toc-backref" href="#id7">Instances Resources</a><a class="headerlink" href="#instances-resources" title="Permalink to this headline">¶</a></h2>
+<p>Each domain can have a number of instances attached to it.</p>
+<dl class="get">
+<dt id="get--api-dev-domains-(domain_id)-instances">
+<tt class="descname">GET </tt><tt class="descname">/api/dev/domains/</tt><big>(</big><em>domain_id</em><big>)</big><tt class="descname">/instances</tt><a class="headerlink" href="#get--api-dev-domains-(domain_id)-instances" title="Permalink to this definition">¶</a></dt>
+<dd><p>List all instances attached to the domain <cite>domain_id</cite></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Status Codes:</th><td class="field-body"><ul class="first last simple">
+<li><strong>200</strong> &#8211; no error</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example request</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span class="nf">GET</span> <span class="nn">/api/dev/domains/1f8112a3-4abd-4629-a1b5-33f78cff504a/instances</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">phantom.nimbusproject.org</span>
+<span class="na">Accept</span><span class="o">:</span> <span class="l">application/json</span>
+</pre></div>
+</div>
+<p><strong>Example response</strong>:</p>
+<div class="highlight-http"><pre>HTTP/1.1 200 OK
+Content-Type: application/json
+
+[
+  {
+    "id": "87554432-f140-4722-86bf-1e3cdb04dcdd",
+    "iaas_instance_id": "i-75c0b81b",
+    "lifecycle_state": "400-PENDING",
+    "hostname": "vm-25.sdsc.futuregrid.org",
+    "cloud": "/api/dev/sites/sierra",
+    "image_id": "hello-phantom.gz",
+    "instance_type": "m1.small",
+    "sensor_data": {
+      "proc.loadavg.1min": {
+        "series": [0.0],
+        "average": 0.0
+      }
+    },
+    "keyname": "phantomkey",
+    "uri": "/api/dev/domains/1f8112a3-4abd-4629-a1b5-33f78cff504a/instances/87554432-f140-4722-86bf-1e3cdb04dcdd"
+  }
+]</pre>
+</div>
+</dd></dl>
+
+<dl class="get">
+<dt id="get--api-dev-domains-(domain_id)-instances-(instance_id)">
+<tt class="descname">GET </tt><tt class="descname">/api/dev/domains/</tt><big>(</big><em>domain_id</em><big>)</big><tt class="descname">/instances/</tt><big>(</big><em>instance_id</em><big>)</big><a class="headerlink" href="#get--api-dev-domains-(domain_id)-instances-(instance_id)" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get details for the instance <cite>instance_id</cite> attached to the domain <cite>domain_id</cite></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Status Codes:</th><td class="field-body"><ul class="first last simple">
+<li><strong>200</strong> &#8211; no error</li>
+<li><strong>404</strong> &#8211; instance is unknown</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example request</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span class="nf">GET</span> <span class="nn">/api/dev/domains/1f8112a3-4abd-4629-a1b5-33f78cff504a/instances/87554432-f140-4722-86bf-1e3cdb04dcdd</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">phantom.nimbusproject.org</span>
+<span class="na">Accept</span><span class="o">:</span> <span class="l">application/json</span>
+</pre></div>
+</div>
+<p><strong>Example response</strong>:</p>
+<div class="highlight-http"><pre>HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+  "id": "87554432-f140-4722-86bf-1e3cdb04dcdd",
+  "iaas_instance_id": "i-75c0b81b",
+  "lifecycle_state": "400-PENDING",
+  "hostname": "vm-25.sdsc.futuregrid.org",
+  "cloud": "/api/dev/sites/sierra",
+  "image_id": "hello-phantom.gz",
+  "instance_type": "m1.small",
+  "sensor_data": {
+    "proc.loadavg.1min": {
+      "series": [0.0],
+      "average": 0.0
+    }
+  },
+  "keyname": "phantomkey",
+  "uri": "/api/dev/domains/1f8112a3-4abd-4629-a1b5-33f78cff504a/instances/87554432-f140-4722-86bf-1e3cdb04dcdd"
+}</pre>
+</div>
+</dd></dl>
+
+<dl class="delete">
+<dt id="delete--api-dev-domains-(domain_id)-instances-(instance_id)">
+<tt class="descname">DELETE </tt><tt class="descname">/api/dev/domains/</tt><big>(</big><em>domain_id</em><big>)</big><tt class="descname">/instances/</tt><big>(</big><em>instance_id</em><big>)</big><a class="headerlink" href="#delete--api-dev-domains-(domain_id)-instances-(instance_id)" title="Permalink to this definition">¶</a></dt>
+<dd><p>Terminate the instance <cite>instance_id</cite> within the domain <cite>domain_id</cite></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Status Codes:</th><td class="field-body"><ul class="first simple">
+<li><strong>204</strong> &#8211; instance terminated</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name" colspan="2">Query Parameters:</th></tr>
+<tr class="field-even field"><td>&nbsp;</td><td class="field-body"><ul class="first last simple">
+<li><strong>adjust_policy</strong> &#8211; either <tt class="docutils literal"><span class="pre">true</span></tt> or <tt class="docutils literal"><span class="pre">false</span></tt>. If <tt class="docutils literal"><span class="pre">true</span></tt>, the domain&#8217;s policy will be adjusted to prevent a replacement VM from starting. In the Multicloud policy, the <tt class="docutils literal"><span class="pre">vm_count</span></tt> parameter will be decremented, in the sensor policy, the <tt class="docutils literal"><span class="pre">sensor_minimum_vms</span></tt> parameter will be decremented, and the <tt class="docutils literal"><span class="pre">sensor_maximum_vms</span></tt> parameter will be adjusted to match it.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example request</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span class="nf">DELETE</span> <span class="nn">/api/dev/domains/1f8112a3-4abd-4629-a1b5-33f78cff504a/instances/87554432-f140-4722-86bf-1e3cdb04dcdd</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">phantom.nimbusproject.org</span>
+<span class="na">Accept</span><span class="o">:</span> <span class="l">application/json</span>
+</pre></div>
+</div>
+<p><strong>Example response</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">204</span> <span class="ne">No Content</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="sensors-resources">
+<h2><a class="toc-backref" href="#id8">Sensors Resources</a><a class="headerlink" href="#sensors-resources" title="Permalink to this headline">¶</a></h2>
+<p>Phantom provides a number of sensors that can be used for auto scaling.</p>
+<dl class="get">
+<dt id="get--api-dev-sensors">
+<tt class="descname">GET </tt><tt class="descname">/api/dev/sensors</tt><a class="headerlink" href="#get--api-dev-sensors" title="Permalink to this definition">¶</a></dt>
+<dd><p>List all sensors</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Status Codes:</th><td class="field-body"><ul class="first last simple">
+<li><strong>200</strong> &#8211; no error</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example request</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span class="nf">GET</span> <span class="nn">/api/dev/sensors</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">phantom.nimbusproject.org</span>
+<span class="na">Accept</span><span class="o">:</span> <span class="l">application/json</span>
+</pre></div>
+</div>
+<p><strong>Example response</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+
+<span class="p">[</span>
+  <span class="p">{</span>
+    <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;df.1kblocks.free&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;uri&quot;</span><span class="p">:</span> <span class="s2">&quot;/api/dev/sensors/df.1kblocks.free&quot;</span>
+  <span class="p">},</span>
+  <span class="p">{</span>
+    <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;df.1kblocks.total&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;uri&quot;</span><span class="p">:</span> <span class="s2">&quot;/api/dev/sensors/df.1kblocks.total&quot;</span>
+  <span class="p">},</span>
+  <span class="p">{</span>
+    <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;df.1kblocks.used&quot;</span><span class="p">,</span>
+    <span class="nt">&quot;uri&quot;</span><span class="p">:</span> <span class="s2">&quot;/api/dev/sensors/df.1kblocks.used&quot;</span>
+  <span class="p">}</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="get">
+<dt id="get--api-dev-sensors-(sensor_id)">
+<tt class="descname">GET </tt><tt class="descname">/api/dev/sensors/</tt><big>(</big><em>sensor_id</em><big>)</big><a class="headerlink" href="#get--api-dev-sensors-(sensor_id)" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the sensor resource identified by <cite>sensor_id</cite></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Status Codes:</th><td class="field-body"><ul class="first last simple">
+<li><strong>200</strong> &#8211; no error</li>
+<li><strong>404</strong> &#8211; sensor is unknown</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example request</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span class="nf">GET</span> <span class="nn">/api/dev/sensors/df.1kblocks.free</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+<span class="na">Host</span><span class="o">:</span> <span class="l">phantom.nimbusproject.org</span>
+<span class="na">Accept</span><span class="o">:</span> <span class="l">application/json</span>
+</pre></div>
+</div>
+<p><strong>Example response</strong>:</p>
+<div class="highlight-http"><div class="highlight"><pre><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
+<span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+
+<span class="p">{</span>
+  <span class="nt">&quot;id&quot;</span><span class="p">:</span> <span class="s2">&quot;df.1kblocks.free&quot;</span><span class="p">,</span>
+  <span class="nt">&quot;uri&quot;</span><span class="p">:</span> <span class="s2">&quot;/api/dev/sensors/df.1kblocks.free&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+        </div>
+        <div class="sidebar">
+          <h3>Page contents</h3>
+          <ul>
+<li><a class="reference internal" href="#">The Phantom HTTP API</a><ul>
+<li><a class="reference internal" href="#authentication-and-tokens">Authentication and Tokens</a></li>
+<li><a class="reference internal" href="#site-resources">Site Resources</a></li>
+<li><a class="reference internal" href="#site-credentials-resources">Site Credentials Resources</a></li>
+<li><a class="reference internal" href="#chef-credentials-resources">Chef Credentials Resources</a></li>
+<li><a class="reference internal" href="#launch-configuration-resources">Launch Configuration Resources</a></li>
+<li><a class="reference internal" href="#domain-resources">Domain Resources</a></li>
+<li><a class="reference internal" href="#instances-resources">Instances Resources</a></li>
+<li><a class="reference internal" href="#sensors-resources">Sensors Resources</a></li>
+</ul>
+</li>
+</ul>
+
+          <h3>Browse</h3>
+          <ul>
+          
+          <li>Prev: <a href="httpscripting.html">Scripting with the Phantom HTTP API</a></li>
+          
+          
+          <li>Next: <a href="buildingadecisionengine.html">Building a Decision Engine with the Phantom Scripting API</a></li>
+          
+          </ul>
+          <h3>You are here:</h3>
+          <ul>
+            <li>
+              <a href="/doc/nimbus">Nimbus Documentation</a>
+            </li>
+            <li>
+              <ul><li>
+                <a href="index.html">phantom 0.2 documentation</a>
+                
+                  <ul><li><a href="advanced.html">Phantom Advanced Documentation</a>
+                
+                <ul><li>The Phantom HTTP API</li></ul>
+                </li></ul>
+              </li></ul>
+            </li>
+          </ul>
+        </div>
+        <div class="clearer"></div>
+      </div>
+  </div>
+<!-- END BODY -->
+
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          <a href="httpscripting.html" title="Scripting with the Phantom HTTP API"
+             >previous</a> |
+          <a href="buildingadecisionengine.html" title="Building a Decision Engine with the Phantom Scripting API"
+             >next</a> |
+          <a href="http-routingtable.html" title="HTTP Routing Table"
+             >routing table</a> |
+          <a href="genindex.html" title="General Index"
+             >index</a>
+        </div>
+
+        <div class="right">
+          
+    <div class="footer">
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+  </div>
+
+  </body>
+</html>

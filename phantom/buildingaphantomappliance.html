@@ -1,0 +1,218 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+
+
+
+<!-- BEGIN HEAD -->
+
+    <title>Building a Phantom Appliance &mdash; phantom 0.2 documentation</title>
+
+    
+    <link rel="stylesheet" href="_static/doc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="phantom 0.2 documentation" href="index.html" />
+    <link rel="up" title="Phantom Advanced Documentation" href="advanced.html" />
+    <link rel="next" title="Multi-cloud VM image generation" href="imagegeneration.html" />
+    <link rel="prev" title="Building a Decision Engine with the Phantom Scripting API" href="buildingadecisionengine.html" />
+<!-- END HEAD -->
+
+
+<link rel="stylesheet" href="_static/standalone.css" type="text/css" />
+
+  </head>
+  <body>
+    <div class="docheader-wrapper">
+      <div class="docheader">
+        <h1><a href="index.html">phantom 0.2 documentation</a></h1>
+        <div class="rel">
+          <a href="buildingadecisionengine.html" title="Building a Decision Engine with the Phantom Scripting API"
+             accesskey="P">previous</a> |
+          <a href="imagegeneration.html" title="Multi-cloud VM image generation"
+             accesskey="N">next</a> |
+          <a href="http-routingtable.html" title="HTTP Routing Table"
+             >routing table</a> |
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a>
+        </div>
+       </div>
+   </div>
+
+<!-- BEGIN BODY -->
+    <div class="content-wrapper">
+      <div class="doccontent">
+        <div class="document">
+            
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="building-a-phantom-appliance">
+<h1>Building a Phantom Appliance<a class="headerlink" href="#building-a-phantom-appliance" title="Permalink to this headline">¶</a></h1>
+<p>You can use Phantom to run any kind of application in the cloud. However, since
+Phantom instantiates and manages virtual machines on your behalf, you will want
+to reduce to a minimum any manual interaction with virtual machines and
+automate the configuration of your application.</p>
+<p>This page presents some guidelines on how to use Phantom to automatically run
+fully-configured applications.  We will show how to create virtual machines
+running specific applications, i.e. appliances that we can deploy with Phantom.</p>
+<div class="section" id="customizing-virtual-machine-images">
+<h2>Customizing virtual machine images<a class="headerlink" href="#customizing-virtual-machine-images" title="Permalink to this headline">¶</a></h2>
+<p>The most basic step in creating a Phantom appliance is to customize a virtual
+machine image with your applications of choice. This can be done by starting
+from scratch or by customizing an existing virtual machine image.</p>
+<p>Creating an image from scratch offers the most flexibility and control: you
+decide exactly what operating system and software to install in the virtual
+machine image. However, it is a difficult task, as your image needs to be
+compatible with the IaaS cloud you intend to use (image format, operating
+system, network configuration, etc.). If you want to create an image from
+scratch, it is best to first document yourself about the virtualization
+technology used by your cloud (see our <a class="reference external" href="http://scienceclouds.org/infrastructure-clouds/">Science Clouds page</a> for more details). You can
+create an image from scratch with a manual operating system installation inside
+a virtual machine, or you can use <a class="reference external" href="http://scienceclouds.org/ecosystem/generation-of-virtual-machine-images/">an automated tool</a>.</p>
+<p>An alternative and simpler approach is to start from an existing image. On most
+IaaS clouds, you will find basic images with few packages installed, that you
+can further customize to run your applications. For example, Nimbus on
+FutureGrid has the <em>hello-cloud</em> image and several Ubuntu images. Amazon EC2
+offers a very large range of public images, for example <a class="reference external" href="http://cloud-images.ubuntu.com/locator/ec2/">Ubuntu images</a>.</p>
+<p>The steps for customizing a virtual machine image are specific to each type of
+cloud. For Amazon EC2, the procedure is described <a class="reference external" href="http://docs.aws.amazon.com/gettingstarted/latest/wah-linux/getting-started-create-custom-ami.html">here</a>.
+For Nimbus, you can follow <a class="reference external" href="https://portal.futuregrid.org/tutorials/nimbus">this tutorial</a> (scroll down to <em>Create a
+New VM Image</em>).</p>
+</div>
+<div class="section" id="configuring-virtual-machines-with-user-data">
+<h2>Configuring virtual machines with user-data<a class="headerlink" href="#configuring-virtual-machines-with-user-data" title="Permalink to this headline">¶</a></h2>
+<p>Often customizing a virtual machine image is not enough, as applications need
+to be configured with information available only at the time of deployment.
+For solving this, most clouds provide a way to pass data to instances. In
+Amazon EC2 and Nimbus, this is called <a class="reference external" href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AESDG-chapter-instancedata.html">user-data</a>.
+The content of user-data can be retrieved from each instance using an HTTP
+request.  On Amazon EC2, this request is made to a fixed address. On Nimbus,
+this is made to the service node, whose hostname is stored in
+<tt class="docutils literal"><span class="pre">/var/nimbus-metadata-server-url</span></tt> just before deploying an instance.</p>
+<p>Phantom allows you to pass user data to your instances as part of the launch
+configuration.  This can be leveraged for configuring virtual machines. For
+example, a shell script can be passed via user-data and automatically executed
+by your instances. With Nimbus, this can be performed by executing the
+following code on boot:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">TMPFILE</span><span class="o">=</span><span class="sb">`</span>mktemp<span class="sb">`</span>
+<span class="nv">I</span><span class="o">=</span>0
+<span class="k">while</span> ! curl <span class="s2">&quot;`cat /var/nimbus-metadata-server-url`/latest/user-data&quot;</span> -o <span class="nv">$TMPFILE</span>; <span class="k">do</span>
+<span class="k">  </span>sleep 1
+  <span class="nv">I</span><span class="o">=</span><span class="sb">`</span>expr <span class="nv">$I</span> + 1<span class="sb">`</span>
+  <span class="k">if</span> <span class="o">[</span> <span class="nv">$I</span> -gt 60 <span class="o">]</span>; <span class="k">then</span>
+<span class="k">    </span><span class="nb">exit </span>1
+  <span class="k">fi</span>
+<span class="k">done</span>
+chmod +x <span class="nv">$TMPFILE</span>
+<span class="nv">$TMPFILE</span>
+</pre></div>
+</div>
+<p>This script attempts to download the content of user-data from the hostname
+stored in <tt class="docutils literal"><span class="pre">/var/nimbus-metadata-server-url</span></tt> and executes it, or gives up
+after failing to do so for a minute.</p>
+</div>
+<div class="section" id="automatically-interacting-with-phantom">
+<h2>Automatically interacting with Phantom<a class="headerlink" href="#automatically-interacting-with-phantom" title="Permalink to this headline">¶</a></h2>
+<p>Just as it is possible to use <a class="reference internal" href="scripting.html"><em>scripting</em></a> to interact with
+Phantom from your workstation, you can also configure your appliance to use
+boto scripts to interact with Phantom on your behalf. For example, this is used
+by our <a class="reference external" href="http://scienceclouds.org/appliances/autoscaling-torque-appliance/">TORQUE appliance</a> to manage
+an autoscaling TORQUE cluster. In that case the software doing the interaction
+with Phantom is <a class="reference external" href="https://github.com/cu-csc/phorque">Phorque</a>. You can read
+its source code to learn more about it.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+        </div>
+        <div class="sidebar">
+          <h3>Page contents</h3>
+          <ul>
+<li><a class="reference internal" href="#">Building a Phantom Appliance</a><ul>
+<li><a class="reference internal" href="#customizing-virtual-machine-images">Customizing virtual machine images</a></li>
+<li><a class="reference internal" href="#configuring-virtual-machines-with-user-data">Configuring virtual machines with user-data</a></li>
+<li><a class="reference internal" href="#automatically-interacting-with-phantom">Automatically interacting with Phantom</a></li>
+</ul>
+</li>
+</ul>
+
+          <h3>Browse</h3>
+          <ul>
+          
+          <li>Prev: <a href="buildingadecisionengine.html">Building a Decision Engine with the Phantom Scripting API</a></li>
+          
+          
+          <li>Next: <a href="imagegeneration.html">Multi-cloud VM image generation</a></li>
+          
+          </ul>
+          <h3>You are here:</h3>
+          <ul>
+            <li>
+              <a href="/doc/nimbus">Nimbus Documentation</a>
+            </li>
+            <li>
+              <ul><li>
+                <a href="index.html">phantom 0.2 documentation</a>
+                
+                  <ul><li><a href="advanced.html">Phantom Advanced Documentation</a>
+                
+                <ul><li>Building a Phantom Appliance</li></ul>
+                </li></ul>
+              </li></ul>
+            </li>
+          </ul>
+        </div>
+        <div class="clearer"></div>
+      </div>
+  </div>
+<!-- END BODY -->
+
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          <a href="buildingadecisionengine.html" title="Building a Decision Engine with the Phantom Scripting API"
+             >previous</a> |
+          <a href="imagegeneration.html" title="Multi-cloud VM image generation"
+             >next</a> |
+          <a href="http-routingtable.html" title="HTTP Routing Table"
+             >routing table</a> |
+          <a href="genindex.html" title="General Index"
+             >index</a>
+        </div>
+
+        <div class="right">
+          
+    <div class="footer">
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+  </div>
+
+  </body>
+</html>

@@ -1,0 +1,337 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+
+
+
+<!-- BEGIN HEAD -->
+
+    <title>Using Sensors with your VM Images &mdash; phantom 0.2 documentation</title>
+
+    
+    <link rel="stylesheet" href="_static/doc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="phantom 0.2 documentation" href="index.html" />
+    <link rel="up" title="Phantom Advanced Documentation" href="advanced.html" />
+    <link rel="next" title="Scripting with the Phantom HTTP API" href="httpscripting.html" />
+    <link rel="prev" title="Phantom Advanced Documentation" href="advanced.html" />
+<!-- END HEAD -->
+
+
+<link rel="stylesheet" href="_static/standalone.css" type="text/css" />
+
+  </head>
+  <body>
+    <div class="docheader-wrapper">
+      <div class="docheader">
+        <h1><a href="index.html">phantom 0.2 documentation</a></h1>
+        <div class="rel">
+          <a href="advanced.html" title="Phantom Advanced Documentation"
+             accesskey="P">previous</a> |
+          <a href="httpscripting.html" title="Scripting with the Phantom HTTP API"
+             accesskey="N">next</a> |
+          <a href="http-routingtable.html" title="HTTP Routing Table"
+             >routing table</a> |
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a>
+        </div>
+       </div>
+   </div>
+
+<!-- BEGIN BODY -->
+    <div class="content-wrapper">
+      <div class="doccontent">
+        <div class="document">
+            
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="using-sensors-with-your-vm-images">
+<h1>Using Sensors with your VM Images<a class="headerlink" href="#using-sensors-with-your-vm-images" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="http://opentsdb.net/tcollector.html">tcollector</a> is a simple program that
+provides sensor monitoring information about your deployed virtual machines.
+It works with the <a class="reference external" href="http://opentsdb.net/">OpenTSDB</a> Monitoring System to keep
+track of the metrics of your Virtual Machines, which Phantom can use to scale
+the VMs for your application. This guide explains how to install tcollector on
+your VM image.</p>
+<p>If you don&#8217;t want to install tcollector on an image, and are only looking to
+test Phantom&#8217;s sensor capabilities, please try the <em>Phantomize</em>
+contextualization which will install and run tcollector automatically when your
+instances boot, or use an already configured VM image such as the
+hello-phantom.gz image available on FutureGrid clouds. You may also base your
+application image on it.</p>
+</div>
+<div class="section" id="installation-and-prerequisites">
+<h2>Installation and Prerequisites<a class="headerlink" href="#installation-and-prerequisites" title="Permalink to this headline">¶</a></h2>
+<p>tcollector requires that you have (at least) Python 2.6 installed on your VM image. This can generally be installed with your distribution&#8217;s package manager, or built from source from <a class="reference external" href="http://python.org/">python.org</a>.</p>
+<p>Once you have Python installed, you can install it like so:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="c"># wget http://build.nimbusproject.org:8001/tcollector/master/tcollector-HEAD.tar.gz</span>
+<span class="c"># tar xzvf tcollector-HEAD.tar.gz</span>
+<span class="c"># mv tcollector /usr/local/tcollector</span>
+</pre></div>
+</div>
+<p>That&#8217;s it! You can start tcollector like so to test it:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="c"># /usr/local/tcollector/tcollector.py --host nimbus-opentsdb.no-ip.info --port 4242</span>
+</pre></div>
+</div>
+<p>Now to make tcollector start on system start, you can use the provided startstop script. Install it like so:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="c"># cp /usr/local/tcollector/startstop /etc/init.d/tcollector</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>If you are running your VM on OpenStack clouds running OpenStack (except for Hotel),
+the public hostname sent by the cloud metadata server does not match what
+is sent by the EC2 interface which uses the public IP.
+For these clouds, we have an <a class="reference external" href="https://github.com/nimbusproject/tcollector/blob/master/startstop.openstack">alternative script available</a>,
+which works around the problem.</p>
+<p>Instead of the above command, use:</p>
+<blockquote class="last">
+<div><p># wget <a class="reference external" href="https://raw.githubusercontent.com/nimbusproject/tcollector/master/startstop.openstack">https://raw.githubusercontent.com/nimbusproject/tcollector/master/startstop.openstack</a></p>
+<p># cp startstop.openstack /etc/init.d/tcollector</p>
+</div></blockquote>
+</div>
+<p>Open up the script and set the TSD_HOST variable to point to the Phantom
+OpenTSDB installation:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="c"># vim /etc/init.d/tcollector</span>
+</pre></div>
+</div>
+<p>Line 5 should look like:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">TSD_HOST</span><span class="o">=</span>nimbus-opentsdb.no-ip.info
+</pre></div>
+</div>
+<p>You can confirm that you&#8217;ve set this right by running the following, and
+verifying that the output is the same:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="c"># grep &#39;TSD_HOST=&#39; /etc/init.d/tcollector</span>
+<span class="nv">TSD_HOST</span><span class="o">=</span>nimbus-opentsdb.no-ip.info
+</pre></div>
+</div>
+<p>You will now want to set this init script to start on boot. To do this on
+Debian or Ubuntu based distros, you will want to use <a class="reference external" href="http://manpages.ubuntu.com/manpages/precise/man8/update-rc.d.8.html">update-rc.d</a>:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="c"># update-rc.d tcollector defaults</span>
+</pre></div>
+</div>
+<p>On Redhat based distros like CentOS and Scientific Linux, you will want to
+use <a class="reference external" href="http://www.centos.org/docs/5/html/Deployment_Guide-en-US/s1-services-chkconfig.html">chkconfig</a>:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="c"># /sbin/chkconfig --add tcollector</span>
+</pre></div>
+</div>
+<p>Now save your image, and you&#8217;re finished.</p>
+</div>
+<div class="section" id="custom-sensors">
+<h2>Custom Sensors<a class="headerlink" href="#custom-sensors" title="Permalink to this headline">¶</a></h2>
+<p>Creating custom tcollector sensors is easy. To do this, you simply need to
+create a script that periodically outputs your metric data. As an example:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="c">#!/usr/bin/python</span>
+import sys
+import <span class="nb">time</span>
+<span class="nv">COLLECTION_INTERVAL</span> <span class="o">=</span> 15  <span class="c"># seconds</span>
+
+<span class="k">while </span>True:
+    <span class="nv">ts</span> <span class="o">=</span> int<span class="o">(</span>time.time<span class="o">())</span>
+    print <span class="s2">&quot;test.my.value %s 42&quot;</span> % ts
+    sys.stdout.flush<span class="o">()</span>
+    time.sleep<span class="o">(</span>COLLECTION_INTERVAL<span class="o">)</span>
+</pre></div>
+</div>
+<p>When this script is running on your VM, you will have the test.my.value metric
+available.</p>
+<p>If you would like to create your own sensors, check out the <a class="reference external" href="http://opentsdb.net/tcollector.html">tcollector documentation</a>, and for inspiration, check out the <a class="reference external" href="https://github.com/nimbusproject/phantom-sensors">phantom sensors</a> that are included with the
+tcollector tarball.</p>
+</div>
+<div class="section" id="domain-sensors">
+<h2>Domain Sensors<a class="headerlink" href="#domain-sensors" title="Permalink to this headline">¶</a></h2>
+<p>If you would like to set up a sensor that is not associated with a particular
+hostname, that is simple as well. You may want to do this if you would like to
+scale based on some external metric, like say you had a system set up with
+Torque on a static headnode, and you set Phantom up to scale based on your
+queue length.</p>
+<div class="section" id="installing-tcollector">
+<h3>Installing tcollector<a class="headerlink" href="#installing-tcollector" title="Permalink to this headline">¶</a></h3>
+<p>Installing tcollector to use as a domain sensor is simple, and very similar to
+installing it on your VM image.</p>
+<p>tcollector requires that you have (at least) Python 2.6 installed on your VM image. This can generally be installed with your distribution&#8217;s package manager, or built from source from <a class="reference external" href="http://python.org/">python.org</a>.</p>
+<p>Once you have Python installed, you can install it like so:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="c"># wget http://build.nimbusproject.org:8001/tcollector/master/tcollector-HEAD.tar.gz</span>
+<span class="c"># tar xzvf tcollector-HEAD.tar.gz</span>
+<span class="c"># mv tcollector /usr/local/tcollector</span>
+</pre></div>
+</div>
+<p>That&#8217;s it! You can start tcollector like so to test it:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="c"># /usr/local/tcollector/tcollector.py --host nimbus-opentsdb.no-ip.info --port 4242</span>
+</pre></div>
+</div>
+<p>Now to make tcollector start on system start, you can use the provided startstop script. Install it like so:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="c"># cp /usr/local/tcollector/startstop /etc/init.d/tcollector</span>
+</pre></div>
+</div>
+<p>Open up the script and set the TSD_HOST variable to point to the Phantom
+OpenTSDB installation:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="c"># vim /etc/init.d/tcollector</span>
+</pre></div>
+</div>
+<p>Line 5 should look like:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">TSD_HOST</span><span class="o">=</span>nimbus-opentsdb.no-ip.info
+</pre></div>
+</div>
+<p>You can confirm that you&#8217;ve set this right by running the following, and
+verifying that the output is the same:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="c"># grep &#39;TSD_HOST=&#39; /etc/init.d/tcollector</span>
+<span class="nv">TSD_HOST</span><span class="o">=</span>nimbus-opentsdb.no-ip.info
+</pre></div>
+</div>
+<p>You will now want to set this init script to start on boot. To do this on
+Debian or Ubuntu based distros, you will want to use update-rc.d:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="c"># update-rc.d tcollector defaults</span>
+ Adding system startup <span class="k">for</span> /etc/init.d/tcollector ...
+   /etc/rc0.d/K20tcollector -&gt; ../init.d/tcollector
+   /etc/rc1.d/K20tcollector -&gt; ../init.d/tcollector
+   /etc/rc6.d/K20tcollector -&gt; ../init.d/tcollector
+   /etc/rc2.d/S20tcollector -&gt; ../init.d/tcollector
+   /etc/rc3.d/S20tcollector -&gt; ../init.d/tcollector
+   /etc/rc4.d/S20tcollector -&gt; ../init.d/tcollector
+   /etc/rc5.d/S20tcollector -&gt; ../init.d/tcollector
+</pre></div>
+</div>
+<p>On Redhat based distros like CentOS and Scientific Linux, you will want
+to use chkconfig:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="c"># /sbin/chkconfig --add tcollector</span>
+</pre></div>
+</div>
+<p>Now save your image, and you&#8217;re finished.</p>
+</div>
+<div class="section" id="configuring-tcollector-for-your-domain">
+<h3>Configuring tcollector for your Domain<a class="headerlink" href="#configuring-tcollector-for-your-domain" title="Permalink to this headline">¶</a></h3>
+<p>Now that you have tcollector installed, you can configure it to push metrics
+for your domain. To do this, open up the configuration as follows:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="c"># vim /usr/local/tcollector/collectors/etc/config.py</span>
+</pre></div>
+</div>
+<p>and set the USER and DOMAIN lines to your Phantom username and Domain, by
+removing the leading &#8216;#&#8217; and setting the correct values. Check your values with:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="c"># egrep &#39;^USER|^DOMAIN&#39; /usr/local/tcollector/collectors/etc/config.py</span>
+<span class="nv">USER</span> <span class="o">=</span> <span class="s2">&quot;iamauser&quot;</span>
+<span class="nv">DOMAIN</span> <span class="o">=</span> <span class="s2">&quot;iamadomain&quot;</span>
+</pre></div>
+</div>
+<p>You will probably also want to remove the existing metrics, since they probably
+won&#8217;t be helpful to your domain. You can do this with:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="c"># rm /usr/local/tcollector/collectors/0/*</span>
+</pre></div>
+</div>
+<p>You can now place your custom domain collector into your tcollector install:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="c"># cp mycollector.py /usr/local/tcollector/collectors/0/</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="using-domain-metrics-with-phantom">
+<h3>Using Domain Metrics with Phantom<a class="headerlink" href="#using-domain-metrics-with-phantom" title="Permalink to this headline">¶</a></h3>
+<p>Use these metrics in the same way you use regular host metrics, but prefix the
+name of the metric with &#8220;domain:&#8221; for example, with a metric named
+<em>my.domain.metric</em>, use &#8220;domain:my.domain.metric&#8221; when adding the sensor, the
+same way that is explained in the <a class="reference internal" href="webapp.html"><em>Phantom Quickstart</em></a>.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+        </div>
+        <div class="sidebar">
+          <h3>Page contents</h3>
+          <ul>
+<li><a class="reference internal" href="#">Using Sensors with your VM Images</a><ul>
+<li><a class="reference internal" href="#introduction">Introduction</a></li>
+<li><a class="reference internal" href="#installation-and-prerequisites">Installation and Prerequisites</a></li>
+<li><a class="reference internal" href="#custom-sensors">Custom Sensors</a></li>
+<li><a class="reference internal" href="#domain-sensors">Domain Sensors</a><ul>
+<li><a class="reference internal" href="#installing-tcollector">Installing tcollector</a></li>
+<li><a class="reference internal" href="#configuring-tcollector-for-your-domain">Configuring tcollector for your Domain</a></li>
+<li><a class="reference internal" href="#using-domain-metrics-with-phantom">Using Domain Metrics with Phantom</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+          <h3>Browse</h3>
+          <ul>
+          
+          <li>Prev: <a href="advanced.html">Phantom Advanced Documentation</a></li>
+          
+          
+          <li>Next: <a href="httpscripting.html">Scripting with the Phantom HTTP API</a></li>
+          
+          </ul>
+          <h3>You are here:</h3>
+          <ul>
+            <li>
+              <a href="/doc/nimbus">Nimbus Documentation</a>
+            </li>
+            <li>
+              <ul><li>
+                <a href="index.html">phantom 0.2 documentation</a>
+                
+                  <ul><li><a href="advanced.html">Phantom Advanced Documentation</a>
+                
+                <ul><li>Using Sensors with your VM Images</li></ul>
+                </li></ul>
+              </li></ul>
+            </li>
+          </ul>
+        </div>
+        <div class="clearer"></div>
+      </div>
+  </div>
+<!-- END BODY -->
+
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          <a href="advanced.html" title="Phantom Advanced Documentation"
+             >previous</a> |
+          <a href="httpscripting.html" title="Scripting with the Phantom HTTP API"
+             >next</a> |
+          <a href="http-routingtable.html" title="HTTP Routing Table"
+             >routing table</a> |
+          <a href="genindex.html" title="General Index"
+             >index</a>
+        </div>
+
+        <div class="right">
+          
+    <div class="footer">
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+  </div>
+
+  </body>
+</html>

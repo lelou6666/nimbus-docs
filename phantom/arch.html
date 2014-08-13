@@ -1,0 +1,189 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+
+
+
+<!-- BEGIN HEAD -->
+
+    <title>Architecture &mdash; phantom 0.2 documentation</title>
+
+    
+    <link rel="stylesheet" href="_static/doc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="phantom 0.2 documentation" href="index.html" />
+<!-- END HEAD -->
+
+
+<link rel="stylesheet" href="_static/standalone.css" type="text/css" />
+
+  </head>
+  <body>
+    <div class="docheader-wrapper">
+      <div class="docheader">
+        <h1><a href="index.html">phantom 0.2 documentation</a></h1>
+        <div class="rel">
+          <a href="http-routingtable.html" title="HTTP Routing Table"
+             >routing table</a> |
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a>
+        </div>
+       </div>
+   </div>
+
+<!-- BEGIN BODY -->
+    <div class="content-wrapper">
+      <div class="doccontent">
+        <div class="document">
+            
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="architecture">
+<h1>Architecture<a class="headerlink" href="#architecture" title="Permalink to this headline">¶</a></h1>
+<p>Those interested in how the Nimbus Phantom service works under
+the hood will find this page helpful.  Here we will provide a quick
+introduction to how the service works.</p>
+<img alt="_images/phantom_arch.png" src="_images/phantom_arch.png" style="width: 529px; height: 397px;" />
+<div class="section" id="user-interfaces">
+<h2>User Interfaces<a class="headerlink" href="#user-interfaces" title="Permalink to this headline">¶</a></h2>
+<p>We have two user interfaces: the Phantom Autoscale API and a Web Application.
+The web application is effectively a user of the Autoscale API; however, to
+provide some conveniences it also speaks directly to the clouds on which
+the user will be running VMs.  The web application was created using the
+<a class="reference external" href="https://www.djangoproject.com/">Django</a> framework and is running
+inside a VM on FutureGrid&#8217;s hotel cloud.  The application is backed
+by a MySQL server.</p>
+<p>The Autoscale API is a Python <a class="reference external" href="http://wsgi.readthedocs.org/en/latest/index.html">WSGI</a> application.  It is run using the <a class="reference external" href="http://www.cherrypy.org/">cherrypy</a>
+framework inside a FutureGrid VM.  The Autoscale service requires no
+state to do its work.  All of the state is contained inside other
+system components.  This allows for horizontal scaling and high levels
+of replication.  However, there is one exception to this.  At the moment
+all user authentication information is contained in a MySQL server.
+We did this because it was much more convenient for our FutureGrid users to
+interact with an existing account system than it was to use a highly
+available one.  Further, the MySQL server can easily handle orders of
+magnitude beyond our predicted load, or any load that the underlying compute
+resources can handle.</p>
+<div class="section" id="nginx">
+<h3>nginx<a class="headerlink" href="#nginx" title="Permalink to this headline">¶</a></h3>
+<p>Both the Autoscale service and the web application are fronted by an nginx
+load balancer.  This is done so that we can dynamically add and subtract
+replicated instances of each service without interrupting users.
+Further, this allows us to use VMs (with potentially changing IP addresses)
+to handle the workload.  nginx handles SSL and holds the certificates
+needed in a safe and known location.</p>
+</div>
+</div>
+<div class="section" id="rabbitmq-message-space">
+<h2>RabbitMQ Message Space<a class="headerlink" href="#rabbitmq-message-space" title="Permalink to this headline">¶</a></h2>
+<p>All internal components interact with each other via AMQP message space.
+A <a class="reference external" href="http://www.rabbitmq.com/">RabbitMQ</a> server is running inside of a
+VM.  This approach allows us to scale up the messaging system and the
+components interacting with it.</p>
+</div>
+<div class="section" id="zookeeper">
+<h2>Zookeeper<a class="headerlink" href="#zookeeper" title="Permalink to this headline">¶</a></h2>
+<p>All of our components use a <a class="reference external" href="http://zookeeper.apache.org/">Zookeeper</a>
+cluster for persistent storage.  This again allows for high scalability.</p>
+</div>
+<div class="section" id="dtrs">
+<h2>DTRS<a class="headerlink" href="#dtrs" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="epum">
+<h2>EPUM<a class="headerlink" href="#epum" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="provisioner">
+<h2>Provisioner<a class="headerlink" href="#provisioner" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+        </div>
+        <div class="sidebar">
+          <h3>Page contents</h3>
+          <ul>
+<li><a class="reference internal" href="#">Architecture</a><ul>
+<li><a class="reference internal" href="#user-interfaces">User Interfaces</a><ul>
+<li><a class="reference internal" href="#nginx">nginx</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#rabbitmq-message-space">RabbitMQ Message Space</a></li>
+<li><a class="reference internal" href="#zookeeper">Zookeeper</a></li>
+<li><a class="reference internal" href="#dtrs">DTRS</a></li>
+<li><a class="reference internal" href="#epum">EPUM</a></li>
+<li><a class="reference internal" href="#provisioner">Provisioner</a></li>
+</ul>
+</li>
+</ul>
+
+          <h3>Browse</h3>
+          <ul>
+          
+          
+          </ul>
+          <h3>You are here:</h3>
+          <ul>
+            <li>
+              <a href="/doc/nimbus">Nimbus Documentation</a>
+            </li>
+            <li>
+              <ul><li>
+                <a href="index.html">phantom 0.2 documentation</a>
+                
+                <ul><li>Architecture</li></ul>
+                
+              </li></ul>
+            </li>
+          </ul>
+        </div>
+        <div class="clearer"></div>
+      </div>
+  </div>
+<!-- END BODY -->
+
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          <a href="http-routingtable.html" title="HTTP Routing Table"
+             >routing table</a> |
+          <a href="genindex.html" title="General Index"
+             >index</a>
+        </div>
+
+        <div class="right">
+          
+    <div class="footer">
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+  </div>
+
+  </body>
+</html>

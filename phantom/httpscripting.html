@@ -1,0 +1,276 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+
+
+
+<!-- BEGIN HEAD -->
+
+    <title>Scripting with the Phantom HTTP API &mdash; phantom 0.2 documentation</title>
+
+    
+    <link rel="stylesheet" href="_static/doc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="phantom 0.2 documentation" href="index.html" />
+    <link rel="up" title="Phantom Advanced Documentation" href="advanced.html" />
+    <link rel="next" title="The Phantom HTTP API" href="api.html" />
+    <link rel="prev" title="Using Sensors with your VM Images" href="sensors.html" />
+<!-- END HEAD -->
+
+
+<link rel="stylesheet" href="_static/standalone.css" type="text/css" />
+
+  </head>
+  <body>
+    <div class="docheader-wrapper">
+      <div class="docheader">
+        <h1><a href="index.html">phantom 0.2 documentation</a></h1>
+        <div class="rel">
+          <a href="sensors.html" title="Using Sensors with your VM Images"
+             accesskey="P">previous</a> |
+          <a href="api.html" title="The Phantom HTTP API"
+             accesskey="N">next</a> |
+          <a href="http-routingtable.html" title="HTTP Routing Table"
+             >routing table</a> |
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a>
+        </div>
+       </div>
+   </div>
+
+<!-- BEGIN BODY -->
+    <div class="content-wrapper">
+      <div class="doccontent">
+        <div class="document">
+            
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="scripting-with-the-phantom-http-api">
+<h1>Scripting with the Phantom HTTP API<a class="headerlink" href="#scripting-with-the-phantom-http-api" title="Permalink to this headline">¶</a></h1>
+<p>Phantom uses a RESTish HTTP protocol, and we recommend
+<a class="reference external" href="http://python-requests.org">requests</a> for scripting Phantom.
+On this page we will describe
+some simple applications that use Python, Requests, and the Phantom HTTP
+API for interacting with Phantom.</p>
+<div class="section" id="phantom-http-api">
+<h2>Phantom HTTP API<a class="headerlink" href="#phantom-http-api" title="Permalink to this headline">¶</a></h2>
+<p>The first thing you will need in order to use the Phantom HTTP API is your
+Phantom username and password. You should have these from signing up for Phantom.</p>
+<p>You will also need to know the URL of the Phantom API. It is:</p>
+<p><tt class="docutils literal"><span class="pre">https://phantom.nimbusproject.org/api/dev</span></tt></p>
+</div>
+<div class="section" id="installing-requests">
+<h2>Installing Requests<a class="headerlink" href="#installing-requests" title="Permalink to this headline">¶</a></h2>
+<p>We recommend using Requests to interact with the Phantom API.</p>
+<p>To get started, create a new
+<a class="reference external" href="http://pypi.python.org/pypi/virtualenv">virtual environment</a> and install
+requests into it.  The following commands should do this for you:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>virtualenv phantom
+New python executable in phantom/bin/python
+Installing distribute...............done.
+Installing pip...............done.
+
+<span class="nv">$ </span><span class="nb">source </span>phantom/bin/activate
+
+<span class="nv">$ </span>pip install requests
+Downloading/unpacking requests
+  Downloading requests-1.2.3.tar.gz <span class="o">(</span>348kB<span class="o">)</span>: 348kB downloaded
+  Running setup.py egg_info <span class="k">for </span>package requests
+
+Installing collected packages: requests
+  Running setup.py install <span class="k">for </span>requests
+
+Successfully installed requests
+Cleaning up...
+</pre></div>
+</div>
+<p>You now have requests installed and ready to use.  Please note the command:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span><span class="nb">source </span>phantom/bin/activate
+</pre></div>
+</div>
+<p>You will need to run this command in every session where you
+wish to use your Python requests environment.</p>
+</div>
+<div class="section" id="getting-a-token">
+<h2>Getting a Token<a class="headerlink" href="#getting-a-token" title="Permalink to this headline">¶</a></h2>
+<p>The Phantom API uses tokens and Basic Authentication for authentication. Users
+must request a token to access most endpoints in the API.  All other requests
+must be authenticated using this token. To get this token with curl,
+for example, a user &#8216;alice&#8217; with the password &#8216;restaurant&#8217; would do the following.
+Please substitute your username and password for &#8216;alice&#8217; and &#8216;restaurant&#8217;:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>curl -d <span class="s1">&#39;username=alice&amp;password=restaurant&#39;</span> https://phantom.nimbusproject.org/api/dev/token
+<span class="o">{</span><span class="s2">&quot;token&quot;</span>: <span class="s2">&quot;xgy-4h324h2i4h32oi4h23&quot;</span>, <span class="s2">&quot;user&quot;</span>: 1, <span class="s2">&quot;success&quot;</span>: <span class="nb">true</span><span class="o">}</span>
+</pre></div>
+</div>
+<p>For convenience store those values in the following environment variables:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span><span class="nb">export </span><span class="nv">USER_ID</span><span class="o">=</span>&lt;user id&gt;
+<span class="nv">$ </span><span class="nb">export </span><span class="nv">TOKEN</span><span class="o">=</span>&lt;token&gt;
+</pre></div>
+</div>
+<p>Then, to use other endpoints, use this user id and token when querying. You can either include the
+user and token as request parameters in any call to phantom, or you can use the basic access authentication
+scheme:</p>
+<ol class="arabic simple">
+<li>Combine user id and token into string &#8220;user:token&#8221;</li>
+<li>Encode resulting string using Base64</li>
+<li>Prepend &#8220;Basic &#8221; (including the trailing space) to the resulting Base64 encoded string</li>
+</ol>
+<p>Curl (and most http libraries) do this automatically for you:</p>
+<blockquote>
+<div><div class="highlight-none"><div class="highlight"><pre>$ curl -u 1:xgy-4h324h2i4h32oi4h23 https://phantom.nimbusproject.org/api/dev/sites
+[]
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="the-phantom-http-api-reference">
+<h2>The Phantom HTTP API Reference<a class="headerlink" href="#the-phantom-http-api-reference" title="Permalink to this headline">¶</a></h2>
+<p>The <a class="reference internal" href="api.html"><em>Phantom HTTP API Reference</em></a> is the best resource to learn about
+using the Phantom API. It describes each method and endpoint of the API. As a
+learning aid, we have also supplied some sample scripts which show how to use the
+API.</p>
+</div>
+<div class="section" id="sample-scripts">
+<h2>Sample scripts<a class="headerlink" href="#sample-scripts" title="Permalink to this headline">¶</a></h2>
+<p>The following sample programs can be used to aid in understanding.
+All of these values can be found in your FutureGrid cloud-client
+cloud.properties file.</p>
+<ul class="simple">
+<li><a class="reference external" href="https://github.com/nimbusproject/phantomwebapp/blob/master/example_scripts/lc_create.py">Create a Launch Configuration</a>.</li>
+<li><a class="reference external" href="https://github.com/nimbusproject/phantomwebapp/blob/master/example_scripts/lc_delete.py">Delete a Launch Configuration</a>.</li>
+<li><a class="reference external" href="https://github.com/nimbusproject/phantomwebapp/blob/master/example_scripts/lc_list.py">List all Launch Configurations</a>.</li>
+<li><a class="reference external" href="https://github.com/nimbusproject/phantomwebapp/blob/master/example_scripts/domain_create.py">Create a Domain</a>.</li>
+<li><a class="reference external" href="https://github.com/nimbusproject/phantomwebapp/blob/master/example_scripts/domain_delete.py">Delete a Domain</a>.</li>
+<li><a class="reference external" href="https://github.com/nimbusproject/phantomwebapp/blob/master/example_scripts/domain_list.py">List all running domains</a>.</li>
+<li><a class="reference external" href="https://github.com/nimbusproject/phantomwebapp/blob/master/example_scripts/domain_alter.py">Change the n-preserving value</a>.</li>
+</ul>
+<p>Here is a sample session of using the above scripts.  In it we will create a
+launch configuration.  We will then launch a domain that
+uses that launch configuration.  First we create the launch configuration:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>python lc_create.py testlc1 hello-phantom.gz hotel
+<span class="nv">$ </span>python lc_list.py
+testlc1
+</pre></div>
+</div>
+<p>The next thing we do is create a domain using that launch configuration:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>python domain_create.py testDomain1 testlc1 1
+using LaunchConfiguration:testlc1
+<span class="nv">$ </span>python asg_list.py
+testDomain1
+    testlc1 : 1
+    Instances:
+    ---------
+        hotel : Healthy
+</pre></div>
+</div>
+<p>The arguments to that program are as follows in order:</p>
+<ul class="simple">
+<li>the new domain name</li>
+<li>the launch configuration name</li>
+<li>the size of the domain</li>
+</ul>
+<p>Now we clean everything up:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>python domain_delete.py testDomain1
+deleting testDomain1
+<span class="nv">$ </span>python lc_delete.py testlc1
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+        </div>
+        <div class="sidebar">
+          <h3>Page contents</h3>
+          <ul>
+<li><a class="reference internal" href="#">Scripting with the Phantom HTTP API</a><ul>
+<li><a class="reference internal" href="#phantom-http-api">Phantom HTTP API</a></li>
+<li><a class="reference internal" href="#installing-requests">Installing Requests</a></li>
+<li><a class="reference internal" href="#getting-a-token">Getting a Token</a></li>
+<li><a class="reference internal" href="#the-phantom-http-api-reference">The Phantom HTTP API Reference</a></li>
+<li><a class="reference internal" href="#sample-scripts">Sample scripts</a></li>
+</ul>
+</li>
+</ul>
+
+          <h3>Browse</h3>
+          <ul>
+          
+          <li>Prev: <a href="sensors.html">Using Sensors with your VM Images</a></li>
+          
+          
+          <li>Next: <a href="api.html">The Phantom HTTP API</a></li>
+          
+          </ul>
+          <h3>You are here:</h3>
+          <ul>
+            <li>
+              <a href="/doc/nimbus">Nimbus Documentation</a>
+            </li>
+            <li>
+              <ul><li>
+                <a href="index.html">phantom 0.2 documentation</a>
+                
+                  <ul><li><a href="advanced.html">Phantom Advanced Documentation</a>
+                
+                <ul><li>Scripting with the Phantom HTTP API</li></ul>
+                </li></ul>
+              </li></ul>
+            </li>
+          </ul>
+        </div>
+        <div class="clearer"></div>
+      </div>
+  </div>
+<!-- END BODY -->
+
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          <a href="sensors.html" title="Using Sensors with your VM Images"
+             >previous</a> |
+          <a href="api.html" title="The Phantom HTTP API"
+             >next</a> |
+          <a href="http-routingtable.html" title="HTTP Routing Table"
+             >routing table</a> |
+          <a href="genindex.html" title="General Index"
+             >index</a>
+        </div>
+
+        <div class="right">
+          
+    <div class="footer">
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+  </div>
+
+  </body>
+</html>

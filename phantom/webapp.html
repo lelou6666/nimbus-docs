@@ -1,0 +1,496 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+
+
+
+<!-- BEGIN HEAD -->
+
+    <title>Phantom Quickstart &mdash; phantom 0.2 documentation</title>
+
+    
+    <link rel="stylesheet" href="_static/doc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="phantom 0.2 documentation" href="index.html" />
+    <link rel="next" title="Phantom Advanced Documentation" href="advanced.html" />
+    <link rel="prev" title="Nimbus Phantom" href="index.html" />
+<!-- END HEAD -->
+
+
+<link rel="stylesheet" href="_static/standalone.css" type="text/css" />
+
+  </head>
+  <body>
+    <div class="docheader-wrapper">
+      <div class="docheader">
+        <h1><a href="index.html">phantom 0.2 documentation</a></h1>
+        <div class="rel">
+          <a href="index.html" title="Nimbus Phantom"
+             accesskey="P">previous</a> |
+          <a href="advanced.html" title="Phantom Advanced Documentation"
+             accesskey="N">next</a> |
+          <a href="http-routingtable.html" title="HTTP Routing Table"
+             >routing table</a> |
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a>
+        </div>
+       </div>
+   </div>
+
+<!-- BEGIN BODY -->
+    <div class="content-wrapper">
+      <div class="doccontent">
+        <div class="document">
+            
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="phantom-quickstart">
+<h1>Phantom Quickstart<a class="headerlink" href="#phantom-quickstart" title="Permalink to this headline">¶</a></h1>
+<p>The best way to get familiar with Phantom is to
+<a class="reference external" href="https://phantom.nimbusproject.org/">try it out</a>.</p>
+<ul class="simple">
+<li><a class="reference internal" href="#getting-access">Getting Access</a></li>
+<li><a class="reference internal" href="#login">Login</a></li>
+<li><a class="reference internal" href="#configuring-your-profile">Configuring your Profile</a></li>
+<li><a class="reference internal" href="#creating-a-launch-configuration">Creating a Launch Configuration</a></li>
+<li><a class="reference internal" href="#launching-a-domain">Launching a Domain</a></li>
+<li><a class="reference internal" href="#updating-a-domain">Updating a Domain</a></li>
+<li><a class="reference internal" href="#terminating-a-domain">Terminating a Domain</a></li>
+</ul>
+<div class="section" id="getting-access">
+<h2>Getting Access<a class="headerlink" href="#getting-access" title="Permalink to this headline">¶</a></h2>
+<p>Phantom has been deployed as a service on <a class="reference external" href="https://futuregrid.org/">FutureGrid</a>
+and you can start using it there.
+In order to use Phantom, you will need a Phantom account and accounts
+on clouds you want to use with Phantom.</p>
+<p>You can either apply for a Futuregrid account, and get access through Futuregrid,
+or if you do not plan on using Futuregrid, you can sign up for Phantom on its own.</p>
+<div class="section" id="register-a-phantom-account-with-futuregrid">
+<h3>Register a Phantom Account with Futuregrid<a class="headerlink" href="#register-a-phantom-account-with-futuregrid" title="Permalink to this headline">¶</a></h3>
+<p>FutureGrid provides several different IaaS clouds that you can use with
+Phantom.  Requesting a FutureGrid account will give you access to all
+FutureGrid clouds.  Thus your first step to gain access is to <a class="reference external" href="https://portal.futuregrid.org/user/register">request a
+FutureGrid account</a>. Once you
+have a FutureGrid account, you will need to join an existing FutureGrid project
+or to <a class="reference external" href="https://portal.futuregrid.org/node/add/fg-projects">create your own</a>.</p>
+<p>Once you are in an active FutureGrid project, you can get a Phantom account by
+emailing <a class="reference external" href="mailto:nimbus&#37;&#52;&#48;mcs&#46;anl&#46;gov">nimbus<span>&#64;</span>mcs<span>&#46;</span>anl<span>&#46;</span>gov</a>.  We will create
+your Phantom account and send you instructions on how to use Phantom.</p>
+</div>
+<div class="section" id="register-a-phantom-account-without-futuregrid">
+<h3>Register a Phantom Account without Futuregrid<a class="headerlink" href="#register-a-phantom-account-without-futuregrid" title="Permalink to this headline">¶</a></h3>
+<p>If you would rather not sign up for Phantom through Futuregrid, you can sign up
+for Phantom without it, and use it with Amazon EC2. To do so, visit the <a class="reference external" href="https://phantom.nimbusproject.org/accounts/signup/">Sign Up</a> page, and create your
+account. Once your account is approved, you should receive an email with further
+instructions.</p>
+<p>Once you have set up your account, log on to <a class="reference external" href="https://phantom.nimbusproject.org/">Phantom</a>.</p>
+</div>
+</div>
+<div class="section" id="login">
+<h2>Login<a class="headerlink" href="#login" title="Permalink to this headline">¶</a></h2>
+<p>Once you have the needed accounts you can log in.
+You will first be presented with a login screen:</p>
+<img alt="_images/phantom_login.png" src="_images/phantom_login.png" style="width: 502px;" />
+<p>If you have forgotten your account information you can click on the
+<a class="reference external" href="https://phantom.nimbusproject.org/accounts/reset_password/">Forgot Password</a>
+link.  After logging in you will see the home page:</p>
+<img alt="_images/phantom_home.png" src="_images/phantom_home.png" style="width: 500px;" />
+<p>This page should guide you through the steps to start launching sets of
+virtual machines, which are called Domains in Phantom.</p>
+</div>
+<div class="section" id="configuring-your-profile">
+<h2>Configuring your Profile<a class="headerlink" href="#configuring-your-profile" title="Permalink to this headline">¶</a></h2>
+<p>Your profile is where your overall Phantom settings are stored. You can change
+your Phantom password here, and more importantly, you can set up your credentials
+with each cloud you use. In addition to setting up your cloud credentials, if you
+would like to use phantom with Chef, you can set up those credentials as well.</p>
+<p>To set up your cloud credentials,
+go to your <a class="reference external" href="https://phantom.nimbusproject.org/phantom/profile">Profile</a>
+page and add your cloud credentials for each cloud you intend to use:</p>
+<img alt="_images/phantom_profile.png" src="_images/phantom_profile.png" style="width: 500px;" />
+<p>All FutureGrid accounts should come pre-loaded with your credentials.  If you
+wish to use EC2 in addition to FutureGrid clouds,
+you can add your credentials:</p>
+<div class="section" id="adding-ec2-credentials">
+<h3>Adding EC2 Credentials<a class="headerlink" href="#adding-ec2-credentials" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li>Visit your <a class="reference external" href="https://phantom.nimbusproject.org/phantom/profile#cloud-credentials">profile</a></li>
+<li>Select the EC2 cloud</li>
+<li>Add your access key</li>
+<li>Add your secret key</li>
+<li>Click Save</li>
+</ol>
+<p>Phantom will now fetch your ssh keys from EC2. If you haven&#8217;t uploaded a key to
+the clouds you want to use, please follow the instructions for <a class="reference external" href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/generating-a-keypair.html#how-to-generate-your-own-key-and-import-it-to-aws">EC2</a>
+and <a class="reference external" href="https://portal.futuregrid.org/manual/using-openstack-futuregrid#key_management">FutureGrid OpenStack</a>.
+For Nimbus you can use <a class="reference external" href="https://gist.github.com/oldpatricka/3752775">this script</a> (requires Python and Boto).
+When this is done:</p>
+<ol class="arabic simple" start="6">
+<li>Choose an ssh keyname for your VMs</li>
+<li>Click Save again</li>
+</ol>
+</div>
+<div class="section" id="adding-chef-credentials">
+<h3>Adding Chef Credentials<a class="headerlink" href="#adding-chef-credentials" title="Permalink to this headline">¶</a></h3>
+<p>Open your knife.rb configuration file. Normally this is in <tt class="docutils literal"><span class="pre">~/.chef/</span></tt> on Mac and
+Linux, and <tt class="docutils literal"><span class="pre">c:\Users\&lt;username&gt;\.chef\</span></tt> on Windows. If you are using <a class="reference external" href="http://www.getchef.com/enterprise-chef/">Hosted
+Enterprise Chef</a>, you can download
+this file from the <a class="reference external" href="https://manage.opscode.com/organizations">Organizations</a>
+page.</p>
+<p>From this file you can read your Chef Server URL (<tt class="docutils literal"><span class="pre">chef_server_url</span></tt>), Chef
+Client Name (<tt class="docutils literal"><span class="pre">node_name</span></tt>) and Chef Validation Client Name
+(<tt class="docutils literal"><span class="pre">validation_client_name</span></tt>).</p>
+<p>You will also need your client key and validator key. From Hosted Enterprise Chef, you
+should have downloaded them when you set up your account and placed them in
+your .chef directory. If you haven&#8217;t, you can generate a new client key on the
+Reset Key page found under the Users menu on the <a class="reference external" href="https://manage.opscode.com/organizations">Organizations</a> page, and a new validator key on
+the <a class="reference external" href="https://manage.opscode.com/organizations">Organizations</a> page.</p>
+<p>Now that we have these values, we can put them in our profile:</p>
+<ol class="arabic simple">
+<li>Visit your <a class="reference external" href="https://phantom.nimbusproject.org/phantom/profile#chef-credentials">Chef Credentials</a></li>
+<li>Click &#8220;Add Chef Server&#8221;</li>
+<li>Choose a name for your server, and click &#8220;Add Chef Server&#8221;</li>
+<li>Add your Chef Server URL, Chef Client Name, and Chef Validation Client Name</li>
+<li>Paste your Chef Client Key (usually in a .pem file in your .chef directory)</li>
+<li>Paste your Chef Validator Key (usually in a .pem file in your .chef directory)</li>
+<li>Click Save Credentials</li>
+</ol>
+</div>
+<div class="section" id="adding-an-ssh-key">
+<h3>Adding an SSH Key<a class="headerlink" href="#adding-an-ssh-key" title="Permalink to this headline">¶</a></h3>
+<p>Phantom requires a copy of your public SSH key to allow you to log in to VMs that
+it starts for you. Often, you will have already uploaded an SSH key to the clouds
+you want to use with Phantom, but if you haven&#8217;t, Phantom provides a tool to do this.</p>
+<p>If you haven&#8217;t yet created an SSH key at all, the FutureGrid site has <a class="reference external" href="https://portal.futuregrid.org/generating-ssh-keys-futuregrid-access">good instructions
+for creating an SSH key</a> .
+Once you have your key, you can upload it by:</p>
+<ol class="arabic simple">
+<li>Set up one or more set of cloud credentials on the <a class="reference external" href="https://phantom.nimbusproject.org/phantom/profile#cloud-credentials">Cloud Credentials</a> page on your profile.</li>
+<li>Go to the <a class="reference external" href="https://phantom.nimbusproject.org/phantom/profile#add-ssh-key">Add SSH Key</a> page in your profile.</li>
+<li>Select the clouds you would like to upload to on the left</li>
+<li>Enter a name for your key into the Name field</li>
+<li>Paste your key into the Key field. (Hint: on the Mac, you can type &#8220;pbcopy &lt; ~/.ssh/id_rsa.pub&#8221; into your terminal to copy your key)</li>
+<li>Click the &#8220;Upload SSH Key&#8221; button to upload your key</li>
+</ol>
+<p>Once you have done this, you can enable the key by following the steps outlined above under
+&#8220;Adding EC2 Credentials&#8221;.</p>
+</div>
+</div>
+<div class="section" id="creating-a-launch-configuration">
+<h2>Creating a Launch Configuration<a class="headerlink" href="#creating-a-launch-configuration" title="Permalink to this headline">¶</a></h2>
+<p>Now that your credentials are configured, you can create a launch configuration.
+A launch configuration is a list of which VM images you would like to start on
+which clouds. You will provide an ordering for the list of clouds to start VMs
+on.</p>
+<p>Go to the
+<a class="reference external" href="https://phantom.nimbusproject.org/phantom/launchconfig">Launch Configurations</a>
+page:</p>
+<img alt="_images/phantom_lc.png" src="_images/phantom_lc.png" style="width: 500px;" />
+<div class="section" id="create-a-launch-configuration">
+<h3>Create a Launch Configuration<a class="headerlink" href="#create-a-launch-configuration" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li>Click Add Launch Config</li>
+<li>Name your Launch Configuration</li>
+</ol>
+<p>Our example is named <em>testoverflow</em>.</p>
+<p>Now we will create a list of clouds in the order we would like to have Phantom
+use them. This way you can prioritize your preferred clouds, while still using
+other clouds when your preferred ones are not available.</p>
+</div>
+<div class="section" id="adding-a-cloud">
+<h3>Adding a Cloud<a class="headerlink" href="#adding-a-cloud" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li>Select a cloud from the list of clouds under <em>Launch Configuration</em></li>
+<li>Specify the maximum number of VMs you would like on this cloud (-1 means infinity)</li>
+<li>Select an instance type (m1.small is a good choice if you have no preference)</li>
+<li>Select the image you wish to launch. You can either pick a <em>Personal Image</em> from
+the list, or type in the name of a <em>Public Image</em> supplied by someone else.
+If you are using a FutureGrid cloud, you can use <em>hello-cloud</em>, for example.</li>
+<li>If you like, you can provide User Data that will be provided on the VM via the
+EC2 or Nimbus metadata server.</li>
+<li>Click <em>Enable</em> to add the cloud configuration to the list of clouds on the right.</li>
+</ol>
+<p>You can now add additional clouds if you like by repeating the above steps.</p>
+<p>Once you have enabled the clouds you would like to use, you can drag and drop
+the clouds change the launch priority of these clouds. Phantom will try
+to start as many VMs as it can (up to the maximum you specified) on the first
+cloud in the list before starting VMs on the second cloud.</p>
+<p>When you are happy with the order you have selected, click the <em>Save</em> button
+Once saved,  you can now launch a domain using this launch
+configuration.</p>
+</div>
+<div class="section" id="appliances">
+<h3>Appliances<a class="headerlink" href="#appliances" title="Permalink to this headline">¶</a></h3>
+<p>Appliances are ready-made launch configuration to help you start domains
+without having to manually enter all the settings.  If you select an appliance,
+the image and contextualization settings will already be configured for you. You
+will only have to select the clouds you want to use, the maximum number of VMs
+on each cloud, and the instance types.</p>
+</div>
+<div class="section" id="setting-up-contextualization">
+<h3>Setting up Contextualization<a class="headerlink" href="#setting-up-contextualization" title="Permalink to this headline">¶</a></h3>
+<p>Contextualization allows you to configure your virtual machines so that they
+provide fully configured applications and services.</p>
+<p>Contextualization is optional: you can leave the User Data field empty, or
+select <em>None</em> as contextualization type.  If you would like to contextualize
+your virtual machines, you can do so using several mechanisms:</p>
+<ul class="simple">
+<li>The plain user-data field will put the information on the cloud&#8217;s metadata
+server for access from the VM</li>
+<li>You can specify a Chef runlist and dictionary of attributes. If you would
+like to know more about Chef, you can visit <a class="reference external" href="https://learnchef.opscode.com/">#LearnChef</a>.</li>
+<li>You can <em>Phantomize</em> a VM which installs and runs tcollector for use with
+sensor autoscaling domains (see <a class="reference internal" href="sensors.html"><em>Using Sensors with your VM Images</em></a>)</li>
+</ul>
+<p>To set up plain user-data:</p>
+<ol class="arabic simple">
+<li>Select the Launch Configuration you would like to use, or make a new one</li>
+<li>Under Contextualization Type, choose &#8220;User Data&#8221;</li>
+<li>Fill in your user data under in the User Data field</li>
+<li>Click Save</li>
+</ol>
+<p>To set up Chef contextualization:</p>
+<ol class="arabic simple">
+<li>Select the Launch Configuration you would like to use, or make a new one</li>
+<li>Under Contextualization Type, choose &#8220;Chef&#8221;</li>
+<li>Fill in your Chef runlist (in json format)</li>
+<li>Fill in your Chef attributes (in json format)</li>
+<li>Click Save</li>
+</ol>
+<p>To set up <em>Phantomize</em>:</p>
+<ol class="arabic simple">
+<li>Select the Launch Configuration you would like to use, or make a new one</li>
+<li>Under Contextualization Type, choose &#8220;Phantomize&#8221;</li>
+<li>Click Save</li>
+</ol>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Your virtual machine image must be configured to download and execute
+user-data on boot. This is done automatically if you have <a class="reference external" href="http://cloudinit.readthedocs.org">cloud-init</a> installed. OpenStack images are
+generally already configured to run cloud-init on boot.</p>
+</div>
+</div>
+</div>
+<div class="section" id="launching-a-domain">
+<h2>Launching a Domain<a class="headerlink" href="#launching-a-domain" title="Permalink to this headline">¶</a></h2>
+<p>Now that you have set up your credentials and created a launch configuration,
+you can launch and manage domains that will launch and monitor VMs for you.</p>
+<p>To launch a new domain, go to the
+<a class="reference external" href="https://phantom.nimbusproject.org/phantom/domain">domains</a>
+page:</p>
+<img alt="_images/phantom_domain.png" src="_images/phantom_domain.png" style="width: 500px;" />
+<div class="section" id="creating-a-simple-domain">
+<h3>Creating a simple domain<a class="headerlink" href="#creating-a-simple-domain" title="Permalink to this headline">¶</a></h3>
+<p>To create a domain:</p>
+<ol class="arabic simple">
+<li>Click <em>Add Domain</em></li>
+<li>Choose a name for the domain in the popup window</li>
+<li>Pick the Launch Configuration you created earlier</li>
+<li>Leave Sensors to Monitor blank for now</li>
+<li>Make sure <em>Scaling Policy</em> is set to &#8220;Multi Cloud&#8221;</li>
+<li>Type in the number of VMs you would like Phantom to start</li>
+<li>Click <em>Start</em></li>
+</ol>
+<p>Phantom is now starting your Domain, and in turn, starting your VMs. You should
+see the list of VMs that Phantom has started on the right under Details. This
+information is updated automatically.</p>
+<p>When you see that your VM is RUNNING, it is now ready to use.</p>
+</div>
+<div class="section" id="creating-a-sensor-autoscaling-domain">
+<h3>Creating a sensor autoscaling domain<a class="headerlink" href="#creating-a-sensor-autoscaling-domain" title="Permalink to this headline">¶</a></h3>
+<p>If you would like to create a sensor autoscaling domain, ensure that you have
+tcollector installed and configured on your VM image, or that you have used the
+<em>Phantomize</em> contextualization. You can also use the hello-phantom.gz public
+image on FutureGrid, as described on the <a class="reference internal" href="sensors.html"><em>Using Sensors with your VM Images</em></a> page.</p>
+<p>Then:</p>
+<ol class="arabic simple">
+<li>Click <em>Add Domain</em></li>
+<li>Choose a name for the domain in the popup window</li>
+<li>Pick the Launch Configuration you created earlier</li>
+<li>Type a sensor to monitor (for instance <em>proc.loadavg.1min</em>) at the <em>Add
+Sensor</em> box, and then a space</li>
+<li>Make sure <em>Scaling Policy</em> is set to &#8220;Sensor&#8221;</li>
+<li>Fill out the sensor policy parameters:
+a) <em>Metric</em> is the metric to base scaling actions on
+b) <em>Cooldown</em> is the number of seconds Phantom should wait between scaling
+actions. This prevents Phantom from starting and stopping VMs too often
+c) <em>Minimum</em> is the minimum number of VMs to maintain
+d) <em>Maximum</em> is the maximum number of VMs to start
+e) <em>Scale Up Threshold</em>: When the metric value is above this value, Phantom
+will start VMs to compensate
+f) <em>Scale Up By</em>: The number of VMs to start when the Scale Up Threshold is
+exceeded
+g) <em>Scale Down Threshold</em>: When the metric value is below this value, Phantom
+will terminate VMs to compensate
+h) <em>Scale Down By</em>: The number of VMs to terminate when the Scale Down Threshold is
+exceeded</li>
+<li>Click <em>Start</em></li>
+</ol>
+</div>
+</div>
+<div class="section" id="updating-a-domain">
+<h2>Updating a Domain<a class="headerlink" href="#updating-a-domain" title="Permalink to this headline">¶</a></h2>
+<p>Once you have started a Domain, you may wish to adjust the settings you picked
+earlier.</p>
+<div class="section" id="changing-the-number-of-running-vms">
+<h3>Changing the number of running VMs<a class="headerlink" href="#changing-the-number-of-running-vms" title="Permalink to this headline">¶</a></h3>
+<p>For example, you may wish to increase or decrease the number of VMs
+that are running as a part of your domain. To do this:</p>
+<ol class="arabic simple">
+<li>Select your domain from the list of domains on the left</li>
+<li>Change the number of VMs in the domain</li>
+<li>Click Update</li>
+</ol>
+<p>You should now see the status bar working and the details view should show the
+updated number of VMs.</p>
+</div>
+<div class="section" id="adding-a-sensor-to-monitor">
+<h3>Adding a sensor to monitor<a class="headerlink" href="#adding-a-sensor-to-monitor" title="Permalink to this headline">¶</a></h3>
+<p>If you would like to start monitoring specific sensors for your domain:</p>
+<ol class="arabic simple">
+<li>Select your domain from the list of domains on the left</li>
+<li>Type the name of a tcollector sensor, like <em>proc.loadavg.1min</em> in the
+<em>Add Sensor</em> box, and then a space</li>
+<li>Click Update</li>
+</ol>
+<p>If your VM image has tcollector installed on it, you should now see the status
+bar working and the details view should show the sensor value.</p>
+<p>You can discover other sensors available to you by typing partial names of
+sensors in the <em>Add Sensor</em> box, and seeing a list of what is available. Some
+good prefixes to explore are <em>df</em>, <em>proc</em>, <em>net</em>, and <em>io</em>. Each of these prefixes
+has a number of interesting metrics available. For example, <em>df.1kblocks.used</em>,
+for used disk space, <em>proc.loadavg.1min</em> for load, or <em>proc.meminfo.highfree</em>
+for available memory.</p>
+</div>
+</div>
+<div class="section" id="terminating-a-domain">
+<h2>Terminating a Domain<a class="headerlink" href="#terminating-a-domain" title="Permalink to this headline">¶</a></h2>
+<p>When you wish to terminate a domain:</p>
+<ol class="arabic simple">
+<li>Select your domain from the list of domains on the left</li>
+<li>Click Terminate</li>
+</ol>
+<p>You should now see the status bar working, and soon, your domain, as well as
+all of the VMs started by it, will be terminated.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+        </div>
+        <div class="sidebar">
+          <h3>Page contents</h3>
+          <ul>
+<li><a class="reference internal" href="#">Phantom Quickstart</a><ul>
+<li><a class="reference internal" href="#getting-access">Getting Access</a><ul>
+<li><a class="reference internal" href="#register-a-phantom-account-with-futuregrid">Register a Phantom Account with Futuregrid</a></li>
+<li><a class="reference internal" href="#register-a-phantom-account-without-futuregrid">Register a Phantom Account without Futuregrid</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#login">Login</a></li>
+<li><a class="reference internal" href="#configuring-your-profile">Configuring your Profile</a><ul>
+<li><a class="reference internal" href="#adding-ec2-credentials">Adding EC2 Credentials</a></li>
+<li><a class="reference internal" href="#adding-chef-credentials">Adding Chef Credentials</a></li>
+<li><a class="reference internal" href="#adding-an-ssh-key">Adding an SSH Key</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#creating-a-launch-configuration">Creating a Launch Configuration</a><ul>
+<li><a class="reference internal" href="#create-a-launch-configuration">Create a Launch Configuration</a></li>
+<li><a class="reference internal" href="#adding-a-cloud">Adding a Cloud</a></li>
+<li><a class="reference internal" href="#appliances">Appliances</a></li>
+<li><a class="reference internal" href="#setting-up-contextualization">Setting up Contextualization</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#launching-a-domain">Launching a Domain</a><ul>
+<li><a class="reference internal" href="#creating-a-simple-domain">Creating a simple domain</a></li>
+<li><a class="reference internal" href="#creating-a-sensor-autoscaling-domain">Creating a sensor autoscaling domain</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#updating-a-domain">Updating a Domain</a><ul>
+<li><a class="reference internal" href="#changing-the-number-of-running-vms">Changing the number of running VMs</a></li>
+<li><a class="reference internal" href="#adding-a-sensor-to-monitor">Adding a sensor to monitor</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#terminating-a-domain">Terminating a Domain</a></li>
+</ul>
+</li>
+</ul>
+
+          <h3>Browse</h3>
+          <ul>
+          
+          <li>Prev: <a href="index.html">Nimbus Phantom</a></li>
+          
+          
+          <li>Next: <a href="advanced.html">Phantom Advanced Documentation</a></li>
+          
+          </ul>
+          <h3>You are here:</h3>
+          <ul>
+            <li>
+              <a href="/doc/nimbus">Nimbus Documentation</a>
+            </li>
+            <li>
+              <ul><li>
+                <a href="index.html">phantom 0.2 documentation</a>
+                
+                <ul><li>Phantom Quickstart</li></ul>
+                
+              </li></ul>
+            </li>
+          </ul>
+        </div>
+        <div class="clearer"></div>
+      </div>
+  </div>
+<!-- END BODY -->
+
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          <a href="index.html" title="Nimbus Phantom"
+             >previous</a> |
+          <a href="advanced.html" title="Phantom Advanced Documentation"
+             >next</a> |
+          <a href="http-routingtable.html" title="HTTP Routing Table"
+             >routing table</a> |
+          <a href="genindex.html" title="General Index"
+             >index</a>
+        </div>
+
+        <div class="right">
+          
+    <div class="footer">
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+  </div>
+
+  </body>
+</html>

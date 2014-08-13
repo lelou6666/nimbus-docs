@@ -1,0 +1,267 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+
+
+
+<!-- BEGIN HEAD -->
+
+    <title>Scripting with the Phantom Autoscale API &mdash; phantom 0.2 documentation</title>
+
+    
+    <link rel="stylesheet" href="_static/doc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="phantom 0.2 documentation" href="index.html" />
+    <link rel="up" title="Phantom Advanced Documentation" href="advanced.html" />
+    <link rel="next" title="Nimbus Phantom Frequently Asked Questions" href="faq.html" />
+    <link rel="prev" title="Phantom Autoscale API protocol" href="protocol.html" />
+<!-- END HEAD -->
+
+
+<link rel="stylesheet" href="_static/standalone.css" type="text/css" />
+
+  </head>
+  <body>
+    <div class="docheader-wrapper">
+      <div class="docheader">
+        <h1><a href="index.html">phantom 0.2 documentation</a></h1>
+        <div class="rel">
+          <a href="protocol.html" title="Phantom Autoscale API protocol"
+             accesskey="P">previous</a> |
+          <a href="faq.html" title="Nimbus Phantom Frequently Asked Questions"
+             accesskey="N">next</a> |
+          <a href="http-routingtable.html" title="HTTP Routing Table"
+             >routing table</a> |
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a>
+        </div>
+       </div>
+   </div>
+
+<!-- BEGIN BODY -->
+    <div class="content-wrapper">
+      <div class="doccontent">
+        <div class="document">
+            
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="scripting-with-the-phantom-autoscale-api">
+<h1>Scripting with the Phantom Autoscale API<a class="headerlink" href="#scripting-with-the-phantom-autoscale-api" title="Permalink to this headline">¶</a></h1>
+<p>Phantom uses the AWS Autoscaling protocol, and we
+<a class="reference external" href="https://github.com/boto/boto">boto</a> for scripting Phantom.
+On this page we will describe
+some simple boto applications for interacting with Phantom.</p>
+<div class="section" id="autoscale-api">
+<h2>Autoscale API<a class="headerlink" href="#autoscale-api" title="Permalink to this headline">¶</a></h2>
+<p>The first thing you will need in order to use the Autoscale API is your
+FutureGrid access tokens.  Acquiring your FutureGrid access tokens is
+described <a class="reference external" href="https://portal.futuregrid.org/tutorials/nimbus">here</a>.
+Inside of your hotel.conf file you will find the access tokens under the
+entries:</p>
+<div class="highlight-bash"><div class="highlight"><pre>vws.repository.s3id<span class="o">=</span>&lt;access key&gt;
+vws.repository.s3key<span class="o">=</span>&lt;secret key&gt;
+</pre></div>
+</div>
+<p>You will also need to know the URL of the Phantom Autoscale API service. It is:
+<a class="reference external" href="https://phantom.nimbusproject.org:8445">https://phantom.nimbusproject.org:8445</a>.</p>
+<p>For convenience store those values in the following environment variables:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nb">export </span><span class="nv">EC2_ACCESS_KEY</span><span class="o">=</span>&lt;access key&gt;
+<span class="nb">export </span><span class="nv">EC2_SECRET_KEY</span><span class="o">=</span>&lt;secret key&gt;
+<span class="nb">export </span><span class="nv">PHANTOM_URL</span><span class="o">=</span>https://phantom.nimbusproject.org:8445
+</pre></div>
+</div>
+</div>
+<div class="section" id="installing-boto">
+<h2>Installing boto<a class="headerlink" href="#installing-boto" title="Permalink to this headline">¶</a></h2>
+<p>We recommend using boto to interact with Phantom Autoscale API.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">You <em>must</em> use boto 2.7.0 or greater, but not boto 2.9.3 which is
+incompatible with the Phantom Autoscale API.</p>
+</div>
+<p>To get started, create a new
+<a class="reference external" href="http://pypi.python.org/pypi/virtualenv">virtual environment</a> and install
+boto into it.  The following commands should do this for you:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>virtualenv phantom
+New python executable in phantom/bin/python
+Installing distribute...............done.
+Installing pip...............done.
+
+<span class="nv">$ </span><span class="nb">source </span>phantom/bin/activate
+
+<span class="nv">$ </span>pip install <span class="s1">&#39;boto &gt;= 2.7.0, &lt; 2.9.3&#39;</span>
+Downloading/unpacking boto&gt;<span class="o">=</span>2.7.0,&lt;2.9.3
+  Downloading boto-2.9.2.tar.gz <span class="o">(</span>875Kb<span class="o">)</span>: 875Kb downloaded
+  Running setup.py egg_info <span class="k">for </span>package boto
+
+.......
+
+Successfully installed boto
+Cleaning up...
+</pre></div>
+</div>
+<p>You now have boto installed and ready to use.  Please note the command:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span><span class="nb">source </span>phantom/bin/activate
+</pre></div>
+</div>
+<p>You will need to run this command in every session where you
+wish to use your python boto environment.</p>
+</div>
+<div class="section" id="sample-scripts">
+<h2>Sample scripts<a class="headerlink" href="#sample-scripts" title="Permalink to this headline">¶</a></h2>
+<p>The following sample programs can be used to aid in understanding.
+All of these values can be found in your FutureGrid cloud-client
+cloud.properties file.</p>
+<ul class="simple">
+<li><a class="reference external" href="https://github.com/nimbusproject/Phantom/blob/master/sandbox/lc_create.py">Create a Launch Configuration</a>.</li>
+<li><a class="reference external" href="https://github.com/nimbusproject/Phantom/blob/master/sandbox/lc_delete.py">Delete a Launch Configuration</a>.</li>
+<li><a class="reference external" href="https://github.com/nimbusproject/Phantom/blob/master/sandbox/lc_list.py">List all Launch Configurations</a>.</li>
+<li><a class="reference external" href="https://github.com/nimbusproject/Phantom/blob/master/sandbox/asg_create.py">Create a Domain</a>.</li>
+<li><a class="reference external" href="https://github.com/nimbusproject/Phantom/blob/master/sandbox/asg_delete.py">Delete a Domain</a>.</li>
+<li><a class="reference external" href="https://github.com/nimbusproject/Phantom/blob/master/sandbox/asg_list.py">List all running domains</a>.</li>
+<li><a class="reference external" href="https://github.com/nimbusproject/Phantom/blob/master/sandbox/asg_alter.py">Change the n-preserving value</a>.</li>
+</ul>
+<p>Here is a sample session of using the above scripts.  In it we will create a
+launch configuration that has 2 sites.  We will then launch a domain that
+spans those 2 sites.  First we create the launch configuration:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>python lc_create.py testlc1@hotel hello-cloud
+<span class="nv">$ </span>python lc_create.py testlc1@sierra hello-cloud
+<span class="nv">$ </span>python lc_list.py
+testlc1@hotel
+testlc1@sierra
+</pre></div>
+</div>
+<p>Note that we had to call lc_create.py twice, once for each cloud.  We
+used the same name so that the two calls will be associated.  In
+the listing they appear as two separate launch configurations, and
+as far as the AWS protocol goes they are treated as two launch configurations.
+However, in Phantom they will be treated as one.</p>
+<p>The next thing we do is create a domain using that launch configuration:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>python asg_create.py testDomain1 testlc1@hotel 3 hotel:1 sierra:2
+using LaunchConfiguration:testlc1@hotel
+<span class="nv">$ </span>python asg_list.py
+testDomain1
+    testlc1 : 3
+    Instances:
+    ---------
+        sierra : Healthy
+        hotel : Healthy
+        sierra : Healthy
+</pre></div>
+</div>
+<p>The arguments to that program are as follows in order:</p>
+<ul class="simple">
+<li>the new domain name</li>
+<li>the launch configuration name</li>
+<li>the size of the domain</li>
+<li>a list of clouds and the maximum number of domains that will be on them.
+This takes the following format &lt;cloud name&gt;:&lt;max vms&gt;</li>
+</ul>
+<p>Notice the we used the launch configuration name <em>testlc1&#64;hotel</em>.  We could
+have also used the name <em>testlc1&#64;sierra</em> if we wanted to.  It just has to
+match one of the AWS launch configuration names.  Phantom will internally
+associate it with all the sites that have the name prefix of &#8220;testlc1&#8221;.</p>
+<p>Now we clean everything up:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>python asg_delete.py testDomain1
+deleting AutoScaleGroup&lt;testDomain1&gt;
+<span class="nv">$ </span>python lc_delete.py testlc1@hotel
+<span class="nv">$ </span>python lc_delete.py testlc1@sierra
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+        </div>
+        <div class="sidebar">
+          <h3>Page contents</h3>
+          <ul>
+<li><a class="reference internal" href="#">Scripting with the Phantom Autoscale API</a><ul>
+<li><a class="reference internal" href="#autoscale-api">Autoscale API</a></li>
+<li><a class="reference internal" href="#installing-boto">Installing boto</a></li>
+<li><a class="reference internal" href="#sample-scripts">Sample scripts</a></li>
+</ul>
+</li>
+</ul>
+
+          <h3>Browse</h3>
+          <ul>
+          
+          <li>Prev: <a href="protocol.html">Phantom Autoscale API protocol</a></li>
+          
+          
+          <li>Next: <a href="faq.html">Nimbus Phantom Frequently Asked Questions</a></li>
+          
+          </ul>
+          <h3>You are here:</h3>
+          <ul>
+            <li>
+              <a href="/doc/nimbus">Nimbus Documentation</a>
+            </li>
+            <li>
+              <ul><li>
+                <a href="index.html">phantom 0.2 documentation</a>
+                
+                  <ul><li><a href="advanced.html">Phantom Advanced Documentation</a>
+                
+                <ul><li>Scripting with the Phantom Autoscale API</li></ul>
+                </li></ul>
+              </li></ul>
+            </li>
+          </ul>
+        </div>
+        <div class="clearer"></div>
+      </div>
+  </div>
+<!-- END BODY -->
+
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          <a href="protocol.html" title="Phantom Autoscale API protocol"
+             >previous</a> |
+          <a href="faq.html" title="Nimbus Phantom Frequently Asked Questions"
+             >next</a> |
+          <a href="http-routingtable.html" title="HTTP Routing Table"
+             >routing table</a> |
+          <a href="genindex.html" title="General Index"
+             >index</a>
+        </div>
+
+        <div class="right">
+          
+    <div class="footer">
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+  </div>
+
+  </body>
+</html>
