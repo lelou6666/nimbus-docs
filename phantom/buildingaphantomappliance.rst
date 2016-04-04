@@ -60,14 +60,24 @@ this is made to the service node, whose hostname is stored in
 Phantom allows you to pass user data to your instances as part of the launch
 configuration.  This can be leveraged for configuring virtual machines. For
 example, a shell script can be passed via user-data and automatically executed
-by your instances. With Nimbus, this can be performed by executing the following code on boot::
+by your instances. With Nimbus, this can be performed by executing the
+following code on boot::
 
     TMPFILE=`mktemp`
+    I=0
     while ! curl "`cat /var/nimbus-metadata-server-url`/latest/user-data" -o $TMPFILE; do
       sleep 1
+      I=`expr $I + 1`
+      if [ $I -gt 60 ]; then
+        exit 1
+      fi
     done
     chmod +x $TMPFILE
     $TMPFILE
+
+This script attempts to download the content of user-data from the hostname
+stored in ``/var/nimbus-metadata-server-url`` and executes it, or gives up
+after failing to do so for a minute.
 
 Automatically interacting with Phantom
 ======================================

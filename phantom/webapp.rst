@@ -20,19 +20,33 @@ Getting Access
 Phantom has been deployed as a service on `FutureGrid <https://futuregrid.org/>`_
 and you can start using it there.
 In order to use Phantom, you will need a Phantom account and accounts
-on clouds you want to use with Phantom. 
+on clouds you want to use with Phantom.
 
-FutureGrid provides several different IaaS clouds that you can use with Phantom.
-Requesting a FutureGrid account will give you access to all FutureGrid clouds.
-Thus your first step to gain access is to `request a FutureGrid account 
-<https://portal.futuregrid.org/user/register>`_. 
+You can either apply for a Futuregrid account, and get access through Futuregrid,
+or if you do not plan on using Futuregrid, you can sign up for Phantom on its own.
 
-To get a Phantom account, request to join the FutureGrid `Nimbus Auto Scale
-testing project <https://portal.futuregrid.org/projects/224>`_.
-Once we have accepted your request to join this project,
-your account will be created and you can use this account to test Phantom.
-If you find Phantom useful, you can create your own FutureGrid project,
-which you can use for any project you like.
+Register a Phantom Account with Futuregrid
+------------------------------------------
+
+FutureGrid provides several different IaaS clouds that you can use with
+Phantom.  Requesting a FutureGrid account will give you access to all
+FutureGrid clouds.  Thus your first step to gain access is to `request a
+FutureGrid account <https://portal.futuregrid.org/user/register>`_. Once you
+have a FutureGrid account, you will need to join an existing FutureGrid project
+or to `create your own <https://portal.futuregrid.org/node/add/fg-projects>`_.
+
+Once you are in an active FutureGrid project, you can get a Phantom account by
+emailing `nimbus@mcs.anl.gov <mailto:nimbus@mcs.anl.gov>`_.  We will create
+your Phantom account and send you instructions on how to use Phantom.
+
+Register a Phantom Account without Futuregrid
+---------------------------------------------
+
+If you would rather not sign up for Phantom through Futuregrid, you can sign up
+for Phantom without it, and use it with Amazon EC2. To do so, visit the `Sign Up
+<https://phantom.nimbusproject.org/accounts/signup/>`_ page, and create your
+account. Once your account is approved, you should receive an email with further
+instructions.
 
 Once you have set up your account, log on to `Phantom <https://phantom.nimbusproject.org/>`_.
 
@@ -100,13 +114,20 @@ Adding Chef Credentials
 
 Open your knife.rb configuration file. Normally this is in ``~/.chef/`` on Mac and
 Linux, and ``c:\Users\<username>\.chef\`` on Windows. If you are using `Hosted
+<<<<<<< HEAD
 Chef <http://www.opscode.com/hosted-chef/>`_, you can download this file from the
 `Organizations <https://manage.opscode.com/organizations>`_ page.
+=======
+Enterprise Chef <http://www.getchef.com/enterprise-chef/>`_, you can download
+this file from the `Organizations <https://manage.opscode.com/organizations>`_
+page.
+>>>>>>> refs/remotes/nimbusproject/master
 
 From this file you can read your Chef Server URL (``chef_server_url``), Chef
 Client Name (``node_name``) and Chef Validation Client Name
 (``validation_client_name``).
 
+<<<<<<< HEAD
 You will also need your client key and validator key. From Hosted Chef, you
 should have downloaded them when you set up your account and placed them in
 your .chef directory. If you haven't, you can generate a new client key on the
@@ -124,6 +145,45 @@ Now that we have these values, we can put them in our profile:
 6. Paste your Chef Client Key (usually in a .pem file in your .chef directory)
 7. Paste your Chef Validator Key (usually in a .pem file in your .chef directory)
 8. Click Save Credentials
+=======
+You will also need your client key and validator key. From Hosted Enterprise Chef, you
+should have downloaded them when you set up your account and placed them in
+your .chef directory. If you haven't, you can generate a new client key on the
+Reset Key page found under the Users menu on the `Organizations
+<https://manage.opscode.com/organizations>`_ page, and a new validator key on
+the `Organizations <https://manage.opscode.com/organizations>`_ page.
+
+Now that we have these values, we can put them in our profile:
+
+1. Visit your `Chef Credentials <https://phantom.nimbusproject.org/phantom/profile#chef-credentials>`_
+2. Click "Add Chef Server"
+3. Choose a name for your server, and click "Add Chef Server"
+4. Add your Chef Server URL, Chef Client Name, and Chef Validation Client Name
+5. Paste your Chef Client Key (usually in a .pem file in your .chef directory)
+6. Paste your Chef Validator Key (usually in a .pem file in your .chef directory)
+7. Click Save Credentials
+
+Adding an SSH Key
+-----------------
+
+Phantom requires a copy of your public SSH key to allow you to log in to VMs that
+it starts for you. Often, you will have already uploaded an SSH key to the clouds
+you want to use with Phantom, but if you haven't, Phantom provides a tool to do this.
+
+If you haven't yet created an SSH key at all, the FutureGrid site has `good instructions
+for creating an SSH key <https://portal.futuregrid.org/generating-ssh-keys-futuregrid-access>`_ .
+Once you have your key, you can upload it by:
+
+1. Set up one or more set of cloud credentials on the `Cloud Credentials <https://phantom.nimbusproject.org/phantom/profile#cloud-credentials>`_ page on your profile.
+2. Go to the `Add SSH Key <https://phantom.nimbusproject.org/phantom/profile#add-ssh-key>`_ page in your profile.
+3. Select the clouds you would like to upload to on the left
+4. Enter a name for your key into the Name field 
+5. Paste your key into the Key field. (Hint: on the Mac, you can type "pbcopy < ~/.ssh/id_rsa.pub" into your terminal to copy your key)
+6. Click the "Upload SSH Key" button to upload your key
+
+Once you have done this, you can enable the key by following the steps outlined above under
+"Adding EC2 Credentials".
+>>>>>>> refs/remotes/nimbusproject/master
 
 
 Creating a Launch Configuration
@@ -166,17 +226,18 @@ Adding a Cloud
    EC2 or Nimbus metadata server.
 6. Click *Enable* to add the cloud configuration to the list of clouds on the right.
 
-You can now add aditional clouds if you like by repeating the above steps.
+You can now add additional clouds if you like by repeating the above steps.
 
 Once you have enabled the clouds you would like to use, you can drag and drop
 the clouds change the launch priority of these clouds. Phantom will try
 to start as many VMs as it can (up to the maximum you specified) on the first
-cloud in the list before starting VMs on the second.
+cloud in the list before starting VMs on the second cloud.
 
 When you are happy with the order you have selected, click the *Save* button
 Once saved,  you can now launch a domain using this launch
 configuration.
 
+<<<<<<< HEAD
 Setting up Contextualization
 ----------------------------
 
@@ -185,6 +246,34 @@ either the plain user-data field, which will put the information on the cloud's
 metadata server for access from the VM, or you can specify a Chef runlist and
 dictionary of attributes. If you would like to know more about Chef, you can
 visit `#LearnChef <https://learnchef.opscode.com/>`_.
+=======
+Appliances
+----------
+
+Appliances are ready-made launch configuration to help you start domains
+without having to manually enter all the settings.  If you select an appliance,
+the image and contextualization settings will already be configured for you. You
+will only have to select the clouds you want to use, the maximum number of VMs
+on each cloud, and the instance types.
+
+Setting up Contextualization
+----------------------------
+
+Contextualization allows you to configure your virtual machines so that they
+provide fully configured applications and services.
+
+Contextualization is optional: you can leave the User Data field empty, or
+select *None* as contextualization type.  If you would like to contextualize
+your virtual machines, you can do so using several mechanisms:
+
+* The plain user-data field will put the information on the cloud's metadata
+  server for access from the VM
+* You can specify a Chef runlist and dictionary of attributes. If you would
+  like to know more about Chef, you can visit `#LearnChef
+  <https://learnchef.opscode.com/>`_.
+* You can *Phantomize* a VM which installs and runs tcollector for use with
+  sensor autoscaling domains (see :doc:`sensors`)
+>>>>>>> refs/remotes/nimbusproject/master
 
 To set up plain user-data:
 
@@ -201,6 +290,22 @@ To set up Chef contextualization:
 4. Fill in your Chef attributes (in json format)
 5. Click Save
 
+<<<<<<< HEAD
+=======
+To set up *Phantomize*:
+
+1. Select the Launch Configuration you would like to use, or make a new one
+2. Under Contextualization Type, choose "Phantomize"
+3. Click Save
+
+.. note::
+
+    Your virtual machine image must be configured to download and execute
+    user-data on boot. This is done automatically if you have `cloud-init
+    <http://cloudinit.readthedocs.org>`_ installed. OpenStack images are
+    generally already configured to run cloud-init on boot.
+
+>>>>>>> refs/remotes/nimbusproject/master
 Launching a Domain
 ==================
 
@@ -237,10 +342,9 @@ Creating a sensor autoscaling domain
 ------------------------------------
 
 If you would like to create a sensor autoscaling domain, ensure that you have
-tcollector installed and configured on your VM image. You can also use the
-hello-phantom.gz public image on FutureGrid, as described on the
-:doc:`sensors`
-page.
+tcollector installed and configured on your VM image, or that you have used the
+*Phantomize* contextualization. You can also use the hello-phantom.gz public
+image on FutureGrid, as described on the :doc:`sensors` page.
 
 Then:
 

@@ -1,5 +1,5 @@
 =======================
-Nimbus Phantom HTTP API
+The Phantom HTTP API
 =======================
 
 .. contents::
@@ -11,7 +11,7 @@ Authentication and Tokens
 The Phantom API uses tokens and Basic Authentication for authentication. Users
 must request a token to access most endpoints in the API.
 
-.. http:post:: /api/v1.0/token
+.. http:post:: /api/dev/token
 
    Get the user's token.
 
@@ -21,14 +21,11 @@ must request a token to access most endpoints in the API.
 
    .. sourcecode:: http
 
-      POST /api/v1.0/token HTTP/1.1
+      POST /api/dev/token HTTP/1.1
       Host: phantom.nimbusproject.org
-      Accept: application/json
+      Accept: application/x-www-form-urlencoded
 
-      {
-        "username": "alice",
-        "password": "restaurant",
-      }
+      username=alice&password=restaurant
 
    **Example response**:
 
@@ -43,12 +40,14 @@ must request a token to access most endpoints in the API.
         "success": true
       }
 
-All other requests must be authenticated using this token. To use this token with curl, 
-for example:
+All other requests must be authenticated using this token.
+
+As an example, if the user 'alice' with the password 'restaurant' wants to get her token,
+she could do the following with curl:
 
    .. sourcecode:: none
 
-      $ curl -d "username=alice&password=restaurant" http://phantom.nimbusproject.org/api/dev/token
+      $ curl -d 'username=alice&password=restaurant' https://phantom.nimbusproject.org/api/dev/token
       {"token": "xgy-4h324h2i4h32oi4h23", "user": 1, "success": true}
 
 Then, to use other endpoints, use this user id and token when querying. You can either include the 
@@ -63,14 +62,49 @@ Curl (and most http libraries) do this automatically for you:
 
    .. sourcecode:: none
 
-      $ curl -u 1:xgy-4h324h2i4h32oi4h23 http://phantom.nimbusproject.org/api/dev/sites
+      $ curl -u 1:xgy-4h324h2i4h32oi4h23 https://phantom.nimbusproject.org/api/dev/sites
       []
+
+You can also store your token in ``~/.netrc`` which will be read by some HTTP clients, including Curl:
+
+   .. sourcecode:: none
+
+      machine phantom.nimbusproject.org login 1 password xgy-4h324h2i4h32oi4h23
+
+You can then use the ``-n`` or ``--netrc`` options of Curl:
+
+   .. sourcecode:: none
+
+      $ curl -n https://phantom.nimbusproject.org/api/dev/sites
+      []
+
+You can also append `?pretty=true` to any API call, and get pretty printed results.
+You should probably only do this when debugging however, as it could decrease your
+response time:
+
+   .. sourcecode:: none
+
+      $ curl -n https://phantom.nimbusproject.org/api/dev/sites
+      [{"instance_types":["m1.small","m1.large","m1.xlarge"],"uri":"/api/dev/sites/ec2","credentials":"/api/dev/credentials/sites/ec2","id":"ec2"}]
+      $ curl -n https://phantom.nimbusproject.org/api/dev/sites?pretty=true
+      [
+          {
+          "instance_types": [
+              "m1.small",
+              "m1.large",
+              "m1.xlarge"
+          ],
+          "uri": "/api/dev/sites/ec2",
+          "credentials": "/api/dev/credentials/sites/ec2",
+          "id": "ec2"
+          }
+      ]
 
 
 Site Resources
 ==============
 
-.. http:get:: /api/v1.0/sites
+.. http:get:: /api/dev/sites
 
    List all clouds known to the authenticated user, and their details
 
@@ -81,7 +115,7 @@ Site Resources
 
    .. sourcecode:: http
 
-      GET /api/v1.0/sites HTTP/1.1
+      GET /api/dev/sites HTTP/1.1
       Host: phantom.nimbusproject.org
       Accept: application/json
 
@@ -95,33 +129,45 @@ Site Resources
       [
         {
           "id": "ec2",
+<<<<<<< HEAD
           "credentials": "/api/v1.0/credentials/sites/ec2",
+=======
+          "credentials": "/api/dev/credentials/sites/ec2",
+>>>>>>> refs/remotes/nimbusproject/master
           "instance_types": [
             "m1.small",
             "m1.large",
             "m1.xlarge"
           ],
-          "uri": "/api/v1.0/sites/ec2"
+          "uri": "/api/dev/sites/ec2"
         },
         {
           "id": "hotel",
+<<<<<<< HEAD
           "credentials": "/api/v1.0/credentials/sites/hotel",
+=======
+          "credentials": "/api/dev/credentials/sites/hotel",
+>>>>>>> refs/remotes/nimbusproject/master
           "instance_types": [
             "m1.small",
             "m1.large",
             "m1.xlarge"
           ],
-          "uri": "/api/v1.0/sites/hotel"
+          "uri": "/api/dev/sites/hotel"
         },
         {
           "id": "sierra",
+<<<<<<< HEAD
           "credentials": "/api/v1.0/credentials/sites/sierra",
+=======
+          "credentials": "/api/dev/credentials/sites/sierra",
+>>>>>>> refs/remotes/nimbusproject/master
           "instance_types": [
             "m1.small",
             "m1.large",
             "m1.xlarge"
           ],
-          "uri": "/api/v1.0/sites/sierra"
+          "uri": "/api/dev/sites/sierra"
         }
       ]
 
@@ -129,7 +175,7 @@ Site Resources
 
    .. sourcecode:: http
 
-      GET /api/v1.0/sites?details=true HTTP/1.1
+      GET /api/dev/sites?details=true HTTP/1.1
       Host: phantom.nimbusproject.org
       Accept: application/json
 
@@ -143,7 +189,11 @@ Site Resources
       [
         {
           "id": "ec2",
+<<<<<<< HEAD
           "credentials": "/api/v1.0/credentials/sites/ec2",
+=======
+          "credentials": "/api/dev/credentials/sites/ec2",
+>>>>>>> refs/remotes/nimbusproject/master
           "instance_types": [
             "m1.small",
             "m1.large",
@@ -156,11 +206,15 @@ Site Resources
           "user_images": [
             "myimage",
           ],
-          "uri": "/api/v1.0/sites/ec2"
+          "uri": "/api/dev/sites/ec2"
         },
         {
           "id": "hotel",
+<<<<<<< HEAD
           "credentials": "/api/v1.0/credentials/sites/hotel",
+=======
+          "credentials": "/api/dev/credentials/sites/hotel",
+>>>>>>> refs/remotes/nimbusproject/master
           "instance_types": [
             "m1.small",
             "m1.large",
@@ -173,11 +227,15 @@ Site Resources
           "user_images": [
             "myimage",
           ],
-          "uri": "/api/v1.0/sites/hotel"
+          "uri": "/api/dev/sites/hotel"
         },
         {
           "id": "sierra",
+<<<<<<< HEAD
           "credentials": "/api/v1.0/credentials/sites/sierra",
+=======
+          "credentials": "/api/dev/credentials/sites/sierra",
+>>>>>>> refs/remotes/nimbusproject/master
           "instance_types": [
             "m1.small",
             "m1.large",
@@ -190,11 +248,11 @@ Site Resources
           "user_images": [
             "myimage",
           ],
-          "uri": "/api/v1.0/sites/sierra"
+          "uri": "/api/dev/sites/sierra"
         }
       ]
 
-.. http:get:: /api/v1.0/sites/(cloud_id)
+.. http:get:: /api/dev/sites/(cloud_id)
 
    Get details for the cloud `cloud_id`
 
@@ -206,7 +264,7 @@ Site Resources
 
    .. sourcecode:: http
 
-      GET /api/v1.0/sites/hotel HTTP/1.1
+      GET /api/dev/sites/hotel HTTP/1.1
       Host: phantom.nimbusproject.org
       Accept: application/json
 
@@ -224,15 +282,20 @@ Site Resources
           "m1.large",
           "m1.xlarge"
         ],
+<<<<<<< HEAD
         "credentials": "/api/v1.0/credentials/sites/hotel",
         "uri": "/api/v1.0/sites/hotel"
+=======
+        "credentials": "/api/dev/credentials/sites/hotel",
+        "uri": "/api/dev/sites/hotel"
+>>>>>>> refs/remotes/nimbusproject/master
       }
 
    **Example request**:
 
    .. sourcecode:: http
 
-      GET /api/v1.0/sites/hotel?details=true HTTP/1.1
+      GET /api/dev/sites/hotel?details=true HTTP/1.1
       Host: phantom.nimbusproject.org
       Accept: application/json
 
@@ -257,15 +320,24 @@ Site Resources
         "user_images": [
           "myimage",
         ],
+<<<<<<< HEAD
         "credentials": "/api/v1.0/credentials/sites/hotel",
         "uri": "/api/v1.0/sites/hotel"
+=======
+        "credentials": "/api/dev/credentials/sites/hotel",
+        "uri": "/api/dev/sites/hotel"
+>>>>>>> refs/remotes/nimbusproject/master
       }
 
 
 Site Credentials Resources
 =====================
 
+<<<<<<< HEAD
 .. http:get:: /api/v1.0/credentials/sites
+=======
+.. http:get:: /api/dev/credentials/sites
+>>>>>>> refs/remotes/nimbusproject/master
 
    List all cloud credentials for the authenticated user
 
@@ -276,7 +348,11 @@ Site Credentials Resources
 
    .. sourcecode:: http
 
+<<<<<<< HEAD
       GET /api/v1.0/credentials/sites HTTP/1.1
+=======
+      GET /api/dev/credentials/sites HTTP/1.1
+>>>>>>> refs/remotes/nimbusproject/master
       Host: phantom.nimbusproject.org
       Accept: application/json
 
@@ -293,14 +369,22 @@ Site Credentials Resources
           "access_key": "aws_access_key_id",
           "secret_key": "aws_secret_access_key",
           "key_name": "phantom_ssh_key",
+<<<<<<< HEAD
           "uri": "/api/v1.0/credentials/sites/ec2"
+=======
+          "uri": "/api/dev/credentials/sites/ec2"
+>>>>>>> refs/remotes/nimbusproject/master
         },
         {
           "id": "hotel",
           "access_key": "hotel_access_key_id",
           "secret_key": "hotel_secret_access_key",
           "key_name": "phantom_ssh_key",
+<<<<<<< HEAD
           "uri": "/api/v1.0/credentials/sites/hotel"
+=======
+          "uri": "/api/dev/credentials/sites/hotel"
+>>>>>>> refs/remotes/nimbusproject/master
         }
       ]
 
@@ -308,7 +392,11 @@ Site Credentials Resources
 
    .. sourcecode:: http
 
+<<<<<<< HEAD
       GET /api/v1.0/credentials/sites?details=true HTTP/1.1
+=======
+      GET /api/dev/credentials/sites?details=true HTTP/1.1
+>>>>>>> refs/remotes/nimbusproject/master
       Host: phantom.nimbusproject.org
       Accept: application/json
 
@@ -329,7 +417,11 @@ Site Credentials Resources
             "default"
           ],
           "key_name": "phantom_ssh_key",
+<<<<<<< HEAD
           "uri": "/api/v1.0/credentials/sites/ec2"
+=======
+          "uri": "/api/dev/credentials/sites/ec2"
+>>>>>>> refs/remotes/nimbusproject/master
         },
         {
           "id": "hotel",
@@ -340,11 +432,19 @@ Site Credentials Resources
             "default"
           ],
           "key_name": "phantom_ssh_key",
+<<<<<<< HEAD
           "uri": "/api/v1.0/credentials/sites/hotel"
         }
       ]
 
 .. http:get:: /api/v1.0/credentials/sites/(cloud_id)
+=======
+          "uri": "/api/dev/credentials/sites/hotel"
+        }
+      ]
+
+.. http:get:: /api/dev/credentials/sites/(cloud_id)
+>>>>>>> refs/remotes/nimbusproject/master
 
    Get cloud credentials for the cloud `cloud_id`
 
@@ -356,7 +456,11 @@ Site Credentials Resources
 
    .. sourcecode:: http
 
+<<<<<<< HEAD
       GET /api/v1.0/credentials/sites/hotel HTTP/1.1
+=======
+      GET /api/dev/credentials/sites/hotel HTTP/1.1
+>>>>>>> refs/remotes/nimbusproject/master
       Host: phantom.nimbusproject.org
       Accept: application/json
 
@@ -372,14 +476,22 @@ Site Credentials Resources
         "access_key": "hotel_access_key_id",
         "secret_key": "hotel_secret_access_key",
         "key_name": "phantom_ssh_key",
+<<<<<<< HEAD
         "uri": "/api/v1.0/credentials/sites/hotel"
+=======
+        "uri": "/api/dev/credentials/sites/hotel"
+>>>>>>> refs/remotes/nimbusproject/master
       }
 
    **Example request**:
 
    .. sourcecode:: http
 
+<<<<<<< HEAD
       GET /api/v1.0/credentials/sites/hotel?details=true HTTP/1.1
+=======
+      GET /api/dev/credentials/sites/hotel?details=true HTTP/1.1
+>>>>>>> refs/remotes/nimbusproject/master
       Host: phantom.nimbusproject.org
       Accept: application/json
 
@@ -399,10 +511,17 @@ Site Credentials Resources
           "default",
           "phantom_ssh_key"
         ],
+<<<<<<< HEAD
         "uri": "/api/v1.0/credentials/sites/hotel"
       }
 
 .. http:post:: /api/v1.0/credentials/sites
+=======
+        "uri": "/api/dev/credentials/sites/hotel"
+      }
+
+.. http:post:: /api/dev/sites/credentials
+>>>>>>> refs/remotes/nimbusproject/master
 
    Save new cloud credentials
 
@@ -416,7 +535,11 @@ Site Credentials Resources
 
    .. sourcecode:: http
 
+<<<<<<< HEAD
       POST /api/v1.0/credentials/sites HTTP/1.1
+=======
+      POST /api/dev/sites/credentials HTTP/1.1
+>>>>>>> refs/remotes/nimbusproject/master
       Host: phantom.nimbusproject.org
       Accept: application/json
 
@@ -433,17 +556,28 @@ Site Credentials Resources
 
       HTTP/1.1 201 Created
       Content-Type: application/json
+<<<<<<< HEAD
       Location: /api/v1.0/credentials/sites/sierra
+=======
+      Location: /api/dev/credentials/sites/sierra
+>>>>>>> refs/remotes/nimbusproject/master
 
       {
         "id": "sierra",
         "access_key": "sierra_access_key_id",
         "secret_key": "sierra_secret_access_key",
         "key_name": "phantom_ssh_key",
+<<<<<<< HEAD
         "uri": "/api/v1.0/credentials/sites/sierra"
       }
 
 .. http:put:: /api/v1.0/credentials/sites/(cloud_id)
+=======
+        "uri": "/api/dev/credentials/sites/sierra"
+      }
+
+.. http:put:: /api/dev/credentials/sites/(cloud_id)
+>>>>>>> refs/remotes/nimbusproject/master
 
    Update cloud credentials
 
@@ -453,7 +587,11 @@ Site Credentials Resources
 
    .. sourcecode:: http
 
+<<<<<<< HEAD
       PUT /api/v1.0/credentials/sites/ec2 HTTP/1.1
+=======
+      PUT /api/dev/credentials/sites/ec2 HTTP/1.1
+>>>>>>> refs/remotes/nimbusproject/master
       Host: phantom.nimbusproject.org
       Accept: application/json
 
@@ -470,17 +608,28 @@ Site Credentials Resources
 
       HTTP/1.1 200 OK
       Content-Type: application/json
+<<<<<<< HEAD
       Location: /api/v1.0/credentials/sites/ec2
+=======
+      Location: /api/dev/credentials/sites/ec2
+>>>>>>> refs/remotes/nimbusproject/master
 
       {
         "id": "ec2",
         "access_key": "updated_aws_access_key_id",
         "secret_key": "updated_aws_secret_access_key",
         "key_name": "phantom_ssh_key",
+<<<<<<< HEAD
         "uri": "/api/v1.0/credentials/sites/ec2"
       }
 
 .. http:delete:: /api/v1.0/credentials/sites/(cloud_id)
+=======
+        "uri": "/api/dev/credentials/sites/ec2"
+      }
+
+.. http:delete:: /api/dev/credentials/sites/(cloud_id)
+>>>>>>> refs/remotes/nimbusproject/master
 
    Delete cloud credentials for the cloud `cloud_id`
 
@@ -490,7 +639,11 @@ Site Credentials Resources
 
    .. sourcecode:: http
 
+<<<<<<< HEAD
       DELETE /api/v1.0/credentials/sites/ec2 HTTP/1.1
+=======
+      DELETE /api/dev/credentials/sites/ec2 HTTP/1.1
+>>>>>>> refs/remotes/nimbusproject/master
       Host: phantom.nimbusproject.org
       Accept: application/json
 
@@ -505,7 +658,11 @@ Site Credentials Resources
 Chef Credentials Resources
 =====================
 
+<<<<<<< HEAD
 .. http:get:: /api/v1.0/credentials/chef
+=======
+.. http:get:: /api/dev/credentials/chef
+>>>>>>> refs/remotes/nimbusproject/master
 
    List all chef credentials for the authenticated user
 
@@ -515,7 +672,11 @@ Chef Credentials Resources
 
    .. sourcecode:: http
 
+<<<<<<< HEAD
       GET /api/v1.0/credentials/chef HTTP/1.1
+=======
+      GET /api/dev/credentials/chef HTTP/1.1
+>>>>>>> refs/remotes/nimbusproject/master
       Host: phantom.nimbusproject.org
       Accept: application/json
 
@@ -534,7 +695,11 @@ Chef Credentials Resources
           "validation_client_name": "chefuser-validator",
           "client_key": "-----BEGIN RSA PRIVATE KEY-----...",
           "validator_key": "-----BEGIN RSA PRIVATE KEY-----...",
+<<<<<<< HEAD
           "uri": "/api/v1.0/credentials/chef/hostedchef"
+=======
+          "uri": "/api/dev/credentials/chef/hostedchef"
+>>>>>>> refs/remotes/nimbusproject/master
         },
         {
           "id": "open_source_chef",
@@ -543,11 +708,19 @@ Chef Credentials Resources
           "validation_client_name": "chef-validator",
           "client_key": "-----BEGIN RSA PRIVATE KEY-----...",
           "validator_key": "-----BEGIN RSA PRIVATE KEY-----...",
+<<<<<<< HEAD
           "uri": "/api/v1.0/credentials/chef/open_source_chef"
         }
       ]
 
 .. http:get:: /api/v1.0/credentials/chef/(chef_id)
+=======
+          "uri": "/api/dev/credentials/chef/open_source_chef"
+        }
+      ]
+
+.. http:get:: /api/dev/credentials/chef/(chef_id)
+>>>>>>> refs/remotes/nimbusproject/master
 
    Get cloud credentials for the chef server `chef_id`
 
@@ -558,7 +731,11 @@ Chef Credentials Resources
 
    .. sourcecode:: http
 
+<<<<<<< HEAD
       GET /api/v1.0/credentials/chef/hostedchef HTTP/1.1
+=======
+      GET /api/dev/credentials/chef/hostedchef HTTP/1.1
+>>>>>>> refs/remotes/nimbusproject/master
       Host: phantom.nimbusproject.org
       Accept: application/json
 
@@ -576,10 +753,17 @@ Chef Credentials Resources
         "validation_client_name": "chefuser-validator",
         "client_key": "-----BEGIN RSA PRIVATE KEY-----...",
         "validator_key": "-----BEGIN RSA PRIVATE KEY-----...",
+<<<<<<< HEAD
         "uri": "/api/v1.0/credentials/chef/hostedchef"
       }
 
 .. http:post:: /api/v1.0/credentials/chef
+=======
+        "uri": "/api/dev/credentials/chef/hostedchef"
+      }
+
+.. http:post:: /api/dev/credentials/chef
+>>>>>>> refs/remotes/nimbusproject/master
 
    Save new chef credentials
 
@@ -595,7 +779,11 @@ Chef Credentials Resources
 
    .. sourcecode:: http
 
+<<<<<<< HEAD
       POST /api/v1.0/credentials/sites HTTP/1.1
+=======
+      POST /api/dev/credentials/sites HTTP/1.1
+>>>>>>> refs/remotes/nimbusproject/master
       Host: phantom.nimbusproject.org
       Accept: application/json
 
@@ -614,7 +802,11 @@ Chef Credentials Resources
 
       HTTP/1.1 201 Created
       Content-Type: application/json
+<<<<<<< HEAD
       Location: /api/v1.0/credentials/sites/sierra
+=======
+      Location: /api/dev/credentials/sites/sierra
+>>>>>>> refs/remotes/nimbusproject/master
 
       {
         "id": "hostedchef",
@@ -623,10 +815,17 @@ Chef Credentials Resources
         "validation_client_name": "chefuser-validator",
         "client_key": "-----BEGIN RSA PRIVATE KEY-----...",
         "validator_key": "-----BEGIN RSA PRIVATE KEY-----...",
+<<<<<<< HEAD
         "uri": "/api/v1.0/credentials/chef/hostedchef"
       }
 
 .. http:put:: /api/v1.0/credentials/chef/(chef_id)
+=======
+        "uri": "/api/dev/credentials/chef/hostedchef"
+      }
+
+.. http:put:: /api/dev/credentials/chef/(chef_id)
+>>>>>>> refs/remotes/nimbusproject/master
 
    Update chef credentials
 
@@ -636,7 +835,11 @@ Chef Credentials Resources
 
    .. sourcecode:: http
 
+<<<<<<< HEAD
       PUT /api/v1.0/credentials/chef/hostedchef HTTP/1.1
+=======
+      PUT /api/dev/credentials/chef/hostedchef HTTP/1.1
+>>>>>>> refs/remotes/nimbusproject/master
       Host: phantom.nimbusproject.org
       Accept: application/json
 
@@ -655,7 +858,11 @@ Chef Credentials Resources
 
       HTTP/1.1 200 OK
       Content-Type: application/json
+<<<<<<< HEAD
       Location: /api/v1.0/credentials/chef/hostedchef
+=======
+      Location: /api/dev/credentials/chef/hostedchef
+>>>>>>> refs/remotes/nimbusproject/master
 
       {
         "id": "hostedchef",
@@ -664,10 +871,17 @@ Chef Credentials Resources
         "validation_client_name": "chefuser-validator",
         "client_key": "-----BEGIN RSA PRIVATE KEY-----...",
         "validator_key": "-----BEGIN RSA PRIVATE KEY-----...",
+<<<<<<< HEAD
         "uri": "/api/v1.0/credentials/chef/hostedchef"
       }
 
 .. http:delete:: /api/v1.0/credentials/chef/(cloud_id)
+=======
+        "uri": "/api/dev/credentials/chef/hostedchef"
+      }
+
+.. http:delete:: /api/dev/credentials/chef/(cloud_id)
+>>>>>>> refs/remotes/nimbusproject/master
 
    Delete chef credentials for the chef server `chef_id`
 
@@ -677,7 +891,11 @@ Chef Credentials Resources
 
    .. sourcecode:: http
 
+<<<<<<< HEAD
       DELETE /api/v1.0/credentials/chef/hostedchef HTTP/1.1
+=======
+      DELETE /api/dev/credentials/chef/hostedchef HTTP/1.1
+>>>>>>> refs/remotes/nimbusproject/master
       Host: phantom.nimbusproject.org
       Accept: application/json
 
@@ -695,7 +913,11 @@ Launch Configuration Resources
    a contextualization method. Phantom currently supports "none", "user_data",
    and "chef".
 
+<<<<<<< HEAD
 .. http:get:: /api/v1.0/launchconfigurations
+=======
+.. http:get:: /api/dev/launchconfigurations
+>>>>>>> refs/remotes/nimbusproject/master
 
    List all launch configurations known to the authenticated user
 
@@ -705,7 +927,7 @@ Launch Configuration Resources
 
    .. sourcecode:: http
 
-      GET /api/v1.0/launchconfigurations HTTP/1.1
+      GET /api/dev/launchconfigurations HTTP/1.1
       Host: phantom.nimbusproject.org
       Accept: application/json
 
@@ -739,11 +961,11 @@ Launch Configuration Resources
           "contextualization_method": "user_data",
           "user_data": "my user data",
           "owner": "johndoe",
-          "uri": "/api/v1.0/launchconfigurations/fcfe9272-d03f-48e4-bd5f-4eb50ec396c7"
+          "uri": "/api/dev/launchconfigurations/fcfe9272-d03f-48e4-bd5f-4eb50ec396c7"
         }
       ]
 
-.. http:get:: /api/v1.0/launchconfigurations/(launchconfiguration_id)
+.. http:get:: /api/dev/launchconfigurations/(launchconfiguration_id)
 
    Get details for the launch configuration `launch_configuration_id`
 
@@ -754,7 +976,7 @@ Launch Configuration Resources
 
    .. sourcecode:: http
 
-      GET /api/v1.0/launchconfigurations/fcfe9272-d03f-48e4-bd5f-4eb50ec396c7 HTTP/1.1
+      GET /api/dev/launchconfigurations/fcfe9272-d03f-48e4-bd5f-4eb50ec396c7 HTTP/1.1
       Host: phantom.nimbusproject.org
       Accept: application/json
 
@@ -786,10 +1008,10 @@ Launch Configuration Resources
         },
         "contextualization_method": "none",
         "owner": "johndoe",
-        "uri": "/api/v1.0/launchconfigurations/fcfe9272-d03f-48e4-bd5f-4eb50ec396c7"
+        "uri": "/api/dev/launchconfigurations/fcfe9272-d03f-48e4-bd5f-4eb50ec396c7"
       }
 
-.. http:post:: /api/v1.0/launchconfigurations
+.. http:post:: /api/dev/launchconfigurations
 
    Create a new launch configuration
 
@@ -797,9 +1019,15 @@ Launch Configuration Resources
    :jsonparameter contextualization_method: the contextualization method, 
         currently phantom supports 'none', 'user_data', and 'chef'
    :jsonparameter user_data: data used by the user_data contextualization method
+<<<<<<< HEAD
    :jsonparameter run_list: json-encoded list of recipes to be installed on a VM using chef
         for the 'chef' contextualization method
    :jsonparameter attributes: json-encoded dictionary of attributes to be used by chef on a
+=======
+   :jsonparameter chef_runlist: json-encoded list of recipes to be installed on a VM using chef
+        for the 'chef' contextualization method
+   :jsonparameter chef_attributes: json-encoded dictionary of attributes to be used by chef on a
+>>>>>>> refs/remotes/nimbusproject/master
         VM using chef for the 'chef' contextualization method
    :statuscode 201: launch configuration created
 
@@ -807,15 +1035,21 @@ Launch Configuration Resources
 
    .. sourcecode:: http
 
-      POST /api/v1.0/launchconfigurations HTTP/1.1
+      POST /api/dev/launchconfigurations HTTP/1.1
       Host: phantom.nimbusproject.org
       Accept: application/json
 
       {
         "name": "mysecondlc",
+<<<<<<< HEAD
         "contextualization_method": "chef"
         "run_list": "["recipe1", "recipe2"]"
         "attributes": "{"my": "attribute"}",
+=======
+        "contextualization_method": "chef",
+        "chef_runlist": "["recipe1", "recipe2"]",
+        "chef_attributes": "{"my": "attribute"}",
+>>>>>>> refs/remotes/nimbusproject/master
         "cloud_params": {
           "hotel": {
             "image_id": "hello-cloud",
@@ -833,13 +1067,18 @@ Launch Configuration Resources
 
       HTTP/1.1 201 Created
       Content-Type: application/json
-      Location: /api/v1.0/launchconfigurations/e99be9d3-8f09-4a6c-bb17-b00efd0d06df
+      Location: /api/dev/launchconfigurations/e99be9d3-8f09-4a6c-bb17-b00efd0d06df
 
       {
         "id": "e99be9d3-8f09-4a6c-bb17-b00efd0d06df",
         "name": "mysecondlc",
+<<<<<<< HEAD
         "contextualization_method": "chef"
         "run_list": "["recipe1", "recipe2"]"
+=======
+        "contextualization_method": "chef",
+        "run_list": "["recipe1", "recipe2"]",
+>>>>>>> refs/remotes/nimbusproject/master
         "attributes": "{"my": "attribute"}",
         "cloud_params": {
           "hotel": {
@@ -851,10 +1090,10 @@ Launch Configuration Resources
           }
         },
         "owner": "johndoe",
-        "uri": "/api/v1.0/launchconfigurations/e99be9d3-8f09-4a6c-bb17-b00efd0d06df"
+        "uri": "/api/dev/launchconfigurations/e99be9d3-8f09-4a6c-bb17-b00efd0d06df"
       }
 
-.. http:put:: /api/v1.0/launchconfigurations/(launch_configuration_id)
+.. http:put:: /api/dev/launchconfigurations/(launch_configuration_id)
 
    Update a launch configuration
 
@@ -864,7 +1103,7 @@ Launch Configuration Resources
 
    .. sourcecode:: http
 
-      PUT /api/v1.0/launchconfigurations/e99be9d3-8f09-4a6c-bb17-b00efd0d06df HTTP/1.1
+      PUT /api/dev/launchconfigurations/e99be9d3-8f09-4a6c-bb17-b00efd0d06df HTTP/1.1
       Host: phantom.nimbusproject.org
       Accept: application/json
 
@@ -889,7 +1128,7 @@ Launch Configuration Resources
 
       HTTP/1.1 200 OK
       Content-Type: application/json
-      Location: /api/v1.0/launchconfigurations/e99be9d3-8f09-4a6c-bb17-b00efd0d06df
+      Location: /api/dev/launchconfigurations/e99be9d3-8f09-4a6c-bb17-b00efd0d06df
 
       {
         "id": "e99be9d3-8f09-4a6c-bb17-b00efd0d06df",
@@ -905,10 +1144,10 @@ Launch Configuration Resources
           }
         },
         "owner": "johndoe",
-        "uri": "/api/v1.0/launchconfigurations/e99be9d3-8f09-4a6c-bb17-b00efd0d06df"
+        "uri": "/api/dev/launchconfigurations/e99be9d3-8f09-4a6c-bb17-b00efd0d06df"
       }
 
-.. http:delete:: /api/v1.0/launchconfigurations/(launch_configuration_id)
+.. http:delete:: /api/dev/launchconfigurations/(launch_configuration_id)
 
    Delete a launch configuration
 
@@ -918,7 +1157,7 @@ Launch Configuration Resources
 
    .. sourcecode:: http
 
-      DELETE /api/v1.0/launchconfigurations/fcfe9272-d03f-48e4-bd5f-4eb50ec396c7 HTTP/1.1
+      DELETE /api/dev/launchconfigurations/fcfe9272-d03f-48e4-bd5f-4eb50ec396c7 HTTP/1.1
       Host: phantom.nimbusproject.org
       Accept: application/json
 
@@ -933,7 +1172,7 @@ Launch Configuration Resources
 Domain Resources
 ================
 
-.. http:get:: /api/v1.0/domains
+.. http:get:: /api/dev/domains
 
    List all domains for the authenticated user
 
@@ -943,7 +1182,7 @@ Domain Resources
 
    .. sourcecode:: http
 
-      GET /api/v1.0/domains HTTP/1.1
+      GET /api/dev/domains HTTP/1.1
       Host: phantom.nimbusproject.org
       Accept: application/json
 
@@ -961,7 +1200,7 @@ Domain Resources
           "de_name": "multicloud",
           "monitor_sensors": "",
           "monitor_domain_sensors": "my.domain.sensor",
-          "launchconfiguration": "/api/v1.0/launchconfigurations/fcfe9272-d03f-48e4-bd5f-4eb50ec396c7",
+          "launchconfiguration": "/api/dev/launchconfigurations/fcfe9272-d03f-48e4-bd5f-4eb50ec396c7",
           "vm_count": 1,
           "sensor_data": {
             "my.domain.sensor": {
@@ -970,11 +1209,11 @@ Domain Resources
             }
           },
           "owner": "johndoe",
-          "uri": "/api/v1.0/domains/1f8112a3-4abd-4629-a1b5-33f78cff504a"
+          "uri": "/api/dev/domains/1f8112a3-4abd-4629-a1b5-33f78cff504a"
         }
       ]
 
-.. http:get:: /api/v1.0/domains/(domain_id)
+.. http:get:: /api/dev/domains/(domain_id)
 
    Get details for the domain `domain_id`
 
@@ -985,7 +1224,7 @@ Domain Resources
 
    .. sourcecode:: http
 
-      GET /api/v1.0/domains/1f8112a3-4abd-4629-a1b5-33f78cff504a HTTP/1.1
+      GET /api/dev/domains/1f8112a3-4abd-4629-a1b5-33f78cff504a HTTP/1.1
       Host: phantom.nimbusproject.org
       Accept: application/json
 
@@ -1002,7 +1241,7 @@ Domain Resources
         "de_name": "multicloud",
         "monitor_sensors": "",
         "monitor_domain_sensors": "my.domain.sensor",
-        "launchconfiguration": "/api/v1.0/launchconfigurations/fcfe9272-d03f-48e4-bd5f-4eb50ec396c7",
+        "launchconfiguration": "/api/dev/launchconfigurations/fcfe9272-d03f-48e4-bd5f-4eb50ec396c7",
         "vm_count": 1,
         "sensor_data": {
           "my.domain.sensor": {
@@ -1011,10 +1250,10 @@ Domain Resources
           }
         },
         "owner": "johndoe",
-        "uri": "/api/v1.0/domains/1f8112a3-4abd-4629-a1b5-33f78cff504a"
+        "uri": "/api/dev/domains/1f8112a3-4abd-4629-a1b5-33f78cff504a"
       }
 
-.. http:post:: /api/v1.0/domains
+.. http:post:: /api/dev/domains
 
    Create a new domain
 
@@ -1024,7 +1263,7 @@ Domain Resources
 
    .. sourcecode:: http
 
-      POST /api/v1.0/domains HTTP/1.1
+      POST /api/dev/domains HTTP/1.1
       Host: phantom.nimbusproject.org
       Accept: application/json
 
@@ -1050,13 +1289,13 @@ Domain Resources
 
       HTTP/1.1 201 Created
       Content-Type: application/json
-      Location: /api/v1.0/domains/bb03986c-ff70-4bc2-baec-10016e5db740
+      Location: /api/dev/domains/bb03986c-ff70-4bc2-baec-10016e5db740
 
       {
         "id": "bb03986c-ff70-4bc2-baec-10016e5db740",
         "name": "myseconddomain",
         "de_name": "sensor",
-        "launchconfiguration": "/api/v1.0/launchconfigurations/e99be9d3-8f09-4a6c-bb17-b00efd0d06df",
+        "launchconfiguration": "/api/dev/launchconfigurations/e99be9d3-8f09-4a6c-bb17-b00efd0d06df",
         "monitor_sensors": "proc.loadavg.1min,df.inodes.free",
         "monitor_domain_sensors": "",
         "sensor_minimum_vms": 1,
@@ -1068,10 +1307,10 @@ Domain Resources
         "sensor_scale_up_vms": 1,
         "sensor_cooldown": 60
         "owner": "johndoe",
-        "uri": "/api/v1.0/domains/bb03986c-ff70-4bc2-baec-10016e5db740"
+        "uri": "/api/dev/domains/bb03986c-ff70-4bc2-baec-10016e5db740"
       }
 
-.. http:put:: /api/v1.0/domains/(domain_id)
+.. http:put:: /api/dev/domains/(domain_id)
 
    Update a domain
 
@@ -1081,7 +1320,7 @@ Domain Resources
 
    .. sourcecode:: http
 
-      PUT /api/v1.0/domains/bb03986c-ff70-4bc2-baec-10016e5db740 HTTP/1.1
+      PUT /api/dev/domains/bb03986c-ff70-4bc2-baec-10016e5db740 HTTP/1.1
       Host: phantom.nimbusproject.org
       Accept: application/json
 
@@ -1107,13 +1346,13 @@ Domain Resources
 
       HTTP/1.1 200 OK
       Content-Type: application/json
-      Location: /api/v1.0/domains/bb03986c-ff70-4bc2-baec-10016e5db740
+      Location: /api/dev/domains/bb03986c-ff70-4bc2-baec-10016e5db740
 
       {
         "id": "bb03986c-ff70-4bc2-baec-10016e5db740",
         "name": "myseconddomain",
         "de_name": "sensor",
-        "launchconfiguration": "/api/v1.0/launchconfigurations/e99be9d3-8f09-4a6c-bb17-b00efd0d06df",
+        "launchconfiguration": "/api/dev/launchconfigurations/e99be9d3-8f09-4a6c-bb17-b00efd0d06df",
         "monitor_sensors": "proc.loadavg.1min,df.inodes.free",
         "monitor_domain_sensors": "",
         "sensor_minimum_vms": 1,
@@ -1125,10 +1364,10 @@ Domain Resources
         "sensor_scale_up_vms": 1,
         "sensor_cooldown": 60,
         "owner": "johndoe",
-        "uri": "/api/v1.0/domains/bb03986c-ff70-4bc2-baec-10016e5db740"
+        "uri": "/api/dev/domains/bb03986c-ff70-4bc2-baec-10016e5db740"
       }
 
-.. http:delete:: /api/v1.0/domains/(domain_id)
+.. http:delete:: /api/dev/domains/(domain_id)
 
    Terminate a domain
 
@@ -1138,7 +1377,7 @@ Domain Resources
 
    .. sourcecode:: http
 
-      DELETE /api/v1.0/domains/1f8112a3-4abd-4629-a1b5-33f78cff504a HTTP/1.1
+      DELETE /api/dev/domains/1f8112a3-4abd-4629-a1b5-33f78cff504a HTTP/1.1
       Host: phantom.nimbusproject.org
       Accept: application/json
 
@@ -1155,7 +1394,7 @@ Instances Resources
 
 Each domain can have a number of instances attached to it.
 
-.. http:get:: /api/v1.0/domains/(domain_id)/instances
+.. http:get:: /api/dev/domains/(domain_id)/instances
 
    List all instances attached to the domain `domain_id`
 
@@ -1165,7 +1404,7 @@ Each domain can have a number of instances attached to it.
 
    .. sourcecode:: http
 
-      GET /api/v1.0/domains/1f8112a3-4abd-4629-a1b5-33f78cff504a/instances HTTP/1.1
+      GET /api/dev/domains/1f8112a3-4abd-4629-a1b5-33f78cff504a/instances HTTP/1.1
       Host: phantom.nimbusproject.org
       Accept: application/json
 
@@ -1182,7 +1421,7 @@ Each domain can have a number of instances attached to it.
           "iaas_instance_id": "i-75c0b81b",
           "lifecycle_state": "400-PENDING",
           "hostname": "vm-25.sdsc.futuregrid.org",
-          "cloud": "/api/v1.0/sites/sierra",
+          "cloud": "/api/dev/sites/sierra",
           "image_id": "hello-phantom.gz",
           "instance_type": "m1.small",
           "sensor_data": {
@@ -1192,11 +1431,11 @@ Each domain can have a number of instances attached to it.
             }
           },
           "keyname": "phantomkey",
-          "uri": "/api/v1.0/domains/1f8112a3-4abd-4629-a1b5-33f78cff504a/instances/87554432-f140-4722-86bf-1e3cdb04dcdd"
+          "uri": "/api/dev/domains/1f8112a3-4abd-4629-a1b5-33f78cff504a/instances/87554432-f140-4722-86bf-1e3cdb04dcdd"
         }
       ]
 
-.. http:get:: /api/v1.0/domains/(domain_id)/instances/(instance_id)
+.. http:get:: /api/dev/domains/(domain_id)/instances/(instance_id)
 
    Get details for the instance `instance_id` attached to the domain `domain_id`
 
@@ -1207,7 +1446,7 @@ Each domain can have a number of instances attached to it.
 
    .. sourcecode:: http
 
-      GET /api/v1.0/domains/1f8112a3-4abd-4629-a1b5-33f78cff504a/instances/87554432-f140-4722-86bf-1e3cdb04dcdd HTTP/1.1
+      GET /api/dev/domains/1f8112a3-4abd-4629-a1b5-33f78cff504a/instances/87554432-f140-4722-86bf-1e3cdb04dcdd HTTP/1.1
       Host: phantom.nimbusproject.org
       Accept: application/json
 
@@ -1223,7 +1462,7 @@ Each domain can have a number of instances attached to it.
         "iaas_instance_id": "i-75c0b81b",
         "lifecycle_state": "400-PENDING",
         "hostname": "vm-25.sdsc.futuregrid.org",
-        "cloud": "/api/v1.0/sites/sierra",
+        "cloud": "/api/dev/sites/sierra",
         "image_id": "hello-phantom.gz",
         "instance_type": "m1.small",
         "sensor_data": {
@@ -1233,20 +1472,21 @@ Each domain can have a number of instances attached to it.
           }
         },
         "keyname": "phantomkey",
-        "uri": "/api/v1.0/domains/1f8112a3-4abd-4629-a1b5-33f78cff504a/instances/87554432-f140-4722-86bf-1e3cdb04dcdd"
+        "uri": "/api/dev/domains/1f8112a3-4abd-4629-a1b5-33f78cff504a/instances/87554432-f140-4722-86bf-1e3cdb04dcdd"
       }
 
-.. http:delete:: /api/v1.0/domains/(domain_id)/instances/(instance_id)
+.. http:delete:: /api/dev/domains/(domain_id)/instances/(instance_id)
 
    Terminate the instance `instance_id` within the domain `domain_id`
 
    :statuscode 204: instance terminated
+   :query adjust_policy: either ``true`` or ``false``. If ``true``, the domain's policy will be adjusted to prevent a replacement VM from starting. In the Multicloud policy, the ``vm_count`` parameter will be decremented, in the sensor policy, the ``sensor_minimum_vms`` parameter will be decremented, and the ``sensor_maximum_vms`` parameter will be adjusted to match it.
 
    **Example request**:
 
    .. sourcecode:: http
 
-      DELETE /api/v1.0/domains/1f8112a3-4abd-4629-a1b5-33f78cff504a/instances/87554432-f140-4722-86bf-1e3cdb04dcdd HTTP/1.1
+      DELETE /api/dev/domains/1f8112a3-4abd-4629-a1b5-33f78cff504a/instances/87554432-f140-4722-86bf-1e3cdb04dcdd HTTP/1.1
       Host: phantom.nimbusproject.org
       Accept: application/json
 
@@ -1263,7 +1503,7 @@ Sensors Resources
 
 Phantom provides a number of sensors that can be used for auto scaling.
 
-.. http:get:: /api/v1.0/sensors
+.. http:get:: /api/dev/sensors
 
    List all sensors
 
@@ -1273,7 +1513,7 @@ Phantom provides a number of sensors that can be used for auto scaling.
 
    .. sourcecode:: http
 
-      GET /api/v1.0/sensors HTTP/1.1
+      GET /api/dev/sensors HTTP/1.1
       Host: phantom.nimbusproject.org
       Accept: application/json
 
@@ -1287,19 +1527,19 @@ Phantom provides a number of sensors that can be used for auto scaling.
       [
         {
           "id": "df.1kblocks.free",
-          "uri": "/api/v1.0/sensors/df.1kblocks.free"
+          "uri": "/api/dev/sensors/df.1kblocks.free"
         },
         {
           "id": "df.1kblocks.total",
-          "uri": "/api/v1.0/sensors/df.1kblocks.total"
+          "uri": "/api/dev/sensors/df.1kblocks.total"
         },
         {
           "id": "df.1kblocks.used",
-          "uri": "/api/v1.0/sensors/df.1kblocks.used"
+          "uri": "/api/dev/sensors/df.1kblocks.used"
         }
       ]
 
-.. http:get:: /api/v1.0/sensors/(sensor_id)
+.. http:get:: /api/dev/sensors/(sensor_id)
 
    Get the sensor resource identified by `sensor_id`
 
@@ -1310,7 +1550,7 @@ Phantom provides a number of sensors that can be used for auto scaling.
 
    .. sourcecode:: http
 
-      GET /api/v1.0/sensors/df.1kblocks.free HTTP/1.1
+      GET /api/dev/sensors/df.1kblocks.free HTTP/1.1
       Host: phantom.nimbusproject.org
       Accept: application/json
 
@@ -1323,5 +1563,5 @@ Phantom provides a number of sensors that can be used for auto scaling.
 
       {
         "id": "df.1kblocks.free",
-        "uri": "/api/v1.0/sensors/df.1kblocks.free"
+        "uri": "/api/dev/sensors/df.1kblocks.free"
       }

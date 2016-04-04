@@ -5,6 +5,12 @@ Nimbus Documentation
 Documentation is available for each of the Nimbus products.
 
 
+Phantom
+=======
+
+* `Current version <http://www.nimbusproject.org/phantom>`_
+
+
 Nimbus Infrastructure
 =====================
 

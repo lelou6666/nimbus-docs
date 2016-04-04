@@ -12,8 +12,11 @@ the VMs for your application. This guide explains how to install tcollector on
 your VM image.
 
 If you don't want to install tcollector on an image, and are only looking to
-test Phantom's sensor capabilities, please try the hello-phantom.gz image
-available on FutureGrid clouds. You may also base your application image on it.
+test Phantom's sensor capabilities, please try the *Phantomize*
+contextualization which will install and run tcollector automatically when your
+instances boot, or use an already configured VM image such as the
+hello-phantom.gz image available on FutureGrid clouds. You may also base your
+application image on it.
 
 Installation and Prerequisites
 ==============================
@@ -28,11 +31,26 @@ Once you have Python installed, you can install it like so::
 
 That's it! You can start tcollector like so to test it::
 
-    # /usr/local/tcollector/tcollector.py --host nimbus-opentsdb.no-ip.org --port 4242
+    # /usr/local/tcollector/tcollector.py --host nimbus-opentsdb.no-ip.info --port 4242
 
 Now to make tcollector start on system start, you can use the provided startstop script. Install it like so::
 
     # cp /usr/local/tcollector/startstop /etc/init.d/tcollector
+
+.. note::
+    
+    If you are running your VM on OpenStack clouds running OpenStack (except for Hotel),
+    the public hostname sent by the cloud metadata server does not match what
+    is sent by the EC2 interface which uses the public IP.
+    For these clouds, we have an `alternative script available
+    <https://github.com/nimbusproject/tcollector/blob/master/startstop.openstack>`_,
+    which works around the problem.
+
+    Instead of the above command, use:
+
+        # wget https://raw.githubusercontent.com/nimbusproject/tcollector/master/startstop.openstack
+
+        # cp startstop.openstack /etc/init.d/tcollector
 
 Open up the script and set the TSD_HOST variable to point to the Phantom
 OpenTSDB installation::
@@ -41,13 +59,13 @@ OpenTSDB installation::
 
 Line 5 should look like::
 
-    TSD_HOST=nimbus-opentsdb.no-ip.org
+    TSD_HOST=nimbus-opentsdb.no-ip.info
 
 You can confirm that you've set this right by running the following, and
 verifying that the output is the same::
 
     # grep 'TSD_HOST=' /etc/init.d/tcollector
-    TSD_HOST=nimbus-opentsdb.no-ip.org
+    TSD_HOST=nimbus-opentsdb.no-ip.info
 
 You will now want to set this init script to start on boot. To do this on
 Debian or Ubuntu based distros, you will want to use `update-rc.d
@@ -110,7 +128,7 @@ Once you have Python installed, you can install it like so::
 
 That's it! You can start tcollector like so to test it::
 
-    # /usr/local/tcollector/tcollector.py --host nimbus-opentsdb.no-ip.org --port 4242
+    # /usr/local/tcollector/tcollector.py --host nimbus-opentsdb.no-ip.info --port 4242
 
 Now to make tcollector start on system start, you can use the provided startstop script. Install it like so::
 
@@ -123,13 +141,13 @@ OpenTSDB installation::
 
 Line 5 should look like::
 
-    TSD_HOST=nimbus-opentsdb.no-ip.org
+    TSD_HOST=nimbus-opentsdb.no-ip.info
 
 You can confirm that you've set this right by running the following, and
 verifying that the output is the same::
 
     # grep 'TSD_HOST=' /etc/init.d/tcollector
-    TSD_HOST=nimbus-opentsdb.no-ip.org
+    TSD_HOST=nimbus-opentsdb.no-ip.info
 
 You will now want to set this init script to start on boot. To do this on
 Debian or Ubuntu based distros, you will want to use update-rc.d::
